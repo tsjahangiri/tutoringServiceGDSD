@@ -15,6 +15,7 @@ Chowdhury Amlan Barua (1310643)
 
 
 Mohammad Salman Haydar (1380756)
+Email: mohammad-salman.haydar@informatik.hs-fulda.de
 
 Mohammad Rakibul Hasan (1355257)
 Email: mohammd-rakibul.hasan@informatik.hs-fulda.de
