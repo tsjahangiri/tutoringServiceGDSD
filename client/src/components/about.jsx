@@ -3,7 +3,7 @@ import '../style.css';
 import Talha from '../assets/talha.jpg';
 import Amlan from '../assets/hasib.jpg';
 import Salman from '../assets/hasib.jpg';
-import Rakibul from '../assets/hasib.jpg';
+import Rakibul from '../assets/rakib.jpg';
 import Hasib from '../assets/hasib.jpg';
 
 class About extends Component {
