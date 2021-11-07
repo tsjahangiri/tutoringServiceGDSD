@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import '../style.css';
-import hasib from '../assets/hasib.jpg';
+import Talha from '../assets/hasib.jpg';
+import Amlan from '../assets/hasib.jpg';
+import Salman from '../assets/hasib.jpg';
+import Rakibul from '../assets/hasib.jpg';
+import Hasib from '../assets/hasib.jpg';
 
 class About extends Component {
     render() {
@@ -14,12 +18,58 @@ class About extends Component {
                 
                 <h2>Our Team</h2>
                 <div className="row">
+                    <div class="column">
+                        <div class="card">
+                            <img src={Talha} alt="Talha Jahangiri Khan" style = {{width:"300px", height:"300px"}} />                 
+                            <div class="container">
+                            <h2>Talha Jahangiri Khan</h2>
+                            <p class="title">Backendlead</p>
+                            <p><button class="button">Contact</button></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="column">
+                        <div class="card">
+                            <img src={Amlan} alt="Chowdhury Amlan Barua" style = {{width:"300px", height:"300px"}} />                 
+                            <div class="container">
+                            <h2>Chowdhury Amlan Barua</h2>
+                            <p class="title">Cloud Engineer</p>
+
+                            <p><button class="button">Contact</button></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="column">
+                        <div class="card">
+                            <img src={Salman} alt="Mohammad Salman Haydar" style = {{width:"300px", height:"300px"}} />                 
+                            <div class="container">
+                            <h2>Mohammad Salman Haydar</h2>
+                            <p class="title">Backend Developer</p>
+                            <p><button class="button">Contact</button></p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="column">
+                        <div class="card">
+                            <img src={Rakibul} alt="Mohammad Rakibul Hasan" style = {{width:"300px", height:"300px"}} />                 
+                            <div class="container">
+                            <h2>Mohammad Rakibul Hasan</h2>
+                            <p class="title">Frontend Teamlead</p>
+                            <p><button class="button">Contact</button></p>
+                        </div>
+                        </div>
+                    </div>
+
+
                     <div className="column">
                         <div className="card">
-                        <img src={hasib} style = {{width:"300px", height:"300px"}} />
-
-
-                  
+                        <img src={Hasib} alt="Mohammad Rakibul Hasan" style = {{width:"300px", height:"300px"}} />                 
                         <div className="container">
                             <h2>Hasib Iqbal</h2>
                             <p className="title">Frontend Developer</p>
@@ -28,8 +78,7 @@ class About extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
-
+                
             </React.Fragment>
            
         );
