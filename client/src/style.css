@@ -7,13 +7,10 @@ body {
     box-sizing: border-box;
   }
   
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-  
+
   .column {
     float: left;
-    width: 33.3%;
+    width: 30%;
     margin-bottom: 16px;
     padding: 0 8px;
   }
@@ -21,6 +18,7 @@ body {
   .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin: 8px;
+    align-items: center;
   }
   
   .about-section {
