@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../style.css';
-import Talha from '../assets/hasib.jpg';
+import Talha from '../assets/talha.jpg';
 import Amlan from '../assets/hasib.jpg';
 import Salman from '../assets/hasib.jpg';
 import Rakibul from '../assets/hasib.jpg';
@@ -24,7 +24,7 @@ class About extends Component {
                             <img src={Talha} alt="Talha Jahangiri Khan" style = {{width:"300px", height:"300px"}} />                 
                             <div class="container">
                                 <h2>Talha Jahangiri Khan</h2>
-                                <p class="title">Backendlead</p>
+                                <p class="title">Backend Developer</p>
                                 <p><button className="button"><a href="/Portfolio/hasib.html">Details</a></button></p>
                             </div>
                         </div>
