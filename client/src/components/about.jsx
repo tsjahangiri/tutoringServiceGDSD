@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../style.css';
 import Talha from '../assets/talha.jpg';
 import Amlan from '../assets/hasib.jpg';
-import Salman from '../assets/hasib.jpg';
+import Salman from '../assets/salman.jpeg';
 import Rakibul from '../assets/rakib.jpg';
 import Hasib from '../assets/hasib.jpg';
 import rakibjsx  from '../components/individual-about-pages/rakib';
@@ -23,42 +23,53 @@ class About extends Component {
                 <div>
                     <div className="column">
                         <div className="card">
-                            <img src={Talha} alt="Talha Jahangiri Khan" style = {{width:"300px", height:"300px"}} />                 
+                            <img src={Talha} alt="Talha Jahangiri Khan" style = {{width:"300px", height:"300px"}} className="center" />                 
                             <div className="container">
                                 <h2>Talha Jahangiri Khan</h2>
                                 <p className="title">Backend Developer</p>
-                                <p><button className="button"><a href="/Portfolio/hasib.html">Details</a></button></p>
+                                <NavLink className="nav-item nav-link" to="/talha">
+                                     Details
+                                </NavLink>
                             </div>
                         </div>
                     </div>
 
+                    
+
+                    
                     <div className="column">
                         <div className="card">
-                            <img src={Amlan} alt="Chowdhury Amlan Barua" style = {{width:"300px", height:"300px"}} />                 
+                            <img src={Amlan} alt="Chowdhury Amlan Barua" style = {{width:"300px", height:"300px", alignItems:'center'}} className="center"  />                 
                             <div className="container">
                                 <h2>Chowdhury Amlan Barua</h2>
                                 <p className="title">Cloud Engineer</p>
-                                <p><button className="button"><a href="/Portfolio/hasib.html">Details</a></button></p>
+                                <NavLink className="nav-item nav-link" to="/amlan">
+                                     Details
+                                </NavLink>
                             </div>
                         </div>
                     </div>
 
-
                     <div className="column">
                         <div className="card">
-                            <img src={Salman} alt="Mohammad Salman Haydar" style = {{width:"300px", height:"300px"}} />                 
+                            <img src={Salman} alt="Mohammad Salman Haydar" style = {{width:"300px", height:"300px"}}  className="center" />                 
                             <div className="container">
                                 <h2>Mohammad Salman Haydar</h2>
                                 <p className="title">Backend Developer</p>
-                                <p><button className="button"><a href="/Portfolio/hasib.html">Details</a></button></p>
+                                <NavLink className="nav-item nav-link" to="/salman">
+                                     Details
+                                </NavLink>
                             </div>
                         </div>
                         </div>
                     </div>
 
+
+
+
                     <div className="column">
                         <div className="card">
-                            <img src={Rakibul} alt="Mohammad Rakibul Hasan" style = {{width:"300px", height:"300px"}} />                 
+                            <img src={Rakibul} alt="Mohammad Rakibul Hasan" style = {{width:"300px", height:"300px"}} className="center"  />                 
                             <div className="container">
                                 <h2>Mohammad Rakibul Hasan</h2>
                                 <p className="title">Frontend Teamlead</p>
@@ -73,11 +84,13 @@ class About extends Component {
 
                     <div className="column">
                         <div className="card">
-                            <img src={Hasib} alt="Hasib Iqbal" style = {{width:"300px", height:"300px", alignItems: "center"}} />                 
+                            <img src={Hasib} alt="Hasib Iqbal" style = {{width:"300px", height:"300px", alignItems: "center"}} className="center"  />                 
                             <div className="container">
                                 <h2>Hasib Iqbal</h2>
                                 <p className="title">Frontend Developer</p>
-                                <p><button className="button"><a href="../aboutMe/hasib.html">Details</a></button></p>
+                                <NavLink className="nav-item nav-link" to="/hasib">
+                                     Details
+                                </NavLink>
                             </div>
                         </div>
                     </div>
