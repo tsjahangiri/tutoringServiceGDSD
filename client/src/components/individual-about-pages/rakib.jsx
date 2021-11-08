@@ -1,19 +1,25 @@
-import React from 'react';
 
-function Rakib(props) {
-    return (
-        <div>
-            <div className="container">
+import React, { Component } from 'react';
+import Rakib from '../../assets/rakib.jpg';
+
+
+class rakib extends Component {
+    render() {
+        return (
+            <div>
+                <div className="container">
                 <h1>Mohammad Rakibul Hasan</h1>
                 <h2>Frontend Developer</h2>
                 <div className="image">
-                    <img src="../assets/rakib.jpg" alt="Mohammad Rakibul Hasan" height="300px" width="300px" />
+                <img src={Rakib} alt="Mohammad Rakibul Hasan" style = {{width:"300px", height:"300px"}} />
                 </div>
                 <p>Master's Student of Global Software Development in HS Fulda</p>
-                <a href="#" className="btn">Get In Touch</a>
+                {/* <a href="#" className="btn">Get In Touch</a> */}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
-export default Rakib;
+export default rakib;
+

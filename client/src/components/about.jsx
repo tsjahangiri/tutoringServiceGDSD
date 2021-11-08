@@ -5,7 +5,8 @@ import Amlan from '../assets/hasib.jpg';
 import Salman from '../assets/hasib.jpg';
 import Rakibul from '../assets/rakib.jpg';
 import Hasib from '../assets/hasib.jpg';
-import rakibjsx  from '../components/individual-about-pages/rakib'
+import rakibjsx  from '../components/individual-about-pages/rakib';
+import {Link, NavLink} from 'react-router-dom'
 
 class About extends Component {
     render() {
@@ -61,7 +62,11 @@ class About extends Component {
                             <div className="container">
                                 <h2>Mohammad Rakibul Hasan</h2>
                                 <p className="title">Frontend Teamlead</p>
-                                <p><button className="button"><a href={rakibjsx}>Details</a></button></p>
+                                <NavLink className="nav-item nav-link" to="/rakib">
+                                     Details
+                                 </NavLink>
+                                {/* <Link className="navbar-brand" to="/rakib">Details</Link> */}
+                                {/* <p><button className="button"><a href={rakibjsx}>Details</a></button></p> */}
                             </div>
                         </div>
                     </div>
