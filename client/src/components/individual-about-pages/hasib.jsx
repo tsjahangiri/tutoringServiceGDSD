@@ -6,14 +6,17 @@ class hasib extends Component {
     render() {
         return (
             <div>
-                <div class="container">
+                <div class="containerPersonal">
+                    <div class="image">
+                        <img src={HasibPic} alt="Hasib Iqbal" style = {{width:"300px", height:"300px", borderRadius:"50%"}} />
+                    </div>
+                    <br/>
                     <h1>Hasib Iqbal</h1>
                     <h2>Frontend Developer</h2>
-                    <div class="image">
-                        <img src={HasibPic} alt="Hasib Iqbal" style = {{width:"300px", height:"300px"}} />
-                    </div>
+                    <br/>
                     <p>Master's Student of Global Software Development in HS Fulda</p>
-                <a href="#" class="btn">Get In Touch</a>
+                    <p>Email: <email>hasib.iqbal@informatik.hs-fulda.de</email></p>
+            
                 </div>
             </div>
         );
