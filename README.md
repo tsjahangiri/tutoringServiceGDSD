@@ -8,6 +8,7 @@ Talha Jahangiri Khan (1325485)
 Email: talha-jaghari.khan@informatik.hs-fulda.de
 
 Chowdhury Amlan Barua (1310643)
+Email: chowdhury-amlan.barua@informatik.hs-fulda.de
 
 
 Mohammad Salman Haydar (1380756)
