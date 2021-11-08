@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import SalmanPic from '../../assets/salman.jpeg';
-// import '../../assets/styles/salman.css'
+import {Link} from 'react-router-dom'
 
 class salman extends Component {
     render() {
         return (
-            <div class="container">
-                <div class="portrait"><img src={SalmanPic}/></div>
+            <div className="container">
+                <div className="portrait"><img src={SalmanPic}/></div>
                 
-                <div class="title"> <span class="titlespan"><strong>Mohammad Salman Haydar</strong></span><br/>
+                <div className="title"> <span className="titlespan"><strong>Mohammad Salman Haydar</strong></span><br/>
                     Masters Student<br/>
                     Global Software Development<br/>
                     Student ID: 1380756
                     <br/>
                     <a href="https://www.hs-fulda.de" target="_blank">Fulda University of Applied Science</a>
                 </div>
-                <div class="clear"></div>
+                <div className="clear"></div>
                     <hr/>
                     <p>
                         <b>Short bio:</b> I'm a masters student studying Global Software Development in Hochschule Fulda. 
@@ -30,6 +30,7 @@ class salman extends Component {
                    <br/>
                    contact me: salmanhaydar3(at)gmail(.)com
                     </p>
+                    <Link className="btn btn-info" to="/"> Back to Home Page </Link>
             </div>
             
         );
