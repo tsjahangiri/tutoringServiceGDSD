@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../style.css';
 import Talha from '../assets/talha.jpg';
+import amlanPic from '../assets/amlan.jpg';
 import Amlan from '../assets/hasib.jpg';
 import Salman from '../assets/salman.jpeg';
 import Rakibul from '../assets/rakib.jpg';
@@ -39,10 +40,10 @@ class About extends Component {
                     
                     <div className="column">
                         <div className="card">
-                            <img src={Amlan} alt="Chowdhury Amlan Barua" style = {{width:"300px", height:"300px", alignItems:'center'}} className="center"  />                 
+                            <img src={amlanPic} alt="Chowdhury Amlan Barua" style = {{width:"300px", height:"300px", alignItems:'center'}} className="center"  />                 
                             <div className="container">
                                 <h2>Chowdhury Amlan Barua</h2>
-                                <p className="title">Cloud Engineer</p>
+                                <h6 className="title">Cloud Engineer &amp; Backend Dev</h6>
                                 <NavLink className="btn btn-success" to="/amlan">
                                      Details
                                 </NavLink>
