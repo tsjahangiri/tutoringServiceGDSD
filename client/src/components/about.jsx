@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import '../style.css';
 import Talha from '../assets/talha.jpg';
+import amlanPic from '../assets/amlan.jpg';
 import Amlan from '../assets/hasib.jpg';
 import Salman from '../assets/salman.jpeg';
 import Rakibul from '../assets/rakib.jpg';
 import Hasib from '../assets/hasib.jpg';
 import rakibjsx  from '../components/individual-about-pages/rakib';
-import {Link, NavLink} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 class About extends Component {
     render() {
@@ -27,7 +28,7 @@ class About extends Component {
                             <div className="container">
                                 <h2>Talha Jahangiri Khan</h2>
                                 <p className="title">Backend Developer</p>
-                                <NavLink className="nav-item nav-link" to="/talha">
+                                <NavLink className="btn btn-success" to="/talha">
                                      Details
                                 </NavLink>
                             </div>
@@ -39,11 +40,11 @@ class About extends Component {
                     
                     <div className="column">
                         <div className="card">
-                            <img src={Amlan} alt="Chowdhury Amlan Barua" style = {{width:"300px", height:"300px", alignItems:'center'}} className="center"  />                 
+                            <img src={amlanPic} alt="Chowdhury Amlan Barua" style = {{width:"300px", height:"300px", alignItems:'center'}} className="center"  />                 
                             <div className="container">
                                 <h2>Chowdhury Amlan Barua</h2>
-                                <p className="title">Cloud Engineer</p>
-                                <NavLink className="nav-item nav-link" to="/amlan">
+                                <h6 className="title">Cloud Engineer &amp; Backend Dev</h6>
+                                <NavLink className="btn btn-success" to="/amlan">
                                      Details
                                 </NavLink>
                             </div>
@@ -56,7 +57,7 @@ class About extends Component {
                             <div className="container">
                                 <h2>Mohammad Salman Haydar</h2>
                                 <p className="title">Backend Developer</p>
-                                <NavLink className="nav-item nav-link" to="/salman">
+                                <NavLink className="btn btn-success" to="/salman">
                                      Details
                                 </NavLink>
                             </div>
@@ -73,7 +74,7 @@ class About extends Component {
                             <div className="container">
                                 <h2>Mohammad Rakibul Hasan</h2>
                                 <p className="title">Frontend Teamlead</p>
-                                <NavLink className="nav-item nav-link" to="/rakib">
+                                <NavLink className="btn btn-success" to="/rakib">
                                      Details
                                  </NavLink>
                                 {/* <Link className="navbar-brand" to="/rakib">Details</Link> */}
@@ -88,7 +89,7 @@ class About extends Component {
                             <div className="container">
                                 <h2>Hasib Iqbal</h2>
                                 <p className="title">Frontend Developer</p>
-                                <NavLink className="nav-item nav-link" to="/hasib">
+                                <NavLink className="btn btn-success" to="/hasib">
                                      Details
                                 </NavLink>
                             </div>
