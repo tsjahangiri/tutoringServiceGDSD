@@ -19,3 +19,9 @@ Email: mohammd-rakibul.hasan@informatik.hs-fulda.de
 
 Hasib Iqbal (1325472)
 Email: hasib.iqbal@informatik.hs-fulda.de
+
+Nisha Devi (1394632)
+Email: nisha.devi@informatik.hs-fulda.de
+
+Rohat Sagar Urif Sonu (1394658)
+Email: rohat-sagar.urif-sonu@informatik.hs-fulda.de
