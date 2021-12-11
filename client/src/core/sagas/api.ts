@@ -95,8 +95,6 @@ export function* callApi(options: ApiOptions): Generator<any, ApiResponse, any> 
   if (responseType) {
     axiosOpts.responseType = responseType;
   }
-  
-  console.log(axiosOpts);
 
   let alertMessage = null;
   

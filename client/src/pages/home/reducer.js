@@ -25,7 +25,6 @@ const homeReducer = (state = INITIAL_STATE, action = {}) => {
             return INITIAL_STATE;
         case GET_TUTOR_LIST_SUCCESS:
             const { data } = action.payload;
-            console.log(data);
             return {
                 ...state,
                 data: data
