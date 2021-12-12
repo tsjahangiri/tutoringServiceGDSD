@@ -1,10 +1,11 @@
 // @flow
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { getTutorListData } from '../selectors';
 
 export default function ItemList() {
+    
     const data = useSelector(getTutorListData);
 
     return (
