@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import '../style.css';
+import './about.css';
 import Talha from '../assets/talha.jpg';
 import amlanPic from '../assets/amlan.jpg';
 import Amlan from '../assets/hasib.jpg';
 import Salman from '../assets/salman.jpeg';
 import Rakibul from '../assets/rakib.jpg';
 import Hasib from '../assets/hasib.jpg';
-import rakibjsx  from '../components/individual-about-pages/rakib';
-import {NavLink} from 'react-router-dom'
+import rakibjsx  from './individual-about-pages/rakib';
+import { NavLink } from 'react-router-dom'
 
 class About extends Component {
     render() {
