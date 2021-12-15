@@ -1,7 +1,8 @@
 // @flow
 import React from 'react';
-import ItemList from './itemList/ItemList';
+import TutorList from './tutorList/TutorList';
 import FilterBar from './filterBar/FilterBar';
+import Header from '../../components/Header/Header';
 import { getTutorList } from './actionCreators';
 
 // 1. dispatch -> actionCreator (getTutorList) -> reducer (GET_TUTOR_LIST)    -> saga (GET_TUTOR_LIST)
@@ -10,8 +11,10 @@ import { getTutorList } from './actionCreators';
 function Home() {
     return (
         <div>
+            <Header />
+            <br />
             <FilterBar loadTutorList={getTutorList} />
-            <ItemList />
+            <TutorList />
         </div>
     );
 }

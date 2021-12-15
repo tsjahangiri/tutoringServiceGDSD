@@ -19,8 +19,13 @@ export default function* homeSaga(): Saga<void> {
 export function* getTutorList(action: Object): Saga<void> {
     const { filters } = action.payload;
 
-    var url = 'https://anime-facts-rest-api.herokuapp.com/api/v1/';
+    var url = process.env.REACT_APP_API_URL;
 
+
+    if(filters.subjectName) {
+        url += `subjectname=${filters.subjectName}`;
+    }
+    
     const apiOptions: ApiOptions = {
         url,
         method: 'GET',
