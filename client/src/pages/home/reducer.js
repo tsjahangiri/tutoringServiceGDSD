@@ -9,7 +9,7 @@ import {
 export const INITIAL_STATE = {
     data: [],
     filters: {
-        keywords: '',
+        subjectName: '',
     }
 };
 
