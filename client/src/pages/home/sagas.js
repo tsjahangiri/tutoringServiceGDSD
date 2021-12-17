@@ -23,7 +23,7 @@ export function* getTutorList(action: Object): Saga<void> {
 
 
     if(filters.subjectName) {
-        url += `subjectname=${filters.subjectName}`;
+        url += `subjectname=${filters.subjectName}&`;
     }
     
     const apiOptions: ApiOptions = {
@@ -36,7 +36,7 @@ export function* getTutorList(action: Object): Saga<void> {
     const { success, response = {} } = apiResponse;
 
     if (success) {
-        var data = response.data;
+        var data = response;
         yield put(getTutorListSuccess({ data }));
     } else {
         var msg = 'Failed to load data from API' //FIXME Improve error message

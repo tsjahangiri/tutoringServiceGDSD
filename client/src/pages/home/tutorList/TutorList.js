@@ -12,6 +12,13 @@ import { getTutorListData } from '../selectors';
 export default function TutorList() {
     
     const data = useSelector(getTutorListData);
+    
+    if(data === undefined) {
+        return (
+            <div>
+            </div>
+        );
+    }
 
     return (
         <div style={{ padding: 10 }}>
