@@ -14,7 +14,6 @@ const persistConfig = {
     storage: storage,
 };
 
-
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const sagaMiddleware = createSagaMiddleware();
