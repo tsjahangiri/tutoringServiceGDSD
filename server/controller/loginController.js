@@ -1,4 +1,4 @@
-const pbkdf2 = require('pbkdf2');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 let database=require("../database");
 require('dotenv').config()
@@ -9,37 +9,24 @@ module.exports={
     //Registering User
     registerUser :  (req, res) => {
    
-        let {user_name,password,email}=req.body;
-        //Password-Based Key Derivation Function uses hash-based message authentication code (HMAC)
-        pbkdf2.pbkdf2(password, process.env.HASHING_SALT, 100000, 64, 'sha256',(err,encrypted_password)=>{
+        let {username, first_name, last_name, usertype, email, password, status}=req.body;
+       
+        bcrypt.hash(password, 10,(err,encrypted_password)=>{
             if (err) throw err;
-            database.query("SELECT * FROM `login` WHERE USER_NAME= " +'"'+user_name+'"'+" AND EMAIL="+'"'+email+'"', function (err, result, fields) {
-                
-     
-                if (!(result[0])) 
+            database.execute('SELECT * FROM `helpmelearn`.`hm_user` WHERE `username`= ? OR `email`= ?', [username, email], function (err, result, fields) {
+                console.log(result.length);
+
+                if (result.length === 0) 
                 {
-                    database.query("INSERT INTO `login` (`user_name`, `password`, `email`) VALUES ( '" + user_name + "', '" + encrypted_password.toString('hex') + "' , '" + email + "')",(err,result)=>{
+                    database.execute('INSERT INTO `helpmelearn`.`hm_user` (`username`, `first_name`, `last_name`, `usertype`, `email`, `password`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?)', [username, first_name, last_name, usertype, email, encrypted_password, status],(err,result)=>{
                         if(err) console.log(err)
                         else {
-                             res.json({message:"User Login Created"})
+                             res.json({message:"User Created"});
                         }
                     });
     
                 } else {
-                let input_email= result[0].email
-                let input_user_name= result[0].user_name
-                if ( (input_email === email) &&  (input_user_name === user_name)) 
-                {res.json({message:"User Already Exists!"})}
-                else{
-    
-                    database.query("INSERT INTO `login` (`user_name`, `password`, `email`) VALUES ( '" + user_name + "', '" + encrypted_password.toString('hex') + "' , '" + email + "')",(err,result)=>{
-                        if(err) console.log(err)
-                        else {
-                             res.json({message:"User Login Created"})
-                            }
-                    });
-    
-                }
+                    res.json({message:"User Already Exists!"});
     
                 }
             });
@@ -56,32 +43,40 @@ module.exports={
    loginUser : async (req, res) => {
    
     
-    let {user_name,password}=req.body;
+    let {username,password}=req.body;
 
    
-     database.query("SELECT * FROM `login` WHERE USER_NAME= " +'"'+user_name+'"', function (err, result, fields) {
+     database.execute('SELECT * FROM `helpmelearn`.`hm_user` WHERE `username`= ?', [username], function (err, result, fields) {
         if (err) throw err;
 
-        if (!(result[0])) 
+        if (result.length === 0) 
         {
             res.json({message:"User Do Not Exists"})
 
         } else {
 
-        let db_user_name= result[0].user_name
+        let db_user_name= result[0].username
         let db_password= result[0].password
-        pbkdf2.pbkdf2(password, process.env.HASHING_SALT, 100000, 64, 'sha256', (err, derivedKey) => {
+
+        let payload = {
+            user_name:username,
+            email:result[0].email,
+            user_type:result[0].usertype,
+            status:result[0].status
+        };
+
+        bcrypt.compare(password, db_password, (err, r) => {
             if (err) throw err;
-            if ((db_user_name === user_name) && derivedKey.toString('hex') === db_password) {
+            if (r) {
                 const token = jwt.sign(
-                    { user_name, password },
+                    payload,
                     process.env.JWT_PRIVATE_KEY,
                     {
                     expiresIn: process.env.TOKEN_EXPIRE,
                     }
                 );
             
-                res.json({user_name:user_name, token: token})
+                res.json({ email : result[0].email, token : token})
             }
             else {
                 {res.json({message:"Invalid Credentials!"})}
