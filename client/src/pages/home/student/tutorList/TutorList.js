@@ -7,10 +7,10 @@ import { getTutorList } from "../../../../core/selectors/tutor";
 import Paging from "../../../../components/paging/Paging";
 
 export default function TutorList() {
-  var data = useSelector(getTutorList); //TODO: Change var to const
+  //var data = useSelector(getTutorList); //TODO: Change var to const
 
   // TODO: Remove this code
-  data = [
+  var data = [
     {
       id: 1,
       pictureUrl: "logo512.png",
