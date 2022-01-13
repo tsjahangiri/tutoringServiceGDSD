@@ -1,7 +1,13 @@
 let database = require("../database");
+const { validationResult } = require("express-validator");
 
 module.exports = {
   createPost: async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     let {
       SubjectTitle,
       Description,
@@ -15,25 +21,18 @@ module.exports = {
     var date = new Date().toISOString().split("T")[0];
 
     database.query(
-      "INSERT INTO hm_post(subjectTitle, description, tutorId, status, `language`, subjectCode, ratePerHour, createdDateTime, modifiedDateTime) VALUES ( '" +
-        SubjectTitle +
-        "', '" +
-        Description +
-        "' , '" +
-        TutorId +
-        "', '" +
-        Status +
-        "', '" +
-        Language +
-        "', '" +
-        SubjectCode +
-        "', '" +
-        RatePerHour +
-        "', '" +
-        date +
-        "', '" +
-        date +
-        "')",
+      "INSERT INTO hm_post(subjectTitle, description, tutorId, status, `language`, subjectCode, ratePerHour, createdDateTime, modifiedDateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        SubjectTitle,
+        Description,
+        TutorId,
+        Status,
+        Language,
+        SubjectCode,
+        RatePerHour,
+        date,
+        date,
+      ],
       (err, result) => {
         if (err) console.log(err);
       }
@@ -47,7 +46,8 @@ module.exports = {
   deletePost: async (req, res) => {
     let id = req.params.id;
     database.query(
-      `DELETE FROM helpmelearndatabase.hm_post WHERE id=${id};`,
+      `DELETE FROM helpmelearndatabase.hm_post WHERE id = ?;`,
+      [id],
       (err, result) => {
         res.json({ message: `Post Id:${id} deleted successfully.` });
       }
@@ -55,6 +55,11 @@ module.exports = {
   },
 
   updatePost: async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     let {
       Id,
       SubjectTitle,
@@ -68,7 +73,18 @@ module.exports = {
 
     var date = new Date().toISOString().split("T")[0];
     database.query(
-      `UPDATE helpmelearndatabase.hm_post SET subjectTitle='${SubjectTitle}', description='${Description}', tutorId='${TutorId}', status=${Status}, language='${Language}', subjectCode=${SubjectCode}, ratePerHour=${RatePerHour}, modifiedDateTime='${date}' WHERE id=${Id};`,
+      `UPDATE helpmelearndatabase.hm_post SET subjectTitle = ?, description = ?, tutorId = ?, status = ?, language = ?, subjectCode = ?, ratePerHour = ?, modifiedDateTime = ? WHERE id = ?;`,
+      [
+        SubjectTitle,
+        Description,
+        TutorId,
+        Status,
+        Language,
+        SubjectCode,
+        RatePerHour,
+        date,
+        Id,
+      ],
       (err, result) => {
         res.json({ message: `Updated successfully.` });
       }
@@ -78,7 +94,8 @@ module.exports = {
   getPost: async (req, res) => {
     let id = req.params.id;
     database.query(
-      `SELECT id, subjectTitle, description, tutorId, status, language, subjectCode, ratePerHour, createdDateTime, modifiedDateTime FROM helpmelearndatabase.hm_post WHERE id=${id};`,
+      `SELECT id, subjectTitle, description, tutorId, status, language, subjectCode, ratePerHour, createdDateTime, modifiedDateTime FROM helpmelearndatabase.hm_post WHERE id = ?;`,
+      [id],
       (err, result) => {
         res.json(result);
       }
@@ -88,25 +105,25 @@ module.exports = {
   searchPost: async (req, res) => {
     let joinQuery = "";
     if (req.query.language !== undefined) {
-      joinQuery += `language = '${req.query.language}'`;
+      joinQuery += `language = ${database.escape(req.query.language)}`;
     }
 
     if (req.query.subjectCode !== undefined) {
       if (joinQuery != "") joinQuery += " and ";
 
-      joinQuery += `subjectCode = '${req.query.subjectCode}'`;
+      joinQuery += `subjectCode = ${database.escape(req.query.subjectCode)}`;
     }
 
     if (req.query.ratePerHour !== undefined) {
       if (joinQuery != "") joinQuery += " and ";
 
-      joinQuery += `ratePerHour = ${req.query.ratePerHour}`;
+      joinQuery += `ratePerHour = ${database.escape(req.query.ratePerHour)}`;
     }
 
     if (req.query.tutorId !== undefined) {
       if (joinQuery != "") joinQuery += " and ";
 
-      joinQuery += `tutorId = '${req.query.tutorId}'`;
+      joinQuery += `tutorId = ${database.escape(req.query.tutorId)}`;
     }
 
     let dbQuery = `SELECT id, subjectTitle, description, tutorId, status, language, subjectCode, ratePerHour, createdDateTime, modifiedDateTime FROM helpmelearndatabase.hm_post`;

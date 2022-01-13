@@ -5,7 +5,6 @@ module.exports = {
   getUsers: async (req, res) => {
     let query = `SELECT id, username, first_name, last_name, usertype, email, password, status FROM hm_user`;
 
-    if (req.params.id !== undefined) query += ` WHERE id = ${req.params.id}`;
     database.query(query, (err, result) => {
       if (err) console.log(err);
       else res.json(result);
@@ -13,9 +12,9 @@ module.exports = {
   },
 
   getUserById: async (req, res) => {
-    let query = `SELECT id, username, first_name, last_name, usertype, email, password, status FROM hm_user WHERE id = ${req.params.id}`;
+    let query = `SELECT id, username, first_name, last_name, usertype, email, password, status FROM hm_user WHERE id = ?`;
 
-    database.query(query, (err, result) => {
+    database.query(query, [req.params.id], (err, result) => {
       if (err) console.log(err);
       else res.json(result);
     });
@@ -30,21 +29,8 @@ module.exports = {
       req.body;
 
     database.query(
-      "INSERT INTO hm_user (username, first_name, last_name, usertype, email, password, status) VALUES ( '" +
-        UserName +
-        "', '" +
-        FirstName +
-        "' , '" +
-        LastName +
-        "', '" +
-        UserType +
-        "', '" +
-        Email +
-        "', '" +
-        Pd +
-        "', '" +
-        Status +
-        "')",
+      "INSERT INTO hm_user (username, first_name, last_name, usertype, email, password, status) VALUES ( ?, ?, ?, ?, ?, ?, ?)",
+      [UserName, FirstName, LastName, UserType, Email, Pd, Status],
       (err, result) => {
         if (err) console.log(err);
       }
@@ -56,11 +42,17 @@ module.exports = {
   },
 
   updateUser: (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     let { Id, UserName, FirstName, LastName, UserType, Email, Pd, Status } =
       req.body;
 
     database.query(
-      `UPDATE hm_user SET username='${UserName}', first_name='${FirstName}', last_name='${LastName}', usertype=${UserType}, email='${Email}', password='${Pd}', status=${Status} WHERE id=${Id}`,
+      `UPDATE hm_user SET username = ?, first_name = ?, last_name = ?, usertype = ?, email = ?, password = ?, status= ? WHERE id= ?`,
+      [UserName, FirstName, LastName, UserType, Email, Pd, Status, Id],
       (err) => {
         if (err) console.log(err);
         else {
