@@ -2,16 +2,12 @@ var mysql = require("mysql2");
 require("dotenv").config();
 
 var connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "admin",
-  database: "helpmelearndatabase",
-  // host: process.env.DB_HOST,
-  // insecureAuth: true,
-  // user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  insecureAuth: true,
+  user: process.env.DB_USER,
 
-  // password: process.env.DB_PASS,
-  // database: process.env.DB_NAME,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
 });
 
 connection.connect((err) => {
