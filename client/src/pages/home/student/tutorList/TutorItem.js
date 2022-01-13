@@ -12,7 +12,7 @@ export default function TutorItem(props) {
       className="border-top border-start border-end border-1 rounded"
     >
       <Link className="nav-link" to={`tutor/${id}`}>
-        <Row style={{ padding: 10 }}>
+        <Row>
           <Col xs={2}>
             <img src={pictureUrl} style={{ width: "148px" }} />
           </Col>

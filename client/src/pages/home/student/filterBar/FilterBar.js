@@ -1,11 +1,7 @@
 // @flow
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 type Props = {
   fetchTutorList: Function,
@@ -33,10 +29,10 @@ export default function FilterBar(props: Props) {
   };
 
   return (
-    <div style={{ padding: 10 }}>
+    <div>
       <Container
         style={{ borderColor: "#808080" }}
-        className="p-4 border border-1 rounded"
+        className="p-3 border border-1 rounded"
       >
         <Row>
           <Col>

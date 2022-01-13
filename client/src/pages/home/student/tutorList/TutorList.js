@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 import { useSelector } from "react-redux";
-import { ListGroup, Container } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import TutorItem from "./TutorItem";
 import { getTutorList } from "../../../../core/selectors/tutor";
 import Paging from "../../../../components/paging/Paging";
@@ -49,15 +49,13 @@ export default function TutorList() {
 
   return (
     <div>
-      <Container>
-        <ListGroup>
-          {data.map((item, i) => {
-            return <TutorItem key={i} item={item} />;
-          })}
-        </ListGroup>
-        <br />
-        <Paging className="float-end" itemCount={data.length} />
-      </Container>
+      <ListGroup>
+        {data.map((item, i) => {
+          return <TutorItem key={i} item={item} />;
+        })}
+      </ListGroup>
+      <br />
+      <Paging className="float-end" itemCount={data.length} />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Page from "../../components/page/Page";
 import Admin from "./admin/index";
 import Student from "./student/index";
+import Tutor from "./tutor/index";
 import { getUserType } from "../../core/selectors/user";
 
 // 1. dispatch -> actionCreator (getTutorList) -> reducer (GET_TUTOR_LIST)    -> saga (GET_TUTOR_LIST)
@@ -12,15 +13,20 @@ import { getUserType } from "../../core/selectors/user";
 function Home() {
   let userType = useSelector(getUserType);
 
-  let home;
-
-  if (userType === "admin") {
-    home = <Admin />;
-  } else if (userType === "student") {
-    home = <Student />;
+  function renderHome() {
+    switch (userType) {
+      case "admin":
+        return <Admin />;
+      case "student":
+        return <Student />;
+      case "tutor":
+        return <Tutor />;
+      default:
+        return null;
+    }
   }
 
-  return <Page>{home}</Page>;
+  return <Page>{renderHome()}</Page>;
 }
 
 export default Home;
