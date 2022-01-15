@@ -4,6 +4,9 @@ import { ListGroup } from "react-bootstrap";
 import StudentShow from "./StudentShow";
 import { getTutorList } from "../../../../core/selectors/tutor";
 import Paging from "../../../../components/paging/Paging";
+import Page from "../../../../components/page/Page";
+import FilterBar from "../filterBar/FilterBar";
+import { fetchTutorList } from "../../../../core/actionCreators/tutor";
 
 function StudentList(props) {
     // var data = useSelector(getTutorList); //TODO: Change var to const
@@ -48,6 +51,9 @@ function StudentList(props) {
 
     return (
         <div>
+            <Page></Page>
+            <FilterBar fetchTutorList={fetchTutorList} />
+            <br />
             <ListGroup>
                 {data.map((item, i) => {
                     return <StudentShow key={i} item={item} />;
