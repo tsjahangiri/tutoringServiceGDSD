@@ -1,138 +1,222 @@
-import {
-  call,
-  race,
-  delay,
-} from 'redux-saga/effects';
-import axios from 'axios';
+import { call, race, delay, select, put } from "redux-saga/effects";
+import axios from "axios";
+import moment from "moment";
+import { getJwtSecret } from "../selectors/user";
+import { logoutUser, setLoginError } from "../actionCreators/user";
+import isOnline from "is-online";
 
 const DEFAULT_TIMEOUT = 1000000;
 
 const DEFAULT_HEADERS: BaseHeaders = {
-  'Content-Type': 'application/json',
-  Accept: 'application/json',
+  "Content-Type": "application/json",
+  Accept: "application/json",
   Authorization: undefined,
 };
 
 export interface BaseHeaders {
-  'Content-Type': string;
+  "Content-Type": string;
   Accept: string;
   Authorization: undefined | string;
 }
 
 export type ApiOptions = {
-  url: string,
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'PATCH',
-  params?: Object,
-  headers?: BaseHeaders,
-  handleErrors?: boolean,
-  timeout?: number,
-  responseType?: string,
+  url: string;
+  method?: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "PATCH";
+  params?: Object;
+  headers?: BaseHeaders;
+  handleErrors?: boolean;
+  timeout?: number;
+  useJwtSecret?: boolean;
 };
 
 export type ApiResponse = {
-  success: boolean,
-  statusCode?: number,
-  response?: any,
-  responseHeaders?: Object,
-  errorCode?: string,
-  errorObj?: Object,
-  apiOptions: ApiOptions,
-  errorHandled?: boolean,
+  isSuccessful: boolean;
+  statusCode?: number;
+  response?: any;
+  responseHeaders?: Object;
+  errorCode?: string;
+  apiOptions: ApiOptions;
 };
 
 export const DEFAULT_API_OPTIONS: ApiOptions = {
-  url: '',
-  method: 'POST',
+  url: "",
+  method: "POST",
   headers: DEFAULT_HEADERS,
-  handleErrors: false,
   timeout: DEFAULT_TIMEOUT,
+  useJwtSecret: true,
 };
 
-export function* callApi(options: ApiOptions): Generator<any, ApiResponse, any> {
-  const mergedHeaders = { ...DEFAULT_HEADERS, ...options.headers };
-  const mergedOptions = {
+export function* executeApiCall(
+  options: ApiOptions
+): Generator<any, ApiResponse, any> {
+  const requestHeaders = { ...DEFAULT_HEADERS, ...options.headers };
+
+  const apiOptions = {
     ...DEFAULT_API_OPTIONS,
     ...options,
-    headers: mergedHeaders,
+    headers: requestHeaders,
     params: options.params,
   };
 
-  const {
-    url,
-    method,
-    params,
-    headers,
-    handleErrors,
-    timeout,
-    responseType,
-  } = mergedOptions;
+  const { url, method, params, headers, timeout, useJwtSecret } = apiOptions;
 
   let apiResponse: ApiResponse = {
-    success: false,
-    errorCode: 'UNKNOWN_ERROR',
-    apiOptions: mergedOptions,
+    isSuccessful: false,
+    errorCode: "UNKNOWN_ERROR",
+    apiOptions: apiOptions,
   };
-  
-  const cancelToken = axios.CancelToken;
-  const source = cancelToken.source();
+
+  const isConnected = yield call(isOnline);
+  if (!isConnected) {
+    apiResponse = {
+      isSuccessful: false,
+      errorCode: "NETWORK_UNAVAILABLE",
+      apiOptions: apiOptions,
+      response: {
+        ErrorMessage:
+          "I'm not connected to a network. Check your internet connection and try again.",
+      },
+    };
+    return apiResponse;
+  }
+
+  if (useJwtSecret) {
+    const jwtSecret = yield call(retrieveJwtSecret);
+    if (jwtSecret) {
+      headers.Authorization = "Bearer ".concat(jwtSecret);
+    } else {
+      apiResponse = {
+        isSuccessful: false,
+        errorCode: "AUTHENTICATION_ERROR",
+        apiOptions: apiOptions,
+        response: {
+          ErrorMessage:
+            "Something went wrong and I had to sign you out.  Please sign in again.",
+        },
+      };
+
+      yield put(
+        setLoginError(
+          "Something went wrong and I had to sign you out.  Please sign in again."
+        )
+      );
+      yield put(logoutUser());
+
+      return apiResponse;
+    }
+  }
+
+  const requestCancellation = axios.CancelToken.source();
 
   let axiosOpts: any = {
     url,
     method,
     timeout,
-    cancelToken: source.token,
+    cancelToken: requestCancellation.token,
     headers,
   };
-  
-  if (method === 'GET') {
+
+  if (method === "GET") {
     axiosOpts.params = params;
-  } else if (axiosOpts.headers['Content-Type'] !== 'application/json') {
+  } else if (axiosOpts.headers["Content-Type"] !== "application/json") {
     axiosOpts.data = params;
   } else {
     axiosOpts.data = JSON.stringify(params);
   }
 
-  if (responseType) {
-    axiosOpts.responseType = responseType;
-  }
-
-  let alertMessage = null;
-  
   try {
-    const { httpResponse, raceTimeout } = yield call(makeActualCall, axiosOpts);
-    if (raceTimeout) {
-      const msg = 'Timeout';
-      source.cancel(msg);
-      alertMessage = msg;
+    const { response, timeout } = yield call(executeActualApiCall, axiosOpts);
+    if (timeout) {
+      const timeoutError =
+        "I didn't get a response from the server on time. Please try again.";
+
+      requestCancellation.cancel(timeoutError);
+
       apiResponse = {
-        success: false,
-        errorCode: 'REQUEST_TIMEOUT',
-        errorObj: raceTimeout,
-        apiOptions: mergedOptions,
+        isSuccessful: false,
+        errorCode: "REQUEST_TIMEOUT",
+        apiOptions: apiOptions,
         response: {
-          Message: msg,
+          ErrorMessage: timeoutError,
         },
       };
     } else {
-      alertMessage = null;
       apiResponse = {
-        success: true,
-        statusCode: httpResponse.status,
-        response: httpResponse.data,
-        responseHeaders: httpResponse.headers,
-        apiOptions: mergedOptions,
+        isSuccessful: true,
+        statusCode: response.status,
+        response: response.data,
+        responseHeaders: response.headers,
+        apiOptions: apiOptions,
       };
     }
   } catch (error: any) {
-    console.log(error); //FIXME: Add logic to handle error
+    if (error.response) {
+      const { status, data, headers: responseHeaders } = error.response;
+      if (status === 401) {
+        apiResponse = {
+          isSuccessful: false,
+          statusCode: status,
+          response: data,
+          responseHeaders,
+          errorCode: "AUTHENTICATION_ERROR",
+          apiOptions: apiOptions,
+        };
+      } else {
+        const { ErrorCode: errorCode } = data || {};
+        apiResponse = {
+          isSuccessful: false,
+          statusCode: status,
+          response: data,
+          responseHeaders,
+          errorCode: errorCode || "HTTP_ERROR_CODE",
+          apiOptions: apiOptions,
+        };
+        // FIXME: Check is server reachable
+      }
+    } else if (error.request) {
+      apiResponse = {
+        isSuccessful: false,
+        errorCode: "NO_RESPONSE_FROM_SERVER",
+        apiOptions: apiOptions,
+        response: {
+          ErrorMessage:
+            "Something went wrong. You're connected to a network but I can't do anything.",
+        },
+      };
+    } else {
+      apiResponse = {
+        isSuccessful: false,
+        errorCode: "EXCEPTION",
+        apiOptions: apiOptions,
+        response: {
+          ErrorMessage:
+            "Well, this is embarrassing. Something went wrong and I don't know why!",
+        },
+      };
+    }
   }
 
   return apiResponse;
 }
 
-export function* makeActualCall(axiosOpts: any): Generator<any, Object, any> {
+export function* executeActualApiCall(
+  axiosOpts: any
+): Generator<any, Object, any> {
   return yield race({
-    httpResponse: call(axios as any, axiosOpts),
-    raceTimeout: delay(axiosOpts.timeout),
+    response: call(axios as any, axiosOpts),
+    timeout: delay(axiosOpts.timeout),
   });
+}
+
+export function* retrieveJwtSecret(): Generator<any, any, any> {
+  const { Secret, Expiry } = yield select(getJwtSecret);
+  if (Secret) {
+    const now = yield call(Date.now);
+    const expiry = moment(Expiry).valueOf();
+    if (expiry >= now) {
+      return Secret;
+    }
+  }
+
+  return null;
 }

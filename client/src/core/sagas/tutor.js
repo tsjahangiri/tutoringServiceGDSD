@@ -1,6 +1,6 @@
 // @flow
 import { takeEvery, call, put } from "redux-saga/effects";
-import { callApi } from "./api";
+import { executeApiCall } from "./api";
 import type { Saga } from "redux-saga";
 import { FETCH_TUTOR_LIST } from "../actionTypes/tutor";
 import {
@@ -26,7 +26,7 @@ export function* getTutorList(action: Object): Saga<void> {
     method: "GET",
   };
 
-  const apiResponse: ApiResponse = yield call(callApi, apiOptions);
+  const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
 
   const { success, response = {} } = apiResponse;
 
