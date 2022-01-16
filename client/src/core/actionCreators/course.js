@@ -7,24 +7,22 @@ import {
   SAVE_COURSE_FAILED,
 } from "../actionTypes/course";
 
-export const saveCourse = (payload) => {
-  const { filters = {} } = payload;
+export const saveCourse = (data) => {
+  console.log("from creators" + data);
   return {
     type: SAVE_COURSE,
-    payload: {
-      filters,
-    },
+    payload: data
   };
 };
 
-export const saveCourseLoading = (payload) => ({
+export const saveCourseLoading = (data) => ({
   type: SAVE_COURSE_LOADING,
-  payload,
+  data,
 });
 
-export const saveCourseSuccess = (payload) => ({
+export const saveCourseSuccess = (data) => ({
   type: SAVE_COURSE_SUCCESS,
-  payload,
+  data,
 });
 
 export const saveCourseFailed = () => ({
