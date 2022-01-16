@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/home/Home";
 import Users from "../pages/users/Users";
 import Posts from "../pages/posts/Posts";
@@ -10,16 +10,13 @@ import OfferCourse from "../pages/offerCourse/OfferCourse";
 
 function AppNavigator() {
   return (
-    <Switch>
-      <Redirect from="/" exact to="/home" />
-      <Route path="/login" component={Login} />
-      <Route path="/home" component={Home} />
-      <Route path="/users" component={Users} />
-      <Route path="/posts" component={Posts} />
-      <Route path="/add-course" component={AddCourse} />
-      <Route path="/add-qualification" component={AddQualification} />
-      <Route path="/offer-course" component={OfferCourse} />
-    </Switch>
+    <Routes>
+      <Route path="/" element={<Navigate to="/home" />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/users" element={<Users />} />
+      <Route path="/posts" element={<Posts />} />
+    </Routes>
   );
 }
 

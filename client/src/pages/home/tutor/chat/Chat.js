@@ -89,10 +89,6 @@ export default function Chat(props: Props) {
     },
   ];
 
-  const textOpened = (item) => {
-    toggleChat(item);
-  };
-
   function renderChat(item, i) {
     const renderBorder = texts.length === i + 1;
     return (
@@ -157,7 +153,7 @@ export default function Chat(props: Props) {
 
     return (
       <Container>
-        <span
+        <div
           style={{
             borderColor: "#808080",
             width: "70%",
@@ -166,8 +162,10 @@ export default function Chat(props: Props) {
           }}
           className="mb-4 p-2 border border-1 rounded"
         >
-          {item.text}
-        </span>
+          <span style={{ fontSize: "0.8rem", opacity: ".5" }}>{item.date}</span>
+          <br />
+          <span>{item.text}</span>
+        </div>
       </Container>
     );
   }

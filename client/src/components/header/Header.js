@@ -11,8 +11,10 @@ function renderNavOptions(headerOptions) {
   const currentUrl = `/${window.location.hash}`;
   return (
     <Nav activeKey={currentUrl} className="me-auto">
-      {headerOptions.map((option, i) => (
-        <Nav.Link href={option.url}>{option.title}</Nav.Link>
+      {headerOptions?.map((option, i) => (
+        <Nav.Link key={i} href={option.url}>
+          {option.title}
+        </Nav.Link>
       ))}
     </Nav>
   );
