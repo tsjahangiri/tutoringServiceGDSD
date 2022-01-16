@@ -11,6 +11,7 @@ import AddCourse from "../pages/addCourse/AddCourse";
 import AddQualification from "../pages/addQualification/AddQualification";
 import OfferCourse from "../pages/offerCourse/OfferCourse";
 import { Anonymous } from "./Anonymous";
+import TutorProfile from "../pages/tutorProfile/TutorProfile";
 
 function AppNavigator() {
   return (
@@ -27,6 +28,7 @@ function AppNavigator() {
       <Route path="/add-qualification" element={<AddQualification />} />
       <Route path="/offer-course" element={<OfferCourse />} />
     </Routes>
+
   );
 }
 
