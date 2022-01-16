@@ -13,6 +13,7 @@ import Page from "../../components/page/Page";
 export default function TutorProfile() {
   return (
     <div>
+      <Page></Page>
       {/* <FilterBar fetchTutorList={fetchTutorList} /> */}
       <AboutMe />
       <br />
