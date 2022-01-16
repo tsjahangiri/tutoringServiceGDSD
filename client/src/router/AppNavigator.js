@@ -25,6 +25,8 @@ function AppNavigator() {
       <Route path="/studentList" element={<StudentList />} />
       <Route path="/tutorList" element={<TutorList />} />
       <Route path="/tutorProfile" element={<TutorProfile />} />
+      <Route path="/tutorList/:id" element={< Registration />} />
+
       <Route path="/add-course" element={<AddCourse />} />
       <Route path="/add-qualification" element={<AddQualification />} />
       <Route path="/offer-course" element={<OfferCourse />} />
