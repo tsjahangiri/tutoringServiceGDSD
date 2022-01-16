@@ -1,28 +1,32 @@
-import { Redirect, Route, Switch } from 'react-router';
-import About from '../components/about';
-import Rakib from '../components/individual-about-pages/rakib.jsx';
-import NotFound from '../components/common/notFound';
-import hasib from '../components/individual-about-pages/hasib';
-import salman from '../components/individual-about-pages/salman';
-import amlan from '../components/individual-about-pages/amlan';
-import talha from '../components/individual-about-pages/talha';
-import Home from '../pages/home/Home';
+import React from "react";
+import { Redirect, Route, Switch } from "react-router";
+import Home from "../pages/home/Home";
+import Users from "../pages/users/Users";
+import Posts from "../pages/posts/Posts";
+import Login from "../pages/login/Login";
+import Registration from "../pages/registration/registration";
+import StudentList from "../pages/home/admin/studentList/StudentList";
+import TutorList from "../pages/home/admin/tutorList/TutorList";
+import AddCourse from "../pages/addCourse/AddCourse";
+import AddQualification from "../pages/addQualification/AddQualification";
+import OfferCourse from "../pages/offerCourse/OfferCourse";
 
 function AppNavigator() {
-    return (
-        <Switch>
-            <Route path="/about" component={About}/>
-            <Route path="/amlan" component={amlan}/>
-            <Route path="/talha" component={talha}/>
-            <Route path="/rakib" component={Rakib}/>
-            <Route path="/hasib" component={hasib}/>
-            <Route path="/salman" component={salman}/>
-            <Route path="/not-found" component={NotFound}/>
-            <Redirect from="/" exact to="/about"/>
-            <Route path="/home" component={Home}/>
-            <Redirect to="/not-found" />
-        </Switch>
-    );
+  return (
+    <Switch>
+      <Redirect from="/" exact to="/home" />
+      <Route path="/login" component={Login} />
+      <Route path="/registration" component={Registration} />
+      <Route path="/home" component={Home} />
+      <Route path="/users" component={Users} />
+      <Route path="/posts" component={Posts} />
+      <Route path="/studentList" component={StudentList} />
+      <Route path="/tutorList" component={TutorList} />
+      <Route path="/add-course" component={AddCourse} />
+      <Route path="/add-qualification" component={AddQualification} />
+      <Route path="/offer-course" component={OfferCourse} />
+    </Switch>
+  );
 }
 
 export default AppNavigator;
