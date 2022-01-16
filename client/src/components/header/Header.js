@@ -11,8 +11,10 @@ function renderNavOptions(headerOptions) {
   const currentUrl = `/${window.location.hash}`;
   return (
     <Nav activeKey={currentUrl} className="me-auto">
-      {headerOptions.map((option, i) => (
-        <Nav.Link href={option.url}>{option.title}</Nav.Link>
+      {headerOptions?.map((option, i) => (
+        <Nav.Link key={i} href={option.url}>
+          {option.title}
+        </Nav.Link>
       ))}
     </Nav>
   );
@@ -41,13 +43,13 @@ function renderBrand() {
         height="32"
         className="d-inline-block align-top"
       />{" "}
-      React Bootstrap
+      HelpMeLearn
     </Navbar.Brand>
   );
 }
 
 function Header(props: Props) {
-  const onSignOut = () => {};
+  const onSignOut = () => { };
 
   return (
     <Navbar sticky="top" bg="primary" variant="dark">
