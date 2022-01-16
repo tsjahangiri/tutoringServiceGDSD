@@ -2,11 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { ListGroup } from "react-bootstrap";
 import StudentShow from "./StudentShow";
-import { getTutorList } from "../../../../core/selectors/tutor";
+import { getStudentShowList } from "../../../../core/selectors/studentShow";
 import Paging from "../../../../components/paging/Paging";
 import Page from "../../../../components/page/Page";
 import FilterBar from "../filterBar/FilterBar";
-import { fetchTutorList } from "../../../../core/actionCreators/tutor";
+import { fetchStudentShowList } from "../../../../core/actionCreators/studentShow";
 
 function StudentList(props) {
     // var data = useSelector(getTutorList); //TODO: Change var to const
@@ -52,7 +52,7 @@ function StudentList(props) {
     return (
         <div>
             <Page></Page>
-            <FilterBar fetchTutorList={fetchTutorList} />
+            <FilterBar fetchStudentShowList={fetchStudentShowList} />
             <br />
             <ListGroup>
                 {data.map((item, i) => {

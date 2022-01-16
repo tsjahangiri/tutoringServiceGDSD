@@ -1,18 +1,18 @@
 // @flow
 import { takeEvery, call, put } from "redux-saga/effects";
-import { callApi } from "./api";
+import { executeApiCall } from "./api";
 import type { Saga } from "redux-saga";
 import { FETCH_STUDENT_SHOW_LIST } from "../actionTypes/studentShow";
 import {
-    getTutorListFailed,
-    getTutorListSuccess,
+    getStudentShowListFailed,
+    getStudentShowListSuccess,
 } from "../actionCreators/studentShow";
 
-export default function* tutorSaga(): Saga<void> {
-    yield takeEvery(FETCH_TUTOR_LIST, getTutorList);
+export default function* studentShowSaga(): Saga<void> {
+    yield takeEvery(FETCH_STUDENT_SHOW_LIST, getStudentShowList);
 }
 
-export function* getTutorList(action: Object): Saga<void> {
+export function* getStudentShowList(action: Object): Saga<void> {
     const { filters } = action.payload;
 
     var url = process.env.REACT_APP_API_URL;
@@ -26,7 +26,7 @@ export function* getTutorList(action: Object): Saga<void> {
         method: "GET",
     };
 
-    const apiResponse: ApiResponse = yield call(callApi, apiOptions);
+    const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
 
     const { success, response = {} } = apiResponse;
 
