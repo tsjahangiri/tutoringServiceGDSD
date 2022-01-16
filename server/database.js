@@ -1,22 +1,20 @@
-var mysql = require('mysql2')
-require('dotenv').config()
-
+var mysql = require("mysql2");
+require("dotenv").config();
 
 var connection = mysql.createConnection({
   host: process.env.DB_HOST,
-  insecureAuth:true,
+  insecureAuth: true,
   user: process.env.DB_USER,
 
-  
   password: process.env.DB_PASS,
-  database: process.env.DB_NAME
-})
+  database: process.env.DB_NAME,
+});
 
-connection.connect((err)=>{
-  if(err){
+connection.connect((err) => {
+  if (err) {
     throw err;
   }
-  console.log('Database connected');
-})
+  console.log("Database connected");
+});
 
-module.exports=connection;
+module.exports = connection;
