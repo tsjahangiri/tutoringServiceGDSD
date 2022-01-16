@@ -4,23 +4,23 @@ import {
     SET_TUTORPROFILE_LIST_LOADING,
     GET_TUTORPROFILE_LIST_SUCCESS,
     GET_TUTORPROFILE_LIST_FAILED,
-  } from "../actionTypes/tutor";
+  } from "../actionTypes/tutorprofile";
   
   export const INITIAL_STATE = {
     data: [],
-    filters: {
-      subjectName: "",
-    },
+    // filters: {
+    //   subjectName: "",
+    // },
   };
   
   export default (state = INITIAL_STATE, action = {}) => {
     switch (action.type) {
-      case FETCH_TUTORPROFILE_LIST:
-        const { filters } = action.payload;
-        return {
-          ...state,
-          filters: filters,
-        };
+      // case FETCH_TUTORPROFILE_LIST:
+      //   const { filters } = action.payload;
+      //   return {
+      //     ...state,
+      //     filters: filters,
+      //   };
       case SET_TUTORPROFILE_LIST_LOADING:
         return INITIAL_STATE;
       case GET_TUTORPROFILE_LIST_SUCCESS:
