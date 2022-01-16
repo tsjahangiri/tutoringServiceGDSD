@@ -14,4 +14,4 @@ export const getJwtSecret = (state: Object) => ({
   Expiry: state.user.current.exp,
 });
 
-export const getUserType = (state: Object) => "tutor";
+export const getUserType = (state: Object) => "admin";
