@@ -1,6 +1,6 @@
 // @flow
 import React, { useState } from "react";
-import { Container, Row, Col, Offcanvas, ListGroup } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Fab } from "react-tiny-fab";
 import Chat from "./chat/Chat";
 
