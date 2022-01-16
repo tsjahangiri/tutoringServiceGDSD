@@ -4,8 +4,7 @@ import user from "./user";
 
 const rootReducer = combineReducers({
   tutor,
-  user,
-  course
+  user
 });
 
 export default rootReducer;

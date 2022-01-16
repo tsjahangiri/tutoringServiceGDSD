@@ -1,6 +1,6 @@
 // @flow
 import { takeEvery, call, put } from "redux-saga/effects";
-import { callApi } from "./api";
+import { executeApiCall } from "./api";
 import type { Saga } from "redux-saga";
 import { SAVE_COURSE } from "../actionTypes/course";
 import {
@@ -27,7 +27,7 @@ export function* saveCourse(action: Object): Saga<void> {
     method: "POST",
   };
 
-  const apiResponse: ApiResponse = yield call(callApi, apiOptions);
+  const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
 
   const { success, response = {} } = apiResponse;
 
