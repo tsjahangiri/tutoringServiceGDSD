@@ -181,5 +181,6 @@ export default function Admin() {
       </Row>
       {renderFabOption()}
       {renderOffcanvas()}
+    </Container>
   );
 }

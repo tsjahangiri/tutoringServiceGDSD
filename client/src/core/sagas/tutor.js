@@ -15,7 +15,7 @@ export default function* tutorSaga(): Saga<void> {
 export function* getTutorList(action: Object): Saga<void> {
   const { filters } = action.payload;
 
-  var url = process.env.REACT_APP_API_URL;
+  var url = `${process.env.REACT_APP_API_URL}`;
 
   if (filters.subjectName) {
     url += `subjectname=${filters.subjectName}&`;
