@@ -1,4 +1,5 @@
 // @flow
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,6 +13,10 @@ import {
 } from "react-bootstrap";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { Fab, Action } from "react-tiny-fab";
+import StudentList from "./studentList/StudentList.js";
+import TutorList from "./tutorList/TutorList.js";
+import FilterBar from "./filterBar/FilterBar";
+import { fetchTutorList } from "../../../core/actionCreators/tutor";
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -176,6 +181,5 @@ export default function Admin() {
       </Row>
       {renderFabOption()}
       {renderOffcanvas()}
-    </Container>
   );
 }

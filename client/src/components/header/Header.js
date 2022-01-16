@@ -43,13 +43,13 @@ function renderBrand() {
         height="32"
         className="d-inline-block align-top"
       />{" "}
-      React Bootstrap
+      HelpMeLearn
     </Navbar.Brand>
   );
 }
 
 function Header(props: Props) {
-  const onSignOut = () => {};
+  const onSignOut = () => { };
 
   return (
     <Navbar sticky="top" bg="primary" variant="dark">
