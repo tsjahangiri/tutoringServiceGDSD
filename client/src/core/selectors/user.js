@@ -1,2 +1,2 @@
 // @flow
-export const getUserType = (state: Object) => "tutor";
+export const getUserType = (state: Object) => "admin";
