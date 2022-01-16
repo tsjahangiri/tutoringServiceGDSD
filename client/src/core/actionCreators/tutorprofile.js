@@ -7,13 +7,13 @@ import {
   } from "../actionTypes/tutorprofile";
   
   export const fetchTutorProfileList = (payload) => {
-    // const { filters = {} } = payload;
-    return {
-      type: FETCH_TUTORPROFILE_LIST,
-      payload: {
-        // filters,
-      },
-    };
+    const { id } = payload;
+      return {
+        type: FETCH_TUTORPROFILE_LIST,
+        payload: {
+          id,
+        }
+      }
   };
   
   export const setTutorProfileListLoading = (payload) => ({

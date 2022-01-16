@@ -6,14 +6,33 @@ import CourseList from "./courselist/CourseList";
 import ReviewList from "./reviewlist/ReviewList";
 import QualificationList from "./qualificationlist/QualificationList";
 import Page from "../../components/page/Page";
-// import FilterBar from "./filterBar/FilterBar";
-// import { fetchTutorList } from "../../../core/actionCreators/tutor";
+import {useParams} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchTutorProfileList } from "../../core/actionCreators/tutorprofile";
 
 export default function TutorProfile() {
+  // const params = useParams();
+  // console.log(params);
+
+  // const dispatch = useDispatch();
+  //   React.useEffect(() => {
+  //   dispatch(fetchTutorProfileList({ params }));
+  // });
+
+ 
+  // const dispatch = useDispatch();
+
+
+  // React.useEffect(() => 
+  // {
+  //   const id = URLSearchParams.get();
+  //   console.log(id);
+  //   dispatch(fetchTutorProfileList({id}));
+  // });
+
   return (
     <div>
       <Page></Page>
-      {/* <FilterBar fetchTutorList={fetchTutorList} /> */}
       <AboutMe />
       <br />
       <Container>

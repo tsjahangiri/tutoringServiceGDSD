@@ -7,7 +7,7 @@ import {
   } from "../actionTypes/tutorprofile";
   
   export const INITIAL_STATE = {
-    data: [],
+    data: {},
     // filters: {
     //   subjectName: "",
     // },
