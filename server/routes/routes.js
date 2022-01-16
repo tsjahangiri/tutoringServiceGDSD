@@ -6,6 +6,8 @@ const {
   updateReviewValidation,
   createUserValidation,
   updateUserValidation,
+  createQualificationValidation,
+  updateQualificationValidation
 } = require("../middleware/validation.js");
 const router = express.Router();
 
@@ -38,5 +40,11 @@ router.post("/login", loginController.loginUser);
 
 let adminController = require("../controller/adminController");
 router.delete("/user", adminAuth.isAdmin, adminController.deleteUser);
+
+let tutorController = require("../controller/tutorController");
+router.post("/qualifications", createQualificationValidation, tutorController.createQualification);
+router.delete("/qualifications/:id", tutorController.deleteQualification);
+router.put("/qualifications", updateQualificationValidation, tutorController.updateQualification);
+router.get("/qualifications/:tutorId", tutorController.getQualificationByTutorId);
 
 module.exports = router;

@@ -36,3 +36,14 @@ exports.updateReviewValidation = [
   body("Id").notEmpty().isInt(),
   body("Comment").isString().notEmpty().isLength({ min: 1 }),
 ];
+
+exports.createQualificationValidation = [
+  body("Subject").notEmpty(),
+  body("Qualification").notEmpty(),
+  body("Grade").notEmpty(),
+  body("TutorId").isString().isInt()
+];
+
+exports.updateQualificationValidation = [
+  body("Id").notEmpty().isInt()
+];
