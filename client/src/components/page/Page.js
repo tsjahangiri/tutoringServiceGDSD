@@ -20,12 +20,12 @@ function Page(props: Props) {
   } else {
     headerOptions = [
       {
-        title: "Users",
-        url: "/#/users",
+        title: "Student List",
+        url: "/#/studentList",
       },
       {
-        title: "Posts",
-        url: "/#/posts",
+        title: "Tutor List",
+        url: "/#/tutorList",
       },
     ];
   }
