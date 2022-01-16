@@ -1,5 +1,4 @@
 let database = require("../database");
-const { param } = require("../routes/user-routes");
 
 module.exports={
 
