@@ -8,6 +8,7 @@ require("dotenv").config();
 
 var jsonParser = bodyParser.json();
 
+app.use(cors());
 app.use(jsonParser);
 app.use(cors());
 app.use("/api/", routes);
