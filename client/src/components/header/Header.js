@@ -38,7 +38,7 @@ function renderBrand() {
     <Navbar.Brand href="/#/home">
       <img
         alt=""
-        src="logo512.png"
+        src="book.jpg"
         width="32"
         height="32"
         className="d-inline-block align-top"
