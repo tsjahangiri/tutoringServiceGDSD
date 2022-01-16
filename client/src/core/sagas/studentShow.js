@@ -2,11 +2,11 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { callApi } from "./api";
 import type { Saga } from "redux-saga";
-import { FETCH_TUTOR_LIST } from "../actionTypes/tutor";
+import { FETCH_STUDENT_SHOW_LIST } from "../actionTypes/studentShow";
 import {
     getTutorListFailed,
     getTutorListSuccess,
-} from "../actionCreators/tutor";
+} from "../actionCreators/studentShow";
 
 export default function* tutorSaga(): Saga<void> {
     yield takeEvery(FETCH_TUTOR_LIST, getTutorList);
@@ -32,9 +32,9 @@ export function* getTutorList(action: Object): Saga<void> {
 
     if (success) {
         var data = response;
-        yield put(getTutorListSuccess({ data }));
+        yield put(getStudentShowListSuccess({ data }));
     } else {
         var msg = "Failed to load data from API"; //FIXME Improve error message
-        yield put(getTutorListFailed({ msg }));
+        yield put(getStudentShowListFailed({ msg }));
     }
 }
