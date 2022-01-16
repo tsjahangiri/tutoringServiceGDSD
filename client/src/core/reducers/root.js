@@ -6,7 +6,11 @@ import studentShow from "./studentShow"
 const rootReducer = combineReducers({
   tutor,
   user,
+<<<<<<< HEAD
   studentShow,
+=======
+  course
+>>>>>>> origin/api-integration-rakib
 });
 
 export default rootReducer;
