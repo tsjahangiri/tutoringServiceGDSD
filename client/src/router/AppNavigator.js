@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/home/Home";
 import Users from "../pages/users/Users";
 import Posts from "../pages/posts/Posts";
@@ -14,24 +14,20 @@ import TutorProfile from "../pages/tutorProfile/TutorProfile";
 
 function AppNavigator() {
   return (
-    <Switch>
-      <Redirect from="/" exact to="/home" />
-      <Route path="/login" component={Login} />
-      <Route path="/registration" component={Registration} />
-      <Route path="/home" component={Home} />
-      <Route path="/users" component={Users} />
-      <Route path="/posts" component={Posts} />
-<<<<<<< HEAD
-      <Route path="/studentList" component={StudentList} />
-      <Route path="/tutorList" component={TutorList} />
-      <Route path="/add-course" component={AddCourse} />
-      <Route path="/add-qualification" component={AddQualification} />
-      <Route path="/offer-course" component={OfferCourse} />
-=======
+    <Routes>
+      <Route path="/" element={<Navigate to="/home" />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/users" element={<Users />} />
+      <Route path="/posts" element={<Posts />} />
+      <Route path="/registration" element={<Registration />} />
+      <Route path="/studentList" element={<StudentList />} />
+      <Route path="/tutorList" element={<TutorList />} />
+      <Route path="/add-course" element={<AddCourse />} />
+      <Route path="/add-qualification" element={<AddQualification />} />
+      <Route path="/offer-course" element={<OfferCourse />} />
+    </Routes>
 
-      <Route path="/tutorProfile" component={TutorProfile} />
->>>>>>> amlan
-    </Switch>
   );
 }
 

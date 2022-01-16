@@ -5,26 +5,41 @@ import { Pagination } from "react-bootstrap";
 type Props = {
   itemCount: number,
   pageSize?: number,
+  active: number,
+  toggleActive: Function,
   className: string,
 };
 
 export default function Paging(props: Props) {
-  const { itemCount, pageSize = 5, className } = props;
+  const {
+    itemCount,
+    pageSize = 5,
+    active = 1,
+    toggleActive,
+    className,
+  } = props;
 
   if (itemCount <= pageSize) {
     return null;
   }
 
-  let active = 1; // TODO: Implement logic of active pagination tab.
+  const pageChanged = (event) => {
+    toggleActive(parseInt(event.target.text));
+  };
 
   const getPaginationItems = () => {
     let paginationItems = [];
     let pageNo = 1;
     let pageCount = itemCount / pageSize;
+    pageCount += pageCount % 1 !== 0 ? 1 : 0;
 
     while (pageNo <= pageCount) {
       paginationItems.push(
-        <Pagination.Item key={pageNo} active={pageNo === active}>
+        <Pagination.Item
+          onClick={(event) => pageChanged(event)}
+          key={pageNo}
+          active={pageNo === active}
+        >
           {pageNo}
         </Pagination.Item>
       );
