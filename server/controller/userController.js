@@ -1,67 +1,75 @@
+let database = require("../database");
+const { validationResult } = require("express-validator");
 
-let database=require("../database");
-const { param } = require("../routes/user-routes");
+module.exports = {
+  getUsers: async (req, res) => {
+    let query = `SELECT id, username, first_name, last_name, usertype, email, password, status FROM hm_user`;
 
-module.exports={
-     getUser : async (req, res) => {
+    database.query(query, (err, result) => {
+      if (err) console.log(err);
+      else res.json(result);
+    });
+  },
 
-       
-          
-            database.query("SELECT * FROM `users`", function (err, result, fields) {
-              if (err) throw err;
-              res.json(result);
-            });
-    },
-    
-    getUserById:async(req,res)=>{
+  getUserById: async (req, res) => {
+    let query = `SELECT id, username, first_name, last_name, usertype, email, password, status FROM hm_user WHERE id = ?`;
 
-        let id=req.params.id;
+    database.query(query, [req.params.id], (err, result) => {
+      if (err) console.log(err);
+      else res.json(result);
+    });
+  },
 
-        database.query("SELECT * FROM `users` WHERE ID="+id, function (err, result, fields) {
-            if (err) throw err;
-            res.json(result);
-          });
+  createUser: (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    let { UserName, FirstName, LastName, UserType, Email, Pd, Status } =
+      req.body;
 
-    },
-    
-     createUser: (req,res) => {
-        
-            let {full_name,street_name,city_name,postal_code}=req.body;
-               database.query("INSERT INTO `users` (`full_name`, `street_name`, `city_name`,`postal_code`) VALUES ( '" + full_name + "', '" + street_name + "' , '" + city_name + "', '" + postal_code + "')",(err,result)=>{
-                if(err) console.log(err)
-                else {
-                    res.json({message:"User Created"})
-                }
-            });
-       
-    },
-    
-    
+    database.query(
+      "INSERT INTO hm_user (username, first_name, last_name, usertype, email, password, status) VALUES ( ?, ?, ?, ?, ?, ?, ?)",
+      [UserName, FirstName, LastName, UserType, Email, Pd, Status],
+      (err, result) => {
+        if (err) console.log(err);
+      }
+    );
 
-        updateUser: (req,res) => {
-        
-            let {full_name,street_name,city_name,postal_code}=req.body;
-            let id=req.params.id;
-          
-            database.query("UPDATE `users` SET full_name=" +'"'+  full_name   + '", ' + "street_name=" + '"' + street_name+ '"' +", city_name=" + '"'+ city_name+ '"' + ", postal_code="+ '"' +postal_code + '"'+ " WHERE ID="+'"'+id +'"'   ,(err,result)=>{
-                if(err) console.log(err)
-                else {
-                    res.json({message:"User Details Updated"})
-                }
-            });
-       
-    },
-    
-     deleteUser:async(req,res)=>{
+    database.query("SELECT LAST_INSERT_ID() as id;", (err, result) => {
+      res.json({ message: `User Id: ${result[0].id}` });
+    });
+  },
 
-        let id=req.params.id;
+  updateUser: (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-        database.query("DELETE FROM `users` WHERE ID="+id, function (err, result, fields) {
-            if (err) throw err;
-            res.json({message:"User "+ id + " Deleted"})
-          });
+    let { Id, UserName, FirstName, LastName, UserType, Email, Pd, Status } =
+      req.body;
 
-        
-    },
-}
+    database.query(
+      `UPDATE hm_user SET username = ?, first_name = ?, last_name = ?, usertype = ?, email = ?, password = ?, status= ? WHERE id= ?`,
+      [UserName, FirstName, LastName, UserType, Email, Pd, Status, Id],
+      (err) => {
+        if (err) console.log(err);
+        else {
+          res.json({ message: "User Details Updated" });
+        }
+      }
+    );
+  },
 
+  deleteUser: async (req, res) => {
+    let id = req.params.id;
+    database.query(
+      `DELETE FROM helpmelearndatabase.hm_user WHERE id=${id}`,
+      (err, result, fields) => {
+        if (err) throw err;
+        res.json({ message: "User " + id + " Deleted" });
+      }
+    );
+  },
+};
