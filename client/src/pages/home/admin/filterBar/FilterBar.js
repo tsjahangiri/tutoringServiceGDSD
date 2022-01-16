@@ -5,6 +5,7 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 type Props = {
     fetchTutorList: Function,
+    fetchStudentShowList: Function,
 };
 
 export default function FilterBar(props: Props) {
@@ -17,8 +18,13 @@ export default function FilterBar(props: Props) {
     });
 
     React.useEffect(() => {
-        dispatch(props.fetchTutorList({ filters }));
+        if(props.fetchTutorList)
+            dispatch(props.fetchTutorList({ filters }));
+        else {
+            dispatch(props.fetchStudentShowList({ filters }));
+        }
     });
+    
 
     const filterTutors = () => {
         var newFilters = {
