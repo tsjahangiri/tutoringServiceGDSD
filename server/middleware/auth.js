@@ -13,7 +13,8 @@ module.exports = (req,res, next) => {
 
         token = req.headers.authorization.split(' ')[1];  // Bearer Token
         // console.log(token);
-    } catch(error) {
+    } 
+    catch(error) {
         // console.log('Authentication failed');
         return next(error);
     }
@@ -32,7 +33,7 @@ module.exports = (req,res, next) => {
     } catch(error)
     {
         //'Token did not match-Authentication failed'
-        res.status(400).send('Invalid Token!')
+        res.status(400).send('Invalid Token!');
     }
 
   }
