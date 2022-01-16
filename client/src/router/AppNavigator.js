@@ -10,12 +10,13 @@ import TutorList from "../pages/home/admin/tutorList/TutorList";
 import AddCourse from "../pages/addCourse/AddCourse";
 import AddQualification from "../pages/addQualification/AddQualification";
 import OfferCourse from "../pages/offerCourse/OfferCourse";
+import { Anonymous } from "./Anonymous";
 
 function AppNavigator() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/home" />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Anonymous component={Login} />} />
       <Route path="/home" element={<Home />} />
       <Route path="/users" element={<Users />} />
       <Route path="/posts" element={<Posts />} />
