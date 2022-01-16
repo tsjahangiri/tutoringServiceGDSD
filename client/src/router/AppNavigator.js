@@ -10,6 +10,7 @@ import TutorList from "../pages/home/admin/tutorList/TutorList";
 import AddCourse from "../pages/addCourse/AddCourse";
 import AddQualification from "../pages/addQualification/AddQualification";
 import OfferCourse from "../pages/offerCourse/OfferCourse";
+import TutorProfile from "../pages/tutorProfile/TutorProfile";
 
 function AppNavigator() {
   return (
@@ -20,11 +21,16 @@ function AppNavigator() {
       <Route path="/home" component={Home} />
       <Route path="/users" component={Users} />
       <Route path="/posts" component={Posts} />
+<<<<<<< HEAD
       <Route path="/studentList" component={StudentList} />
       <Route path="/tutorList" component={TutorList} />
       <Route path="/add-course" component={AddCourse} />
       <Route path="/add-qualification" component={AddQualification} />
       <Route path="/offer-course" component={OfferCourse} />
+=======
+
+      <Route path="/tutorProfile" component={TutorProfile} />
+>>>>>>> amlan
     </Switch>
   );
 }
