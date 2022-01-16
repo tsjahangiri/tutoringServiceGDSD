@@ -9,7 +9,7 @@ function TutorShow(props) {
             style={{ borderColor: "#808080" }}
             className="border-top border-start border-end border-1 rounded"
         >
-            <Link className="nav-link" to={`tutor/${id}`}>
+            <Link className="nav-link" to={`${id}`}>            
                 <Row>
                     <Col xs={2}>
                         <img src={pictureUrl} style={{ width: "100px", height: "100px" }} />

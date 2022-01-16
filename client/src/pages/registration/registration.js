@@ -2,7 +2,15 @@ import React from 'react';
 import { Form, Button } from "react-bootstrap";
 import "./registration.css";
 
+import { useParams } from 'react-router-dom';
+
+
 function Registration(props) {
+    const params = useParams()
+
+// yuo can find all params from here
+console.log(params)
+
     return (
         <div className="registration-page">
             <div className="registration-content">
