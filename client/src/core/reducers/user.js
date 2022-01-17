@@ -1,9 +1,11 @@
 // @flow
 import {
   LOGIN_USER,
-  SET_LOGIN_ERROR,
+  SET_LOGIN_ALERT,
   LOGOUT_USER,
   SET_CURRENT_USER,
+  REGISTER_USER,
+  SET_REGISTRATION_ALERT,
 } from "../actionTypes/user";
 
 export const INITIAL_STATE = {
@@ -17,9 +19,15 @@ export default (state = INITIAL_STATE, action = {}) => {
     case LOGIN_USER:
       return {
         ...state,
-        authenticationError: undefined,
+        loginAlert: undefined,
       };
-    case SET_LOGIN_ERROR:
+    case REGISTER_USER:
+      return {
+        ...state,
+        registrationAlert: undefined,
+      };
+    case SET_LOGIN_ALERT:
+    case SET_REGISTRATION_ALERT:
       return {
         ...state,
         ...action.payload,
