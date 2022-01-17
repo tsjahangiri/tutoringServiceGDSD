@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import "./AddQualification.css";
 import { saveQualification } from "../../core/actionCreators/qualification";

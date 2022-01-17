@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import "./AddCourse.css";
 import { saveCourse } from "../../core/actionCreators/course";
