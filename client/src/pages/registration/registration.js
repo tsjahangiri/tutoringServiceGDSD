@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Alert } from "react-bootstrap";
-import "./Registration.css";
 import { registerUser } from "../../core/actionCreators/user";
 import { getRegistrationAlert } from "../../core/selectors/user";
+import "./Registration.css";
 
 function Registration(props) {
   const navigate = useNavigate();
