@@ -4,7 +4,8 @@ import type { Saga } from "redux-saga";
 import tutorSaga from "./tutor";
 import userSaga from "./user";
 import courseSaga from "./course"
+import qualificationSaga from "./qualification"
 
 export default function* rootSaga(): Saga<void> {
-  yield all([fork(tutorSaga), fork(userSaga), fork(courseSaga)]);
+  yield all([fork(tutorSaga), fork(userSaga), fork(courseSaga), fork(qualificationSaga)]);
 }
