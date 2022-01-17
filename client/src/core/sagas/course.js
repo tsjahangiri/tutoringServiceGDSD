@@ -14,7 +14,7 @@ export default function* courseSaga(): Saga<void> {
 
 export function* saveCourse(action: Object): Saga<void> {
   // const { course } = action.payload;
-
+  console.log("hello")
  
   var url = process.env.REACT_APP_API_URL;
   url += `/course`;
@@ -23,6 +23,7 @@ export function* saveCourse(action: Object): Saga<void> {
     url,
     method: "POST",
     params: action.payload,
+    useJwtSecret: false
   };
 
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);

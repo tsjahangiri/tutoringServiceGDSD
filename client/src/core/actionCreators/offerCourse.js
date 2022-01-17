@@ -8,7 +8,7 @@ import {
 } from "../actionTypes/offerCourse";
 
 export const saveOfferCourse = (data) => {
-  console.log("from creators" + data);
+  console.log(`from creators ${data}`);
   return {
     type: SAVE_OFFER_COURSE,
     payload: data

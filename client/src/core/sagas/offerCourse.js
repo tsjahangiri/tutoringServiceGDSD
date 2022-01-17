@@ -23,6 +23,7 @@ export function* saveOfferCourse(action: Object): Saga<void> {
     url,
     method: "POST",
     params: action.payload,
+    useJwtSecret: false
   };
 
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);

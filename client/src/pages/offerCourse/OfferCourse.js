@@ -50,8 +50,8 @@ function OfferCourse(props) {
             <option value="EEE">Parallel Programming</option>
           </Form.Control>
           <br /> 
-          <p>Subject Not Available? <t /> 
-          <Link className="btn btn-info" to={"/add-course"}>Request For Subject</Link></p>
+          <p>Subject Not Available ?
+          <Link className="btn btn-info" to={"/add-course"}> Request For Subject</Link></p>
         
           <Form.Control type="text" ref={levelRef} placeholder="Level" />
           <br />
