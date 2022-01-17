@@ -1,7 +1,11 @@
 // @flow
 import React from "react";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import "./Header.css";
+import { isAuthenticated, getCurrentUser } from "../../core/selectors/user";
+import { logoutUser } from "../../core/actionCreators/user";
+import { NavLink } from "react-router-dom";
 
 type Props = {
   headerOptions: Array<Object>,
@@ -20,17 +24,32 @@ function renderNavOptions(headerOptions) {
   );
 }
 
-function renderUserOptions(onSignOut) {
-  return (
-    <Navbar.Collapse className="justify-content-end">
-      <span style={{ color: "#FFFFFF" }}>Signed in as:</span>
-      <Nav>
-        <NavDropdown title="Rohat Sagar" drop="down" menuVariant="dark">
-          <NavDropdown.Item onClick={onSignOut}>Logout</NavDropdown.Item>
-        </NavDropdown>
-      </Nav>
-    </Navbar.Collapse>
-  );
+function renderUserOptions(currentUser, isAuth, onSignOut) {
+  if (isAuth) {
+    return (
+      <Navbar.Collapse className="justify-content-end">
+        <span style={{ color: "#FFFFFF" }}>Signed in as:</span>
+        <Nav>
+          <NavDropdown
+            title={currentUser.user_name}
+            drop="down"
+            menuVariant="dark"
+          >
+            <NavDropdown.Item onClick={onSignOut}>Logout</NavDropdown.Item>
+          </NavDropdown>
+        </Nav>
+      </Navbar.Collapse>
+    );
+  } else {
+    return (
+      <NavLink to="/login">
+        <i
+          style={{ fontSize: "1.5rem", color: "#FFFFFF" }}
+          className="bi bi-box-arrow-in-right"
+        ></i>
+      </NavLink>
+    );
+  }
 }
 
 function renderBrand() {
@@ -49,7 +68,14 @@ function renderBrand() {
 }
 
 function Header(props: Props) {
-  const onSignOut = () => { };
+  const dispatch = useDispatch();
+
+  const isAuth = useSelector(isAuthenticated);
+  const currentUser = useSelector(getCurrentUser);
+
+  const onSignOut = () => {
+    dispatch(logoutUser());
+  };
 
   return (
     <Navbar sticky="top" bg="primary" variant="dark">
@@ -57,7 +83,7 @@ function Header(props: Props) {
         {renderBrand()}
         <Navbar.Toggle />
         {renderNavOptions(props.headerOptions)}
-        {renderUserOptions(onSignOut)}
+        {renderUserOptions(currentUser, isAuth, onSignOut)}
       </Container>
     </Navbar>
   );
