@@ -17,10 +17,11 @@ function Home() {
     switch (userType) {
       case "admin":
         return <Admin />;
-      case "student":
-        return <Student />;
       case "tutor":
         return <Tutor />;
+      case "student":
+      case "guest":
+        return <Student />;
       default:
         return null;
     }
