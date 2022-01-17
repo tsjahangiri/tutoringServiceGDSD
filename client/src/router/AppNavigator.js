@@ -4,7 +4,7 @@ import Home from "../pages/home/Home";
 import Users from "../pages/users/Users";
 import Posts from "../pages/posts/Posts";
 import Login from "../pages/login/Login";
-import Registration from "../pages/registration/registration";
+import Registration from "../pages/registration/Registration";
 import StudentList from "../pages/home/admin/studentList/StudentList";
 import TutorList from "../pages/home/admin/tutorList/TutorList";
 import AddCourse from "../pages/addCourse/AddCourse";
