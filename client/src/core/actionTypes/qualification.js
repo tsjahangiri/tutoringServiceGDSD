@@ -1,0 +1,7 @@
+const prefix = "qualification";
+
+//POST
+export const SAVE_QUALIFICATION = `${prefix}/SAVE_QUALIFICATION`;
+export const SAVE_QUALIFICATION_LOADING = `${prefix}/SAVE_QUALIFICATION_LOADING`;
+export const SAVE_QUALIFICATION_SUCCESS = `${prefix}/SAVE_QUALIFICATION_SUCCESS`;
+export const SAVE_QUALIFICATION_FAILED = `${prefix}/SAVE_QUALIFICATION_FAILED`;

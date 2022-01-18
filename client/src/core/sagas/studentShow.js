@@ -1,6 +1,6 @@
 // @flow
 import { takeEvery, call, put } from "redux-saga/effects";
-import { callApi } from "./api";
+import { executeApiCall } from "./api";
 import type { Saga } from "redux-saga";
 import { FETCH_TUTOR_LIST } from "../actionTypes/tutor";
 import {

@@ -1,5 +1,6 @@
 // @flow
 import React from "react";
+import {useLocation} from "react-router-dom";
 import { useSelector } from "react-redux";
 import Page from "../../components/page/Page";
 import Admin from "./admin/index";
@@ -11,16 +12,20 @@ import { getUserType } from "../../core/selectors/user";
 // 2. reducer (GET_TUTOR_LIST_SUCCESS) <- actionCreator (getTutorListSuccess)  <- saga (getTutorListSuccess)
 
 function Home() {
-  let userType = useSelector(getUserType);
+  const search = useLocation().search;
+  const userType = new URLSearchParams(search).get('userType');
+
+  // let userType = useSelector(getUserType);
 
   function renderHome() {
     switch (userType) {
       case "admin":
         return <Admin />;
-      case "student":
-        return <Student />;
       case "tutor":
         return <Tutor />;
+      case "student":
+      case "guest":
+        return <Student />;
       default:
         return null;
     }
