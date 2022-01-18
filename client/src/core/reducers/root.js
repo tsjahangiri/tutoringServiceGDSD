@@ -7,7 +7,7 @@ import course from "./course"
 const rootReducer = combineReducers({
   tutor,
   user,
-//  studentShow,
+  studentShow,
   course
 });
 

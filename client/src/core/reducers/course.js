@@ -6,6 +6,7 @@ import {
   SAVE_COURSE_FAILED,
 } from "../actionTypes/course";
 
+
 export const INITIAL_STATE = {
   data: [],
   filters: {
@@ -20,6 +21,15 @@ export default (state = INITIAL_STATE, action = {}) => {
       return {
         ...state,
         filters: filters,
+
+export const INITIAL_STATE = {};
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case SAVE_COURSE:
+      return {
+        ...state,
       };
     case SAVE_COURSE_LOADING:
       return INITIAL_STATE;
@@ -29,6 +39,8 @@ export default (state = INITIAL_STATE, action = {}) => {
         ...state,
         data: data,
       };
+      return INITIAL_STATE;
+
     case SAVE_COURSE_FAILED:
       return INITIAL_STATE;
     default:
