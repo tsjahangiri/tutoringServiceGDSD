@@ -10,14 +10,15 @@ import {useParams} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchTutorProfileList } from "../../core/actionCreators/tutorprofile";
 
-export default function TutorProfile() {
-  // const params = useParams();
-  // console.log(params);
+export default function TutorProfile(props) {
 
-  // const dispatch = useDispatch();
-  //   React.useEffect(() => {
-  //   dispatch(fetchTutorProfileList({ params }));
-  // });
+  const params = useParams();
+  console.log(params);
+
+  const dispatch = useDispatch();
+    React.useEffect(() => {
+    dispatch(fetchTutorProfileList({ params }));
+  });
 
  
   // const dispatch = useDispatch();

@@ -3,6 +3,13 @@ const cors = require("cors");
 var bodyParser = require("body-parser");
 const routes = require("./routes/routes.js");
 const app = express();
+
+//chat- socket IO server instance
+const http = require('http');
+const socketIO = require("socket.io");
+const server = http.Server(app);
+var io = socketIO(server);
+
 const port = 3000;
 require("dotenv").config();
 
@@ -16,6 +23,10 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Help Me Learn API listening at http://localhost:${port}`);
 });
+
+// app.listen(port, () => {
+//   console.log(`Help Me Learn API listening at http://localhost:${port}`);
+// });

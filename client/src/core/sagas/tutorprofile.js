@@ -4,22 +4,22 @@ import { executeApiCall } from "./api";
 import type { Saga } from "redux-saga";
 import { FETCH_TUTORPROFILE_LIST } from "../actionTypes/tutorprofile";
 import {
-  GET_TUTORPROFILE_LIST_SUCCESS,
-  GET_TUTORPROFILE_LIST_FAILED,
+  getTutorProfileListSuccess,
+  getTutorProfileListFailed,
 } from "../actionCreators/tutorprofile";
 
-export default function* tutorSaga(): Saga<void> {
+export default function* tutorprofileSaga(): Saga<void> {
   yield takeEvery(FETCH_TUTORPROFILE_LIST, getTutorProfileList);
 }
 
 export function* getTutorProfileList(action: Object): Saga<void> {
-  // const { filters } = action.payload;
+  const { id } = action.payload;
 
   var url = `${process.env.REACT_APP_API_URL}`;
 
-  if (filters.subjectName) {
-    url += `/tutor/id=${id}&`;
-  }
+  // if (filters.subjectName) {
+  //   url += `/id=${id}&`;
+  // }
 
   const apiOptions: ApiOptions = {
     url,
