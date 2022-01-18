@@ -168,7 +168,7 @@ export default function Admin() {
   };
 
   return (
-    <Container>
+    <div>
       <Row>
         <Col className="d-flex justify-content-start">
           {renderPieChart("Users by Status", usersByStatus, onUsersByStatus)}
@@ -182,6 +182,6 @@ export default function Admin() {
       </Row>
       {renderFabOption()}
       {renderOffcanvas()}
-    </Container>
+    </div>
   );
 }

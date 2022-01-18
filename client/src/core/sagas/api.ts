@@ -2,7 +2,7 @@ import { call, race, delay, select, put } from "redux-saga/effects";
 import axios from "axios";
 import moment from "moment";
 import { getJwtSecret } from "../selectors/user";
-import { logoutUser, setLoginError } from "../actionCreators/user";
+import { logoutUser, setLoginAlert } from "../actionCreators/user";
 import isOnline from "is-online";
 
 const DEFAULT_TIMEOUT = 1000000;
@@ -96,7 +96,7 @@ export function* executeApiCall(
       };
 
       yield put(
-        setLoginError(
+        setLoginAlert(
           "Something went wrong and I had to sign you out.  Please sign in again."
         )
       );
@@ -166,10 +166,14 @@ export function* executeApiCall(
         apiResponse = {
           isSuccessful: false,
           statusCode: status,
-          response: data,
+          // response: data, //FIXME: Remove
           responseHeaders,
           errorCode: errorCode || "HTTP_ERROR_CODE",
           apiOptions: apiOptions,
+          response: {
+            ErrorMessage:
+              "Something went wrong. You're connected to a network but I can't do anything.",
+          },
         };
         // FIXME: Check is server reachable
       }
