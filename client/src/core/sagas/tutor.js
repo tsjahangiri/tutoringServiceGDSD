@@ -24,6 +24,7 @@ export function* getTutorList(action: Object): Saga<void> {
   const apiOptions: ApiOptions = {
     url,
     method: "GET",
+    useJwtSecret: false,
   };
 
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
