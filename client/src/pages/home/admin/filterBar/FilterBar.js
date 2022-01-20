@@ -5,6 +5,7 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 type Props = {
     fetchTutorList: Function,
+    fetchStudentShowList: Function,
 };
 
 export default function FilterBar(props: Props) {
@@ -17,8 +18,13 @@ export default function FilterBar(props: Props) {
     });
 
     React.useEffect(() => {
-        dispatch(props.fetchTutorList({ filters }));
+        if(props.fetchTutorList)
+            dispatch(props.fetchTutorList({ filters }));
+        else {
+            dispatch(props.fetchStudentShowList({ filters }));
+        }
     });
+    
 
     const filterTutors = () => {
         var newFilters = {
@@ -36,29 +42,16 @@ export default function FilterBar(props: Props) {
             >
                 <Row>
                     <Col>
-                        <Form.Label>Subject</Form.Label>
+                        <Form.Label>First Name</Form.Label>
                         <Form.Control size="sm" ref={subjectControl} type="text" />
                     </Col>
                     <Col>
-                        <Form.Label>Level</Form.Label>
-                        <Form.Select size="sm" defaultValue="Any">
-                            <option>Any</option>
-                            <option>Undergraduate</option>
-                            <option>Graduate</option>
-                        </Form.Select>
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control size="sm" ref={subjectControl} type="text" />
                     </Col>
                     <Col>
-                        <Form.Label>Price</Form.Label>
-                        <Form.Control size="sm" type="number" />
-                    </Col>
-                    <Col>
-                        <Form.Label>Gender</Form.Label>
-                        <Form.Select size="sm" defaultValue="Any">
-                            <option>Any</option>
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Other</option>
-                        </Form.Select>
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control size="sm" ref={subjectControl} type="text" />
                     </Col>
                 </Row>
                 <br />

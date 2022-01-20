@@ -1,4 +1,3 @@
-/* eslint-disable no-duplicate-case */
 // @flow
 import {
   SAVE_COURSE,
