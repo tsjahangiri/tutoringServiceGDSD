@@ -11,7 +11,7 @@ const {
   createCourseValidation,
   updateCourseValidation,
   createQualificationValidation,
-  updateQualificationValidation
+  updateQualificationValidation,
 } = require("../middleware/validation.js");
 const router = express.Router();
 
@@ -75,6 +75,6 @@ let tutorController = require("../controller/tutorController");
 router.post("/qualifications", createQualificationValidation, tutorController.createQualification);
 router.delete("/qualifications/:id", tutorController.deleteQualification);
 router.put("/qualifications", updateQualificationValidation, tutorController.updateQualification);
-router.get("/qualifications/:tutorProfileId", tutorController.getQualificationByTutorId);
+router.get("/qualifications/:tutorProfileId", tutorController.getQualificationByTutorProfileId);
 
 module.exports = router;
