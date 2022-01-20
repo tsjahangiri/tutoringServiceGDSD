@@ -1,4 +1,3 @@
-
 // @flow
 import {
   SAVE_COURSE,

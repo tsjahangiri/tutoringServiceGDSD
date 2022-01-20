@@ -17,6 +17,7 @@ import StudentList from "./studentList/StudentList.js";
 import TutorList from "./tutorList/TutorList.js";
 import FilterBar from "./filterBar/FilterBar";
 import { fetchTutorList } from "../../../core/actionCreators/tutor";
+import { fetchStudentShowList } from "../../../core/actionCreators/studentShow";
 
 export default function Admin() {
   const navigate = useNavigate();

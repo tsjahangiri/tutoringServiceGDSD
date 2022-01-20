@@ -1,2 +1,2 @@
 // @flow
-export const getStudentList = (state: Object) => state.studentListShow.list;
+export const getStudentShowList = (state: Object) => state.studentShow.data;
