@@ -50,10 +50,10 @@ router.put("/tutors", TutorProfileController.updateTutorInfo);
 let searchController = require("../controller/searchController");
 router.get("/tutors/search", searchController.getTutorsByFilters);
 
-// router.post("/users", createUserValidation, userController.createUser);
-// router.delete("/users/:id", userController.deleteUser);
-// router.put("/users", updateUserValidation, userController.updateUser);
-// router.get("/users", userController.getUsers);
-// router.get("/users/:id", userController.getUserById);
+router.post("/users", createUserValidation, userController.createUser);
+router.delete("/users/:id", userController.deleteUser);
+router.put("/users", updateUserValidation, userController.updateUser);
+router.get("/users", userController.getUsers);
+router.get("/users/:id", userController.getUserById);
 
 module.exports = router;
