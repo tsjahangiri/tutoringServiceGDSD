@@ -9,7 +9,7 @@ import Page from "../../../../components/page/Page";
 import FilterBar from "../filterBar/FilterBar";
 
 function TutorList(props) {
-    const data = useSelector(getTutorList); //TODO: Change var to const return <TutorShow key={i} item={item} />;
+    const data = useSelector(getTutorList); //TODO: Change var to const 
 
     if (data === undefined) {
         return <div></div>;
@@ -22,7 +22,7 @@ function TutorList(props) {
             <br />
             <ListGroup>
                 {data.map((item, i) => {
-                    console.log(item)
+                    return <TutorShow key={i} item={item} />;
                 })}
             </ListGroup>
             <br />
