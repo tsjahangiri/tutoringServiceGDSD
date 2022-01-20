@@ -19,7 +19,7 @@ module.exports = {
 
           if (result.length === 0) {
             database.execute(
-              "INSERT INTO `helpmelearn`.`hm_user` ( `first_name`, `last_name`, `usertype`, `email`, `password`, `status`, `gender`) VALUES (?, ?, ?, ?, ?, ?, ?)",
+              "INSERT INTO `helpmelearn`.`hm_user` ( `firstName`, `lastName`, `usertype`, `email`, `password`, `status`, `gender`) VALUES (?, ?, ?, ?, ?, ?, ?)",
               [
                 first_name,
                 last_name,
