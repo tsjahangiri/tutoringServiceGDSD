@@ -16,7 +16,7 @@ module.exports = {
       try {
         const decodedToken = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
         // console.log(decodedToken);
-        if (decodedToken.user_type === 101 || decodedToken.user_type === 100 || decodedToken.user_type === 102) {
+        if (decodedToken.user_type === 101 || decodedToken.user_type === 100) {
           req.userid = decodedToken.id;
           next();
         } else {

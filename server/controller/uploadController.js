@@ -5,6 +5,9 @@ require("dotenv").config();
 const upload = async (req, res) => {
   try {
 
+    if (req.file.mimetype === 'application/pdf' && req.userid === 102) {
+        throw(err);
+    }
     await uploadFile(req, res);
 
 
