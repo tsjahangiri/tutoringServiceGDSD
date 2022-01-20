@@ -2,22 +2,22 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { executeApiCall } from "./api";
 import type { Saga } from "redux-saga";
-import { SAVE_COURSE } from "../actionTypes/course";
+import { SAVE_OFFER_COURSE } from "../actionTypes/offerCourse";
 import {
-  saveCourseSuccess,
-  saveCourseFailed
-} from "../actionCreators/course";
+  saveOfferCourseSuccess,
+  saveOfferCourseFailed
+} from "../actionCreators/offerCourse";
 
-export default function* courseSaga(): Saga<void> {
-  yield takeEvery(SAVE_COURSE, saveCourse);
+export default function* offerCourseSaga(): Saga<void> {
+  yield takeEvery(SAVE_OFFER_COURSE, saveOfferCourse);
 }
 
-export function* saveCourse(action: Object): Saga<void> {
+export function* saveOfferCourse(action: Object): Saga<void> {
   // const { course } = action.payload;
-  console.log("hello")
+
  
   var url = process.env.REACT_APP_API_URL;
-  url += `/course`;
+  url += `/tutor/course`;
 
   const apiOptions: ApiOptions = {
     url,
@@ -32,9 +32,9 @@ export function* saveCourse(action: Object): Saga<void> {
   var msg = "";
   if (success) {
     msg = "Course Saved Successfully";
-    yield put(saveCourseSuccess({ msg }));
+    yield put(saveOfferCourseSuccess({ msg }));
   } else {
     msg = "Failed to save data"; //FIXME Improve error message
-    yield put(saveCourseFailed({ msg }));
+    yield put(saveOfferCourseFailed({ msg }));
   }
 }
