@@ -34,6 +34,24 @@ module.exports = {
       joinQuery += `Status = ${database.escape(req.query.Status)}`;
     }
 
+    if (req.query.LastName !== undefined) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `lastName = ${database.escape(req.query.LastName)}`;
+    }
+
+    if (req.query.FirstName !== undefined) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `firstName = ${database.escape(req.query.FirstName)}`;
+    }
+
+    if (req.query.Email !== undefined) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `email = ${database.escape(req.query.Email)}`;
+    }
+
     let query =
       "SELECT id, firstName, lastName, usertype, email, status, gender FROM hm_user";
     if (joinQuery !== "") query += ` where ${joinQuery}`;

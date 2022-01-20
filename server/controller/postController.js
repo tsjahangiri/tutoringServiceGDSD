@@ -121,6 +121,12 @@ module.exports = {
       joinQuery += `tutorProfileId = ${database.escape(req.query.TutorProfileId)}`;
     }
 
+    if (req.query.Status !== undefined) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `Status = ${database.escape(req.query.Status)}`;
+    }
+    
     let dbQuery = "SELECT id, description, tutorProfileId, status, `language`, subjectId, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime FROM hm_post";
     if (joinQuery !== "") dbQuery += ` where ${joinQuery}`;
 

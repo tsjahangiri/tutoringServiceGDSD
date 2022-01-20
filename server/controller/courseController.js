@@ -35,14 +35,18 @@ module.exports = {
 
   // Get Courses Method
   getCourses: async (req, res) => {
-    // Query
-    database.query(
-      "SELECT id, courseCode, courseName, departmentId, `level`, status FROM hm_course",
-      (err, result) => {
-        if (err) res.status(400).send(`Request Error: ${err}`);
-        else res.status(200).json(result);
-      }
-    );
+    let joinQuery = "";
+    if (req.query.Status !== undefined) {
+      joinQuery += `status = ${database.escape(req.query.Status)}`;
+    }
+
+    let dbQuery =
+      "SELECT id, courseCode, courseName, departmentId, `level`, status FROM hm_course";
+    if (joinQuery !== "") dbQuery += ` where ${joinQuery}`;
+    database.query(dbQuery, (err, result) => {
+      if (err) res.status(400).send(`Request Error: ${err}`);
+      else res.status(200).json(result);
+    });
   },
 
   // Get Course By Id Method
