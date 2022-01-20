@@ -5,15 +5,12 @@ require("dotenv").config();
 const upload = async (req, res) => {
   try {
 
-    if (req.file.mimetype === 'application/pdf' && req.userid === 102) {
-        throw(err);
-    }
     await uploadFile(req, res);
-
 
     if (req.file == undefined) {
       return res.status(400).send({ message: "Please upload a file!" });
     }
+    
     if(req.file.mimetype === "application/pdf") {
 
         database.execute("INSERT INTO `helpmelearn`.`hm_file` ( `tutorProfileId`, `fileName`, `fileType`, `fileExtension`, `filePath`) VALUES (?, ?, ?, ?, ?)", 
