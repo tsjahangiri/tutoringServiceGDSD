@@ -16,9 +16,8 @@ module.exports = {
       try {
         const decodedToken = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
         // console.log(decodedToken);
-        if (decodedToken.user_type === 101) {
+        if (decodedToken.user_type === 101 || decodedToken.user_type === 100 || decodedToken.user_type === 102) {
           req.userid = decodedToken.id;
-          console.log(req.userid);
           next();
         } else {
           res.status(403).json({ status: false, message: "Permission denied" });
