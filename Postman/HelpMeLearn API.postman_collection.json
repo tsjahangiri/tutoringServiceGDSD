@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "575a59ee-ceb0-466f-87b1-f15524706116",
+		"_postman_id": "40b88f36-f7ce-40c6-b36a-c556a5c37b91",
 		"name": "HelpMeLearn API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -598,6 +598,120 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "FileUpload/Fetch",
+			"item": [
+				{
+					"name": "upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJzYWxtYW4uaGF5ZGFyQGdtYWlsLmNvbSIsInVzZXJfdHlwZSI6MTAxLCJzdGF0dXMiOjEsImlhdCI6MTY0MjY5MTQzNCwiZXhwIjoxNjQyNzI3NDM0fQ.cSCMZrvZycrZPArzAS6Tu8zFfpBHR4MxBSgjWO_RunQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FetchImage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/fetch/image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"fetch",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch File",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/fetch/image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"fetch",
+								"image"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJzYWxtYW4uaGF5ZGFyQGdtYWlsLmNvbSIsInVzZXJfdHlwZSI6MTAxLCJzdGF0dXMiOjEsImlhdCI6MTY0MjcxMDIzMCwiZXhwIjoxNjQyNzQ2MjMwfQ.rZj2juQjsRFB39FGDBpP7HV2eM7RJqNmMVx9ETyvN_Y",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "http://localhost:9090",
+			"type": "default"
 		}
 	]
 }
