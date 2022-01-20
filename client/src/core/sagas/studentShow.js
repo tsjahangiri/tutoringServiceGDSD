@@ -24,6 +24,7 @@ export function* getStudentShowList(action: Object): Saga<void> {
     const apiOptions: ApiOptions = {
         url,
         method: "GET",
+        params: payload, // /api?param1=a&param2=b
     };
 
     const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
