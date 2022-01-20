@@ -73,4 +73,8 @@ router.delete("/user", adminAuth.isAdmin, adminController.deleteUser);
 let uploadController = require("../controller/uploadController");
 router.post("/upload", tutorAuth.isTutor, uploadController.upload);
 
+let fetchController = require("../controller/fetchFileController");
+router.get("/fetch/file", tutorAuth.isTutor, fetchController.file);
+router.get("/fetch/image", tutorAuth.isTutor, fetchController.image);
+
 module.exports = router;
