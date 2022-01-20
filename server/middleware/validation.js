@@ -66,3 +66,14 @@ exports.updateCourseValidation = [
   body("Level").notEmpty().isString().isLength({ min: 1 }),
   body("Status").notEmpty().isIn([100, 101, 102]),
 ];
+
+exports.createQualificationValidation = [
+  body("SubjectId").notEmpty(),
+  body("Description").notEmpty(),
+  body("Grade").notEmpty(),
+  body("TutorProfileId").isString().isInt()
+];
+
+exports.updateQualificationValidation = [
+  body("Id").notEmpty().isInt()
+];
