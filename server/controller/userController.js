@@ -2,35 +2,17 @@ let database = require("../database");
 const { validationResult } = require("express-validator");
 
 module.exports = {
-  getUsers: async (req, res) => {
-    let query = `SELECT id, username, first_name, last_name, usertype, email, password, status FROM hm_user`;
-
-    database.query(query, (err, result) => {
-      if (err) console.log(err);
-      else res.json(result);
-    });
-  },
-
-  getUserById: async (req, res) => {
-    let query = `SELECT id, username, first_name, last_name, usertype, email, password, status FROM hm_user WHERE id = ?`;
-
-    database.query(query, [req.params.id], (err, result) => {
-      if (err) console.log(err);
-      else res.json(result);
-    });
-  },
-
   createUser: (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    let { UserName, FirstName, LastName, UserType, Email, Pd, Status } =
+    let { FirstName, LastName, UserType, Email, Password, Status, Gender } =
       req.body;
 
     database.query(
-      "INSERT INTO hm_user (username, first_name, last_name, usertype, email, password, status) VALUES ( ?, ?, ?, ?, ?, ?, ?)",
-      [UserName, FirstName, LastName, UserType, Email, Pd, Status],
+      "INSERT INTO hm_user (firstName, lastName, usertype, email, password, status, gender) VALUES ( ?, ?, ?, ?, ?, ?, ?)",
+      [FirstName, LastName, UserType, Email, Password, Status, Gender],
       (err, result) => {
         if (err) console.log(err);
       }
@@ -41,23 +23,51 @@ module.exports = {
     });
   },
 
+  getUsers: async (req, res) => {
+    let joinQuery = "";
+    if (req.query.UserType !== undefined)
+      joinQuery += `usertype = ${database.escape(req.query.UserType)}`;
+
+    if (req.query.Status !== undefined) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `Status = ${database.escape(req.query.Status)}`;
+    }
+
+    let query =
+      "SELECT id, firstName, lastName, usertype, email, status, gender FROM hm_user";
+    if (joinQuery !== "") query += ` where ${joinQuery}`;
+    database.query(query, (err, result) => {
+      if (err) res.status(400).send(`Response Error: ${err}`);
+      else res.status(200).json(result);
+    });
+  },
+
+  getUserById: async (req, res) => {
+    let query =
+      "SELECT firstName, lastName, usertype, email, status, gender FROM hm_user WHERE id = ?";
+
+    database.query(query, [req.params.id], (err, result) => {
+      if (err) res.status(400).send(`Response Error: ${err}`);
+      else res.status(200).json(result);
+    });
+  },
+
   updateUser: (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    let { Id, UserName, FirstName, LastName, UserType, Email, Pd, Status } =
+    let { Id, FirstName, LastName, UserType, Email, Password, Status, Gender } =
       req.body;
 
     database.query(
-      `UPDATE hm_user SET username = ?, first_name = ?, last_name = ?, usertype = ?, email = ?, password = ?, status= ? WHERE id= ?`,
-      [UserName, FirstName, LastName, UserType, Email, Pd, Status, Id],
+      "UPDATE hm_user SET firstName = ?, lastName = ?, usertype = ?, email = ?, password = ?, status = ?, gender = ? WHERE id= ?",
+      [FirstName, LastName, UserType, Email, Password, Status, Gender, Id],
       (err) => {
-        if (err) console.log(err);
-        else {
-          res.json({ message: "User Details Updated" });
-        }
+        if (err) res.status(400).send(`Response Error: ${err}`);
+        else res.status(204).json({ message: "User Details Updated" });
       }
     );
   },
@@ -65,10 +75,14 @@ module.exports = {
   deleteUser: async (req, res) => {
     let id = req.params.id;
     database.query(
-      `DELETE FROM helpmelearndatabase.hm_user WHERE id=${id}`,
+      "DELETE FROM hm_user WHERE id = ?",
+      [id],
       (err, result, fields) => {
-        if (err) throw err;
-        res.json({ message: "User " + id + " Deleted" });
+        if (err) res.status(400).send(`Response Error: ${err}`);
+        else
+          res
+            .status(200)
+            .json({ message: "User deleted successfully." });
       }
     );
   },

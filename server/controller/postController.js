@@ -9,49 +9,59 @@ module.exports = {
     }
 
     let {
-      SubjectTitle,
       Description,
-      TutorId,
+      TutorProfileId,
       Status,
       Language,
-      SubjectCode,
+      SubjectId,
       RatePerHour,
+      ExperinceYears,
+      AvailableTime,
     } = req.body;
 
     var date = new Date().toISOString().split("T")[0];
+    var isActive = true;
 
     database.query(
-      "INSERT INTO hm_post(subjectTitle, description, tutorId, status, `language`, subjectCode, ratePerHour, createdDateTime, modifiedDateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO hm_post(description, tutorProfileId, status, `language`, subjectId, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
-        SubjectTitle,
         Description,
-        TutorId,
+        TutorProfileId,
         Status,
         Language,
-        SubjectCode,
+        SubjectId,
         RatePerHour,
         date,
         date,
+        ExperinceYears,
+        isActive,
+        AvailableTime,
       ],
-      (err, result) => {
-        if (err) console.log(err);
+      (err) => {
+        if (err) res.status(400).send(`Response Error: ${err}`);
       }
     );
 
     database.query("SELECT LAST_INSERT_ID() as id;", (err, result) => {
-      res.json({ message: `Post Id: ${result[0].id}` });
+      if (err)
+        res
+          .status(400)
+          .send(
+            `Successfully added Post, but unable get record Id. Request Error: ${err}`
+          );
+      else res.status(201).json({ message: `Post Id: ${result[0].id}` });
     });
   },
 
   deletePost: async (req, res) => {
     let id = req.params.id;
-    database.query(
-      `DELETE FROM helpmelearndatabase.hm_post WHERE id = ?;`,
-      [id],
-      (err, result) => {
-        res.json({ message: `Post Id:${id} deleted successfully.` });
-      }
-    );
+    database.query("DELETE FROM hm_post WHERE id = ?;", [id], (err, result) => {
+      if (err) res.status(400).send(`Response Error: ${err}`);
+      else
+        res
+          .status(200)
+          .json({ message: `Post Id:${id} deleted successfully.` });
+    });
   },
 
   updatePost: async (req, res) => {
@@ -62,31 +72,34 @@ module.exports = {
 
     let {
       Id,
-      SubjectTitle,
       Description,
-      TutorId,
+      TutorProfileId,
       Status,
       Language,
-      SubjectCode,
+      SubjectId,
       RatePerHour,
+      ExperinceYears,
+      AvailableTime,
     } = req.body;
 
     var date = new Date().toISOString().split("T")[0];
     database.query(
-      `UPDATE helpmelearndatabase.hm_post SET subjectTitle = ?, description = ?, tutorId = ?, status = ?, language = ?, subjectCode = ?, ratePerHour = ?, modifiedDateTime = ? WHERE id = ?;`,
+      "UPDATE hm_post SET description=?, tutorProfileId=?, status=?, `language`=?, subjectId=?, ratePerHour=?, modifiedDateTime=?, experienceYears=?, availableTime=? WHERE id = ?;",
       [
-        SubjectTitle,
         Description,
-        TutorId,
+        TutorProfileId,
         Status,
         Language,
-        SubjectCode,
+        SubjectId,
         RatePerHour,
         date,
+        ExperinceYears,
+        AvailableTime,
         Id,
       ],
       (err, result) => {
-        res.json({ message: `Updated successfully.` });
+        if (err) res.status(400).send(`Response Error: ${err}`);
+        else res.status(204).json({ message: "Post Details Updated" });
       }
     );
   },
@@ -94,39 +107,21 @@ module.exports = {
   getPost: async (req, res) => {
     let id = req.params.id;
     database.query(
-      `SELECT id, subjectTitle, description, tutorId, status, language, subjectCode, ratePerHour, createdDateTime, modifiedDateTime FROM helpmelearndatabase.hm_post WHERE id = ?;`,
+      "SELECT id, description, tutorProfileId, status, `language`, subjectId, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime FROM hm_post WHERE id = ?;",
       [id],
       (err, result) => {
-        res.json(result);
-      }
+        if (err) res.status(400).send(`Response Error: ${err}`);
+        else res.status(200).json(result);      }
     );
   },
 
   searchPost: async (req, res) => {
     let joinQuery = "";
-    if (req.query.language !== undefined) {
-      joinQuery += `language = ${database.escape(req.query.language)}`;
+    if (req.query.TutorProfileId !== undefined) {
+      joinQuery += `tutorProfileId = ${database.escape(req.query.TutorProfileId)}`;
     }
 
-    if (req.query.subjectCode !== undefined) {
-      if (joinQuery != "") joinQuery += " and ";
-
-      joinQuery += `subjectCode = ${database.escape(req.query.subjectCode)}`;
-    }
-
-    if (req.query.ratePerHour !== undefined) {
-      if (joinQuery != "") joinQuery += " and ";
-
-      joinQuery += `ratePerHour = ${database.escape(req.query.ratePerHour)}`;
-    }
-
-    if (req.query.tutorId !== undefined) {
-      if (joinQuery != "") joinQuery += " and ";
-
-      joinQuery += `tutorId = ${database.escape(req.query.tutorId)}`;
-    }
-
-    let dbQuery = `SELECT id, subjectTitle, description, tutorId, status, language, subjectCode, ratePerHour, createdDateTime, modifiedDateTime FROM helpmelearndatabase.hm_post`;
+    let dbQuery = "SELECT id, description, tutorProfileId, status, `language`, subjectId, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime FROM hm_post";
     if (joinQuery !== "") dbQuery += ` where ${joinQuery}`;
 
     database.query(dbQuery, (err, result) => {
