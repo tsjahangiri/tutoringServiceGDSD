@@ -13,21 +13,11 @@ export default function* courseSaga(): Saga<void> {
 }
 
 export function* saveCourse(action: Object): Saga<void> {
-  const { filters } = action.payload;
-
-  var url = process.env.REACT_APP_API_URL;
-
-//need to change the api
-  if (filters.subjectName) {
-    url += `subjectname=${filters.subjectName}&`;
-  }
-
   // const { course } = action.payload;
   console.log("hello")
  
   var url = process.env.REACT_APP_API_URL;
   url += `/course`;
-
 
   const apiOptions: ApiOptions = {
     url,
@@ -38,14 +28,6 @@ export function* saveCourse(action: Object): Saga<void> {
 
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
 
-
-  const { success, response = {} } = apiResponse;
-
-  if (success) {
-    var data = response;
-    yield put(saveCourseSuccess({ data }));
-  } else {
-    var msg = "Failed to save data"; //FIXME Improve error message
   const { success } = apiResponse;
   var msg = "";
   if (success) {

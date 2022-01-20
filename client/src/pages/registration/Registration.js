@@ -6,36 +6,7 @@ import { registerUser } from "../../core/actionCreators/user";
 import { getRegistrationAlert } from "../../core/selectors/user";
 import "./Registration.css";
 
-import { useParams } from 'react-router-dom';
-
-
 function Registration(props) {
-    const params = useParams()
-
-// yuo can find all params from here
-console.log(params)
-
-    return (
-        <div className="registration-page">
-            <div className="registration-content">
-                <div className="title_container">
-                    <h2>Registration</h2>
-                </div>
-                <div>
-                    <div>
-                        <Form>
-                            <div className="row clearfix">
-                                <div className="col_half">
-                                    <div className="input_field"> <span><i aria-hidden="true" className="fa fa-user"></i></span>
-                                        <Form.Control type="text" name="name" placeholder="First Name" />
-                                    </div>
-                                </div>
-                                <div className="col_half">
-                                    <div className="input_field"> <span><i aria-hidden="true" className="fa fa-user"></i></span>
-                                        <Form.Control type="text" name="name" placeholder="Last Name" required />
-                                    </div>
-                                </div>
-                            </div>
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

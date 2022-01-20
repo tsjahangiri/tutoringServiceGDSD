@@ -3,6 +3,7 @@ import { takeEvery, call, put } from "redux-saga/effects";
 import { executeApiCall } from "./api";
 import type { Saga } from "redux-saga";
 import { FETCH_STUDENT_SHOW_LIST } from "../actionTypes/studentShow";
+import { allStudentListApi } from "../endpoints";
 import {
     getStudentShowListFailed,
     getStudentShowListSuccess,
@@ -20,18 +21,17 @@ export function* getStudentShowList(action: Object): Saga<void> {
     if (filters.subjectName) {
         url += `subjectname=${filters.subjectName}&`;
     }
-
+    console.log(url)
     const apiOptions: ApiOptions = {
-        url,
+        url: allStudentListApi,
         method: "GET",
-        params: payload, // /api?param1=a&param2=b
+        useJwtSecret: false,
     };
 
     const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
+    const { isSuccessful, response = {} } = apiResponse;
 
-    const { success, response = {} } = apiResponse;
-
-    if (success) {
+    if (isSuccessful) {
         var data = response;
         yield put(getStudentShowListSuccess({ data }));
     } else {
