@@ -6,10 +6,8 @@ import userSaga from "./user";
 import courseSaga from "./course"
 import studentShowSaga from "./studentShow"
 import qualificationSaga from "./qualification"
+import offerCourseSaga from "./offerCourse"
 
 export default function* rootSaga(): Saga<void> {
-  yield all([fork(tutorSaga), fork(userSaga), fork(studentShowSaga), fork(courseSaga)]);
-
-export default function* rootSaga(): Saga<void> {
-  yield all([fork(tutorSaga), fork(userSaga), fork(courseSaga), fork(qualificationSaga)]);
+  yield all([fork(tutorSaga), fork(userSaga), fork(courseSaga), fork(studentShowSaga), fork(qualificationSaga), fork(offerCourseSaga)]);
 }
