@@ -21,35 +21,75 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '0c8a4418-601d-11ec-8f02-42010a800003:1-416511';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '0c8a4418-601d-11ec-8f02-42010a800003:1-428990';
 
 --
--- Table structure for table `hm_image`
+-- Table structure for table `hm_chat`
 --
 
-DROP TABLE IF EXISTS `hm_image`;
+DROP TABLE IF EXISTS `hm_chat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `hm_image` (
+CREATE TABLE `hm_chat` (
+  `id` int(11) NOT NULL,
+  `fromUserId` int(11) NOT NULL,
+  `toUserId` int(11) NOT NULL,
+  `text` varchar(75) NOT NULL,
+  `createdDate` date DEFAULT NULL,
+  `msgStatus` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `hm_course`
+--
+
+DROP TABLE IF EXISTS `hm_course`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hm_course` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `imagePath` varchar(50) NOT NULL,
-  `date` varchar(50) DEFAULT NULL,
-  `userId` varchar(100) NOT NULL,
-  `createdDateTime` date NOT NULL,
-  `modifiedDateTime` date NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+  `courseCode` varchar(45) NOT NULL,
+  `courseName` varchar(75) NOT NULL,
+  `departmentId` int(11) NOT NULL,
+  `level` varchar(45) NOT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `hm_image`
+-- Table structure for table `hm_department`
 --
 
-LOCK TABLES `hm_image` WRITE;
-/*!40000 ALTER TABLE `hm_image` DISABLE KEYS */;
-/*!40000 ALTER TABLE `hm_image` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `hm_department`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hm_department` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `hm_file`
+--
+
+DROP TABLE IF EXISTS `hm_file`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hm_file` (
+  `id` int(11) NOT NULL,
+  `tutorProfileId` int(11) NOT NULL,
+  `fileName` varchar(75) NOT NULL,
+  `fileType` int(11) NOT NULL,
+  `fileExtension` varchar(15) NOT NULL,
+  `filePath` varchar(175) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `hm_post`
@@ -60,28 +100,21 @@ DROP TABLE IF EXISTS `hm_post`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hm_post` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `subjectTitle` varchar(50) NOT NULL,
   `description` varchar(50) DEFAULT NULL,
-  `tutorId` int(11) NOT NULL,
+  `tutorProfileId` int(11) NOT NULL,
   `status` int(11) NOT NULL,
-  `language` varchar(45) DEFAULT NULL,
-  `subjectCode` float NOT NULL,
-  `ratePerHour` float DEFAULT NULL,
+  `language` varchar(55) DEFAULT NULL,
+  `subjectId` int(11) NOT NULL,
+  `ratePerHour` float NOT NULL,
   `createdDateTime` date NOT NULL,
   `modifiedDateTime` date NOT NULL,
+  `experienceYears` int(11) DEFAULT NULL,
+  `isActive` int(11) DEFAULT NULL,
+  `availableTime` varchar(75) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hm_post`
---
-
-LOCK TABLES `hm_post` WRITE;
-/*!40000 ALTER TABLE `hm_post` DISABLE KEYS */;
-/*!40000 ALTER TABLE `hm_post` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `hm_qualification`
@@ -92,21 +125,13 @@ DROP TABLE IF EXISTS `hm_qualification`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hm_qualification` (
   `id` int(11) NOT NULL,
-  `subject` varchar(100) NOT NULL,
-  `qualification` varchar(50) NOT NULL,
+  `subjectId` int(11) NOT NULL,
+  `description` varchar(80) NOT NULL,
   `grade` varchar(45) DEFAULT NULL,
+  `tutorProfileId` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hm_qualification`
---
-
-LOCK TABLES `hm_qualification` WRITE;
-/*!40000 ALTER TABLE `hm_qualification` DISABLE KEYS */;
-/*!40000 ALTER TABLE `hm_qualification` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `hm_review`
@@ -117,23 +142,35 @@ DROP TABLE IF EXISTS `hm_review`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hm_review` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `comment` varchar(150) NOT NULL,
+  `text` varchar(250) DEFAULT NULL,
   `rating` float DEFAULT NULL,
   `createdDateTime` date NOT NULL,
   `modifiedDateTime` date NOT NULL,
+  `userId` int(11) NOT NULL,
+  `tutorProfileId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `hm_review`
+-- Table structure for table `hm_tutor_profile`
 --
 
-LOCK TABLES `hm_review` WRITE;
-/*!40000 ALTER TABLE `hm_review` DISABLE KEYS */;
-/*!40000 ALTER TABLE `hm_review` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `hm_tutor_profile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hm_tutor_profile` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL,
+  `about` varchar(250) NOT NULL,
+  `age` int(11) NOT NULL,
+  `rating` float NOT NULL,
+  `picPath` varchar(180) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `hm_user`
@@ -144,58 +181,17 @@ DROP TABLE IF EXISTS `hm_user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hm_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) NOT NULL,
-  `first_name` varchar(50) DEFAULT NULL,
-  `last_name` varchar(50) DEFAULT NULL,
+  `firstName` varchar(50) DEFAULT NULL,
+  `lastName` varchar(50) DEFAULT NULL,
   `usertype` int(11) NOT NULL,
-  `email` varchar(70) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `password` varchar(145) NOT NULL,
-  `status` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `gender` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hm_user`
---
-
-LOCK TABLES `hm_user` WRITE;
-/*!40000 ALTER TABLE `hm_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `hm_user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tutorprofile`
---
-
-DROP TABLE IF EXISTS `tutorprofile`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tutorprofile` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(50) NOT NULL,
-  `subject` varchar(100) NOT NULL,
-  `age` int(11) NOT NULL,
-  `level` varchar(45) DEFAULT NULL,
-  `rate` float DEFAULT NULL,
-  `rating` float DEFAULT NULL,
-  `numOfStudents` int(11) DEFAULT NULL COMMENT '	',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tutorprofile`
---
-
-LOCK TABLES `tutorprofile` WRITE;
-/*!40000 ALTER TABLE `tutorprofile` DISABLE KEYS */;
-INSERT INTO `tutorprofile` VALUES (4,'Rohat','Sagar','Introducation to Programming',22,'Bachelor',22,5,100),(5,'Talha Jahangiri','Khan','English',24,'Bachelor',20,5,50),(6,'Chowdhury Amlan','Barua ','Parallel Programming',21,'Master',25,4.9,75),(7,'Mohammad Salman','Haydar','Object Oriented Programming',25,'Bachelor',24,4.7,55),(8,'Nisha','Devi','Test Oriented Development',20,'Master',25,5,90),(9,'Hasib ','Iqbal ','Data Science',23,'Bachelor ',22,4.9,100),(10,'Mohammad Rakibul','Hasan ','Machine Learning',23,'Master',26,4.7,50),(11,'Mohammad Rakibul','Hasan ','Math',23,'Bachelor',22,4.8,75),(12,'Hasib ','Iqbal ','Mobile App Development',23,'Bachelor ',24,4.6,50),(13,'Rohat','Sagar','Distributed Application',22,'Master',26,5,90);
-/*!40000 ALTER TABLE `tutorprofile` ENABLE KEYS */;
-UNLOCK TABLES;
 SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -207,4 +203,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-16 16:00:27
+-- Dump completed on 2022-01-19 17:47:07
