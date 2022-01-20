@@ -11,7 +11,7 @@ const socketIO = require("socket.io");
 const server = http.Server(app);
 var io = socketIO(server);
 
-const port = 9090;
+const port = 8080;
 require("dotenv").config();
 
 var jsonParser = bodyParser.json();
