@@ -15,6 +15,7 @@ const router = express.Router();
 
 let auth = require("../middleware/auth");
 let adminAuth = require("../middleware/adminAuth");
+let tutorAuth = require("../middleware/tutorAuth");
 
 let postController = require("../controller/postController");
 router.post("/posts", createPostValidation, postController.createPost);
@@ -68,5 +69,8 @@ router.post("/login", loginController.loginUser);
 
 let adminController = require("../controller/adminController");
 router.delete("/user", adminAuth.isAdmin, adminController.deleteUser);
+
+let uploadController = require("../controller/uploadController");
+router.post("/upload", tutorAuth.isTutor, uploadController.upload);
 
 module.exports = router;
