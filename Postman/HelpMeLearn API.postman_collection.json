@@ -14,13 +14,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/users/1",
+							"raw": "{{BaseUrl}}/users/5",
 							"host": [
 								"{{BaseUrl}}"
 							],
 							"path": [
 								"users",
-								"1"
+								"5"
 							]
 						}
 					},
@@ -38,6 +38,18 @@
 							],
 							"path": [
 								"users"
+							],
+							"query": [
+								{
+									"key": "UserType",
+									"value": "101",
+									"disabled": true
+								},
+								{
+									"key": "Status",
+									"value": "100",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -50,7 +62,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"UserName\" : \"TEst\",\r\n  \"FirstName\": \"test\",\r\n  \"LastName\": \"test\",\r\n  \"UserType\":101,\r\n  \"Email\": \"12345@gmail.coooo\",\r\n  \"Password\":1234,\r\n  \"Status\": 0\r\n}",
+							"raw": "{\r\n  \"FirstName\": \"Hello Tutor\",\r\n  \"LastName\": \"World Tutor\",\r\n  \"UserType\":101,\r\n  \"Email\": \"12345@gmail.coooo\",\r\n  \"Password\": \"12345\",\r\n  \"Status\": 101,\r\n  \"Gender\": \"Female\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -75,13 +87,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/users/1",
+							"raw": "{{BaseUrl}}/users/5",
 							"host": [
 								"{{BaseUrl}}"
 							],
 							"path": [
 								"users",
-								"1"
+								"5"
 							]
 						}
 					},
@@ -94,7 +106,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 4,\r\n  \"UserName\" : \"TEst\",\r\n  \"FirstName\": \"test\",\r\n  \"LastName\": \"test\",\r\n  \"UserType\":101,\r\n  \"Email\": \"12345@gmail.coo\",\r\n  \"Pd\":1234,\r\n  \"Status\": 0\r\n}",
+							"raw": "{\r\n  \"Id\": 7,\r\n  \"UserName\" : \"TEst\",\r\n  \"FirstName\": \"test\",\r\n  \"LastName\": \"test\",\r\n  \"UserType\":101,\r\n  \"Email\": \"12345@gmail.coo\",\r\n  \"Pd\":\"12344\",\r\n  \"Status\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -124,7 +136,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/posts?subjectCode=1",
+							"raw": "{{BaseUrl}}/posts",
 							"host": [
 								"{{BaseUrl}}"
 							],
@@ -138,18 +150,19 @@
 									"disabled": true
 								},
 								{
-									"key": "tutorId",
-									"value": "test",
+									"key": "TutorProfileId",
+									"value": "1",
 									"disabled": true
 								},
 								{
 									"key": "ratePerHour",
-									"value": "0",
+									"value": "12",
 									"disabled": true
 								},
 								{
 									"key": "subjectCode",
-									"value": "1"
+									"value": "1",
+									"disabled": true
 								}
 							]
 						}
@@ -162,13 +175,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/posts/4",
+							"raw": "{{BaseUrl}}/posts/2",
 							"host": [
 								"{{BaseUrl}}"
 							],
 							"path": [
 								"posts",
-								"4"
+								"2"
 							]
 						}
 					},
@@ -181,7 +194,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Id\": 4,\r\n\t\"SubjectTitle\" : \"Web\",\r\n\t\"Description\" : \"test description\",\r\n\t\"TutorId\": \"tutor101\",\r\n\t\"Status\": 0,\r\n\t\"Language\": \"English\",\r\n\t\"SubjectCode\": \"1\",\r\n    \"RatePerHour\":\"12\"\r\n}",
+							"raw": "{\r\n    \"Id\": 2,\r\n    \"TutorProfileId\" : 1,\r\n    \"SubjectId\": 1,\r\n\t\"Description\" : \"test description - Test\",\r\n\t\"TutorId\": 1,\r\n\t\"Status\": 100,\r\n\t\"Language\": \"Math 101\",\r\n\t\"ExperinceYears\": \"1\",\r\n    \"RatePerHour\":\"12\",\r\n    \"AvailableTime\":\"12:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -225,7 +238,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"SubjectTitle\" : \"GDSD\",\r\n\t\"Description\" : \"test description\",\r\n\t\"TutorId\": \"tutor101\",\r\n\t\"Status\": 0,\r\n\t\"Language\": \"English\",\r\n\t\"SubjectCode\": \"1\",\r\n    \"RatePerHour\":\"12\"\r\n}",
+							"raw": "{\r\n\t\"TutorProfileId\" : 1,\r\n    \"SubjectId\": 1,\r\n\t\"Description\" : \"test description\",\r\n\t\"TutorId\": 1,\r\n\t\"Status\": 100,\r\n\t\"Language\": \"Math 101\",\r\n\t\"ExperinceYears\": \"1\",\r\n    \"RatePerHour\":\"12\",\r\n    \"AvailableTime\":\"12:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -274,7 +287,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Id\": 2,\r\n    \"Comment\" : \"This is tempory comment\",\r\n    \"Rating\": 4\r\n}",
+							"raw": "{\r\n    \"Id\": 1,\r\n    \"UserId\" : 1,\r\n    \"TutorProfileId\": 1,\r\n    \"Text\": \"Okay\",\r\n    \"Rating\": 4\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -299,13 +312,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/reviews/2",
+							"raw": "{{BaseUrl}}/reviews/1",
 							"host": [
 								"{{BaseUrl}}"
 							],
 							"path": [
 								"reviews",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -318,7 +331,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Comment\" : \"This is temp comment\",\r\n    \"Rating\": 4\r\n}",
+							"raw": "{\r\n    \"UserId\" : 1,\r\n    \"TutorProfileId\": 2,\r\n    \"Text\": \"Best\",\r\n    \"Rating\": 4\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -332,6 +345,253 @@
 							],
 							"path": [
 								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reviews - Filtering",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/reviews?TutorProfileId=2&UserId=1",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "TutorProfileId",
+									"value": "2"
+								},
+								{
+									"key": "UserId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Department",
+			"item": [
+				{
+					"name": "Departments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/depts",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"depts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Departments",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Computer Science\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/depts",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"depts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Departments",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": 3,\r\n    \"Name\": \"Medical Science\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/depts",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"depts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Departments",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/depts/3",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"depts",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Departments/Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/depts/1",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"depts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Course",
+			"item": [
+				{
+					"name": "Courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/courses",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Course/Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/courses/1",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"courses",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Courses",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/courses/1",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"courses",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Courses",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": 1,\r\n    \"CourseName\": \"GDSD - Winter 21/22\",\r\n    \"CourseCode\": \"101\",\r\n    \"DeptId\": 1,\r\n    \"Level\": \"UnderGrad\",\r\n    \"Status\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/courses",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Courses",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CourseName\": \"GDSD\",\r\n    \"CourseCode\": \"101\",\r\n    \"DeptId\": 1,\r\n    \"Level\": \"UnderGrad\",\r\n    \"Status\": 105\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/courses",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"courses"
 							]
 						}
 					},
