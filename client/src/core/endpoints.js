@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000/api';
+const baseUrl = 'http://serverv1-env.eba-2zezdtzh.us-east-1.elasticbeanstalk.com/api';
 
 export const loginApi = `${baseUrl}/login`;
 export const registerApi = `${baseUrl}/register`;
