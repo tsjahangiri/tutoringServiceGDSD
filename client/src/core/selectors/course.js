@@ -1,2 +1,2 @@
 // @flow
-export const saveCourse = (state: Object) => state.course;
+export const getCourseListByStatus = (state: Object) => state.course.data;
