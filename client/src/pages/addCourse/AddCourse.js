@@ -7,16 +7,19 @@ import { saveCourse } from "../../core/actionCreators/course";
 function AddCourse(props) {
   const dispatch = useDispatch();
 
-  const subjectRef = useRef(null);
+  const courseNameRef = useRef(null);
+  const courseCodeRef = useRef(null);
   const levelRef = useRef(null);
   const descriptionRef = useRef(null);
-
+  const departmentRef = useRef(null);
   //function to save the course
   const submitCourse = () => {
     const course = {
-      subject: subjectRef.current.value,
+      courseName: courseNameRef.current.value,
+      courseCode: courseCodeRef.current.value,
       level: levelRef.current.value,
       description: descriptionRef.current.value,
+      departmentId: departmentRef.current.value
     };
    console.log(course);
     dispatch(saveCourse(course));
@@ -32,14 +35,16 @@ function AddCourse(props) {
         <h1>Add New Course</h1>
         <Form>
           <br />
-          <Form.Control as="select">
-            <option value="">Select Department...</option>
-            <option value="CSE">CSE</option>
-            <option value="BBA">BBA</option>
-            <option value="EEE">EEE</option>
+          <Form.Control ref={departmentRef} as="select">
+            <option value="0">Select Department...</option>
+            <option value="1">CSE</option>
+            <option value="2">BBA</option>
+            <option value="3">EEE</option>
           </Form.Control>
           <br />
-          <Form.Control ref={subjectRef} type="text" placeholder="Subject" />
+          <Form.Control ref={courseNameRef} type="text" placeholder="Course Name" />
+          <br />
+          <Form.Control ref={courseCodeRef} type="text" placeholder="Course Code" />
           <br />
           <Form.Control ref={levelRef} type="text" placeholder="Level" />
           <br />

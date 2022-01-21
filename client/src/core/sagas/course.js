@@ -20,7 +20,7 @@ export function* saveCourse(action: Object): Saga<void> {
   console.log("hello")
  
   var url = process.env.REACT_APP_API_URL;
-  url += `/course`;
+  url += `courses`;
 
   const apiOptions: ApiOptions = {
     url,
