@@ -1,10 +1,10 @@
 // @flow
 import {
-    FETCH_STUDENT_SHOW_LIST,
-    SET_STUDENT_SHOW_LIST_LOADING,
-    GET_STUDENT_SHOW_LIST_SUCCESS,
-    GET_STUDENT_SHOW_LIST_FAILED,
-} from "../actionTypes/studentShow";
+    FETCH_TUTOR_LIST,
+    SET_TUTOR_LIST_LOADING,
+    GET_TUTOR_LIST_SUCCESS,
+    GET_TUTOR_LIST_FAILED,
+} from "../actionTypes/tutor";
 
 export const INITIAL_STATE = {
     data: [],
@@ -15,21 +15,21 @@ export const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action = {}) => {
     switch (action.type) {
-        case FETCH_STUDENT_SHOW_LIST:
+        case FETCH_TUTOR_LIST:
             const { filters } = action.payload;
             return {
                 ...state,
                 filters: filters,
             };
-        case SET_STUDENT_SHOW_LIST_LOADING:
+        case SET_TUTOR_LIST_LOADING:
             return INITIAL_STATE;
-        case GET_STUDENT_SHOW_LIST_SUCCESS:
+        case GET_TUTOR_LIST_SUCCESS:
             const { data } = action.payload;
             return {
                 ...state,
                 data: data,
             };
-        case GET_STUDENT_SHOW_LIST_FAILED:
+        case GET_TUTOR_LIST_FAILED:
             return INITIAL_STATE;
         default:
             return state;

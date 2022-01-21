@@ -13,13 +13,11 @@ var io = socketIO(server);
 
 const port = 8080;
 require("dotenv").config();
-global.__basedir = __dirname;
 
 var jsonParser = bodyParser.json();
 
 app.use(cors());
 app.use(jsonParser);
-app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
 app.use("/api/", routes);
 // app.use(function (req, res, next) {
@@ -34,7 +32,7 @@ app.use(function(req, res, next) {
     next();
 })
 
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Help Me Learn API listening at http://localhost:${port}`);
 });
 

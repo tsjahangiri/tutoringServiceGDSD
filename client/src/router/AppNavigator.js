@@ -7,7 +7,6 @@ import Login from "../pages/login/Login";
 import Registration from "../pages/registration/Registration";
 import StudentList from "../pages/home/admin/studentList/StudentList";
 import TutorList from "../pages/home/admin/tutorList/TutorList";
-import PendingTutorList from "../pages/home/admin/pendingTutor/PendingTutor";
 import AddCourse from "../pages/addCourse/AddCourse";
 import AddQualification from "../pages/addQualification/AddQualification";
 import OfferCourse from "../pages/offerCourse/OfferCourse";
@@ -30,10 +29,6 @@ function AppNavigator() {
       <Route path="/registration" element={<Registration />} />
       <Route path="/studentList" element={<StudentList />} />
       <Route path="/tutorList" element={<TutorList />} />
-      <Route path="/pendingTutorList" element={<PendingTutorList />} />
-      <Route path="/tutorProfile" element={<TutorProfile />} />
-      <Route path="/tutorList/:id" element={< TutorProfile />} />
-
       <Route path="/add-course" element={<AddCourse />} />
       <Route path="/add-qualification" element={<AddQualification />} />
       <Route path="/offer-course" element={<OfferCourse />} />
