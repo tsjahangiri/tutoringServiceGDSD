@@ -1,17 +1,41 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { ListGroup } from "react-bootstrap";
-import StudentShow from "../studentList/StudentShow";
-import { getStudentShowList } from "../../../../core/selectors/studentShow";
+import PendingTutorShow from "./PendingTutorShow";
+import { pendingTutorShowList } from "../../../../core/selectors/PendingTutorShow";
 import Paging from "../../../../components/paging/Paging";
 import Page from "../../../../components/page/Page";
 import FilterBar from "../filterBar/FilterBar";
-import { fetchStudentShowList } from "../../../../core/actionCreators/studentShow";
+import { fetchPendingTutorShowList } from "../../../../core/actionCreators/PendingTutorShow";
 
 function PendingTutor(props) {
-    // var data = useSelector(getTutorList); //TODO: Change var to const
+    const data = useSelector(pendingTutorShowList); //TODO: Change var to const
 
     // TODO: Remove this code
+
+    if (data === undefined) {
+        return <div></div>;
+    }
+
+    return (
+        <div>
+            <Page></Page>
+            <FilterBar fetchPendingTutorShowList={fetchPendingTutorShowList} />
+            <br />
+            <ListGroup>
+                {data.map((item, i) => {
+                    return <PendingTutorShow key={i} item={item} />;
+                })}
+            </ListGroup>
+            <br />
+            <Paging className="float-end" itemCount={data.length} />
+        </div>
+    );
+}
+
+export default PendingTutor;
+
+/*
     var data = [
         {
             id: 1,
@@ -45,24 +69,5 @@ function PendingTutor(props) {
         },
     ];
 
-    if (data === undefined) {
-        return <div></div>;
-    }
 
-    return (
-        <div>
-            <Page></Page>
-            <FilterBar fetchPendingTutorShowList={fetchStudentShowList} />
-            <br />
-            <ListGroup>
-                {data.map((item, i) => {
-                    return <StudentShow key={i} item={item} />;
-                })}
-            </ListGroup>
-            <br />
-            <Paging className="float-end" itemCount={data.length} />
-        </div>
-    );
-}
-
-export default PendingTutor;
+*/

@@ -26,6 +26,10 @@ function Page(props: Props) {
         title: "Tutor List",
         url: "/#/tutorList",
       },
+      {
+        title: "Pending Courses",
+        url: "/#/pendingTutorList",
+      },
     ];
   }
 

@@ -21,6 +21,10 @@ function AddCourse(props) {
    console.log(course);
     dispatch(saveCourse(course));
   };
+  //test
+  //  const getCourse = () => {
+  //   dispatch(fetchCourseListByStatus(1));
+  // };
 
   return (
     <div className="course-page">

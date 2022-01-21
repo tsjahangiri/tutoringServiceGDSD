@@ -6,3 +6,4 @@ export const tutorSearchApi = `${baseUrl}/tutors/search`;
 export const courseApi = `${baseUrl}/courses`;
 export const allStudentListApi = `${baseUrl}/users/?UserType=102`;
 export const allTutorListApi = `${baseUrl}/users/?UserType=101`;
+export const pendingTutorListApi = `${baseUrl}/courses?Status=100`;
