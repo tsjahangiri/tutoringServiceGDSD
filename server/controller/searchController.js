@@ -26,7 +26,7 @@ module.exports={
         }
 
         console.log(query);
-y
+
         database.query(query, function (err, result, fields) {
             if (err) throw err;
             res.json(result);
