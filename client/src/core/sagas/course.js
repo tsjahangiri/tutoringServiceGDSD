@@ -82,6 +82,7 @@ export function* fetchApprovedCourseList(action: Object): Saga<void> {
     url: courseApi,
     method: "GET",
     params: { Status: 101 },
+    useJwtSecret: false,
   };
 
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
