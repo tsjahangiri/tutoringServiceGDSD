@@ -72,6 +72,17 @@ router.post("/login", loginController.loginUser);
 let adminController = require("../controller/adminController");
 router.delete("/user", adminAuth.isAdmin, adminController.deleteUser);
 
+let TutorProfileController = require("../controller/TutorProfileController");
+router.get("/tutors/Info/:id", TutorProfileController.getTutorAbouInfoById);
+router.get("/tutors/courses/:id", TutorProfileController.getTutorOfferedCoursesById);
+router.get("/tutors/qualification/:id", TutorProfileController.getTutorQualificationById);
+router.get("/tutors/reviews/:id", TutorProfileController.getReviewsById);
+router.post("/tutors", TutorProfileController.saveTutorInfo);
+router.put("/tutors", TutorProfileController.updateTutorInfo);
+
+let searchController = require("../controller/searchController");
+router.get("/tutors/search", searchController.getTutorsByFilters);
+
 let tutorController = require("../controller/tutorController");
 router.post("/qualifications", createQualificationValidation, tutorController.createQualification);
 router.delete("/qualifications/:id", tutorController.deleteQualification);
