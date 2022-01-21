@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -8,17 +8,17 @@ import {
   ListGroup,
   Form,
 } from "react-bootstrap";
+import socketIOClient from "socket.io-client";
 import "./Chat.css";
 
 type Props = {
   showChat: Boolean,
   chatClosed: Function,
+  currentUserId?: number,
 };
 
 export default function Chat(props: Props) {
-  const { showChat, chatClosed } = props;
-
-  const [chat, toggleChat] = useState(undefined); //TODO: Rename chat
+  const { showChat, chatClosed, currentUserId } = props;
 
   // TODO: Remove
   const pictureUrl = "logo512.png";
@@ -28,6 +28,7 @@ export default function Chat(props: Props) {
   let date = "12-01-2022";
   let texts = [
     {
+      id: 1,
       name: "Rohat Sagar",
       lastContact: date,
       lastText: text,
@@ -70,6 +71,7 @@ export default function Chat(props: Props) {
       ],
     },
     {
+      id: 2,
       name: "Ammar",
       lastContact: date,
       lastText: text,
@@ -82,6 +84,7 @@ export default function Chat(props: Props) {
       ],
     },
     {
+      id: 3,
       name: "Vishal",
       lastContact: date,
       lastText: text,
@@ -89,13 +92,20 @@ export default function Chat(props: Props) {
     },
   ];
 
+  let defaultSelectedChat = undefined;
+  if (currentUserId !== undefined && texts?.length != 0) {
+    defaultSelectedChat = texts.find((element) => element.id == currentUserId);
+  }
+
+  const [selectedChat, setSelectedChat] = useState(defaultSelectedChat); //TODO: Rename chat
+
   function renderChat(item, i) {
     const renderBorder = texts.length === i + 1;
     return (
       <Container
         xs={1}
         onClick={
-          () => toggleChat(item) /** very important to use () => func() */
+          () => setSelectedChat(item) /** very important to use () => func() */
         }
         key={i}
         style={{ borderColor: "#808080", cursor: "pointer" }}
@@ -170,7 +180,7 @@ export default function Chat(props: Props) {
     );
   }
 
-  if (chat === undefined) {
+  if (selectedChat === undefined) {
     return (
       <Offcanvas
         style={{ zIndex: 9999 /** to overlay fab button */ }}
@@ -200,11 +210,11 @@ export default function Chat(props: Props) {
       >
         <Offcanvas.Header closeButton>
           <i
-            onClick={() => toggleChat(undefined)}
+            onClick={() => setSelectedChat(undefined)}
             className="bi bi-arrow-left-short"
             style={{ fontSize: "2rem", cursor: "pointer", opacity: ".5" }}
           ></i>
-          <Offcanvas.Title>{chat.name}</Offcanvas.Title>
+          <Offcanvas.Title>{selectedChat.name}</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ListGroup
@@ -215,7 +225,7 @@ export default function Chat(props: Props) {
               height: "80%",
             }}
           >
-            {chat?.texts.map((item, i) => {
+            {selectedChat?.texts.map((item, i) => {
               return renderText(item);
             })}
           </ListGroup>

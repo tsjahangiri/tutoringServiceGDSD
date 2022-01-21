@@ -21,12 +21,8 @@ function AppNavigator() {
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/login" element={<Anonymous component={Login} />} />
       <Route path="/home" element={<Home />} />
-      {/*
       <Route path="/users" element={<Authorized component={Users} />} />
       <Route path="/posts" element={<Authorized component={Posts} />} />
-      */}
-      <Route path="/users" element={<Users />} />
-      <Route path="/posts" element={<Posts />} />
       <Route path="/registration" element={<Registration />} />
       <Route path="/studentList" element={<StudentList />} />
       <Route path="/tutorList" element={<TutorList />} />
@@ -34,6 +30,7 @@ function AppNavigator() {
       <Route path="/add-course" element={<AddCourse />} />
       <Route path="/add-qualification" element={<AddQualification />} />
       <Route path="/offer-course" element={<OfferCourse />} />
+      <Route path="/tutor/:tutorId" element={<TutorProfile />} />
     </Routes>
   );
 }

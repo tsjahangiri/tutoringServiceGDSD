@@ -9,7 +9,10 @@ import {
 export const INITIAL_STATE = {
   data: [],
   filters: {
-    subjectName: "",
+    subjectId: undefined,
+    level: "%",
+    minRate: 0,
+    gender: "%",
   },
 };
 

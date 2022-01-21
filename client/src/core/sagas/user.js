@@ -17,13 +17,13 @@ export default function* loginSaga(): Saga<void> {
 }
 
 export function* login(action: Object): Saga<void> {
-  const { username, pd } = action.payload;
+  const { email, pd } = action.payload;
 
   const apiOptions: ApiOptions = {
     url: loginApi,
     method: "POST",
     params: {
-      username: username,
+      email: email,
       password: pd,
     },
     useJwtSecret: false,
@@ -34,11 +34,11 @@ export function* login(action: Object): Saga<void> {
   const { isSuccessful, response = {} } = apiResponse;
 
   if (isSuccessful) {
-    const { email, token } = response;
+    const { id, email, token } = response;
     if (token !== undefined) {
       var decoded = jwt_decode(token);
-      const { exp, status, user_name, user_type } = decoded;
-      yield put(setCurrentUser({ email, user_name, user_type, token, exp }));
+      const { id, email, user_type, status, exp } = decoded;
+      yield put(setCurrentUser({ id, email, user_type, status, exp, token }));
     }
   } else {
     const errorMessage = response.ErrorMessage || response.message;

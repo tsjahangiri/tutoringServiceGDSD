@@ -5,15 +5,16 @@ import {
   SAVE_COURSE_LOADING,
   SAVE_COURSE_SUCCESS,
   SAVE_COURSE_FAILED,
+  SET_APPROVED_COURSE_LIST,
   FETCH_COURSE_LIST_BY_STATUS,
   SET_COURSE_LIST_BY_STATUS_LOADING,
   GET_COURSE_LIST_BY_STATUS_SUCCESS,
-  GET_COURSE_LIST_BY_STATUS_FAILED
+  GET_COURSE_LIST_BY_STATUS_FAILED,
 } from "../actionTypes/course";
 
 export const INITIAL_STATE = {
   data: [],
-  status: ""
+  status: "",
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -23,12 +24,17 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
       };
+    case SET_APPROVED_COURSE_LIST:
+      return {
+        ...state,
+        approvedCourseList: action.payload,
+      };
     case SAVE_COURSE_LOADING:
       return INITIAL_STATE;
     case SAVE_COURSE_SUCCESS:
       return INITIAL_STATE;
     case SAVE_COURSE_FAILED:
-     case FETCH_COURSE_LIST_BY_STATUS:
+    case FETCH_COURSE_LIST_BY_STATUS:
       const { status } = action.payload;
       return {
         ...state,

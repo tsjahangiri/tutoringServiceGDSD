@@ -14,11 +14,9 @@ function Page(props: Props) {
 
   let userType = useSelector(getUserType);
 
-  var headerOptions;
-  
-  if (userType === "student" || userType === "tutor") {
-    headerOptions = [];
-  } else {
+  var headerOptions = [];
+
+  if (userType === "admin") {
     headerOptions = [
       {
         title: "Student List",
@@ -34,8 +32,7 @@ function Page(props: Props) {
       },
     ];
   }
-  
- 
+
   return (
     <div>
       <Header headerOptions={headerOptions} />
