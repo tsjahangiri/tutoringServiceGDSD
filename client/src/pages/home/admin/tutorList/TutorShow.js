@@ -4,7 +4,6 @@ import { Row, Col } from "react-bootstrap";
 
 function TutorShow(props) {
     const { id, firstName, lastName, gender } = props.item;
-    console.log(id)
   return (
     <div
       style={{ borderColor: "#808080" }}
