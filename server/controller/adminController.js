@@ -3,12 +3,12 @@ const adminAuth = require("../middleware/adminAuth");
 
 module.exports = {
   deleteUser: (req, res, next) => {
-    let userName = req.query.username;
+    let userId = req.query.id;
     // console.log(userName);
     try {
       database.execute(
-        "DELETE FROM `helpmelearn`.`hm_user` WHERE (`username` = ?)",
-        [userName],
+        "DELETE FROM `helpmelearn`.`hm_user` WHERE (`id` = ?)",
+        [userId],
         (err, result) => {
           // console.log(result);
           res.json({ success: true, message: "User deleted succesfully!" });

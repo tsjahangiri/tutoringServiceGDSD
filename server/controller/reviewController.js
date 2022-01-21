@@ -52,7 +52,7 @@ module.exports = {
     }
 
     let query =
-      "SELECT id, `text`, rating, createdDateTime, modifiedDateTime, userId, tutorProfileId FROM helpmelearndatabase.hm_review";
+      "SELECT id, `text`, rating, createdDateTime, modifiedDateTime, userId, tutorProfileId FROM hm_review";
     if (joinQuery !== "") query += ` where ${joinQuery}`;
     database.query(query, (err, result) => {
       if (err) res.status(400).send(`Response Error: ${err}`);
