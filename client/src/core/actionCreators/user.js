@@ -31,10 +31,10 @@ export const setRegistrationAlert = (
   },
 });
 
-export const loginUser = (username: string, pd: string) => ({
+export const loginUser = (email: string, pd: string) => ({
   type: LOGIN_USER,
   payload: {
-    username,
+    email,
     pd,
   },
 });
@@ -49,18 +49,20 @@ export const logoutUser = () => ({
 });
 
 export const setCurrentUser = ({
+  id,
   email,
-  user_name,
   user_type,
-  token,
+  status,
   exp,
+  token,
 }) => ({
   type: SET_CURRENT_USER,
   payload: {
+    id,
     email,
-    user_name,
     user_type,
-    token,
+    status,
     exp,
+    token,
   },
 });
