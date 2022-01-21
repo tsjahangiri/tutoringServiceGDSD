@@ -18,7 +18,6 @@ function StudentList(props) {
 
     return (
         <div>
-            <p>Helo</p>
             <Page></Page>
             <FilterBar fetchStudentShowList={fetchStudentShowList} />
             <br />
