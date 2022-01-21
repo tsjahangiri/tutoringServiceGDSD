@@ -32,7 +32,7 @@ app.use(function(req, res, next) {
     next();
 })
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Help Me Learn API listening at http://localhost:${port}`);
 });
 
