@@ -1,74 +1,55 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Card, ListGroup, Row, Col, Container, Button, ListGroupItem, Badge, Pagination, Table } from "react-bootstrap";
-import { div, img } from "bootstrap";
-import "./QualificationList.css";
+import { ListGroup } from "react-bootstrap";
 
 export default function QualificationList() {
+  // var data = useSelector(); //TODO: Change var to const
 
-    // var data = useSelector(getQualificationList); //TODO: Change var to const
+  var data = [
+    {
+      id: 1,
+      subject: "Math 101",
+      description:
+        "Some quick example text to build on the card title and make up the bulk of the card's content",
+      grade: "A+",
+    },
+    {
+      id: 2,
+      subject: "Math 102",
+      description:
+        "Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content",
+      grade: "B",
+    },
+  ];
 
-    let active = 2;
-    let items = [];
-    const viewDetails = () => {
-        var newFilters = {};
-    };
+  if (data === undefined || data.length === undefined || data.length === 0) {
+    return null;
+  }
 
-    var data = [
-        {
-            id: 1,
-            SL: 1,
-            Subject: "Hasib Iqbal",
-            University: "Some quick example text",
-            Qualification: "Some quick example text",
-            Topics: "Some quick example "
-        },
-        {
-            id: 2,
-            SL: 2,
-            Subject: "Hasib Iqbal",
-            University: "Some quick example text",
-            Qualification: "Some quick example text",
-            Topics: "Some quick example "
-        }
-    ];
-
-    for (let number = 1; number <= data.length; number++) {
-        items.push(
-            <Pagination.Item key={number} active={number === active}>
-                {number}
-            </Pagination.Item>,
-        );
-    }
-
-    if (data === undefined) {
-        return <div></div>;
-    }
-
-    return (
-        <Card>
-            <Table responsive="sm">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Subject</th>
-                        <th>Qualification</th>
-                        <th>University</th>
-                        <th>Topics</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((item, i) => {
-                        return <tr>
-                            <td>{item.SL}</td>
-                            <td>{item.Subject}</td>
-                            <td>{item.Qualification}</td>
-                            <td>{item.University}</td>
-                            <td>{item.Topics}</td>
-                        </tr>;
-                    })}
-                </tbody>
-            </Table>
-        </Card>
-    );
+  return (
+    <div>
+      <span>MY QUALIFICATIONS</span>
+      <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
+        {data.map((item, i) => {
+          return (
+            <ListGroup.Item
+              style={{ cursor: "pointer" }}
+              key={i}
+              className="d-flex justify-content-between align-items-start"
+            >
+              <div className="me-auto">
+                <div>
+                  <span className="fw-bold">{item.subject}</span>
+                </div>
+                <div className="mb-2">
+                  <span className="text-muted">{`Grade: ${item.grade}`}</span>
+                </div>
+                <div className="fw-light">{item.description}</div>
+              </div>
+            </ListGroup.Item>
+          );
+        })}
+      </ListGroup>
+    </div>
+  );
 }

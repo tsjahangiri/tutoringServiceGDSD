@@ -4,13 +4,29 @@ import {
   SAVE_COURSE_LOADING,
   SAVE_COURSE_SUCCESS,
   SAVE_COURSE_FAILED,
+  FETCH_APPROVED_COURSE_LIST,
+  SET_APPROVED_COURSE_LIST,
 } from "../actionTypes/course";
+
+export const fetchApprovedCourseList = (payload) => {
+  return {
+    type: FETCH_APPROVED_COURSE_LIST,
+    payload,
+  };
+};
+
+export const setApprovedCourseList = (payload) => {
+  return {
+    type: SET_APPROVED_COURSE_LIST,
+    payload,
+  };
+};
 
 export const saveCourse = (data) => {
   console.log("from creators" + data);
   return {
     type: SAVE_COURSE,
-    payload: data
+    payload: data,
   };
 };
 

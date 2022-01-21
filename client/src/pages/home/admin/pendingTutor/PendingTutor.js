@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { ListGroup } from "react-bootstrap";
-import StudentShow from "./StudentShow";
+import StudentShow from "../studentList/StudentShow";
 import { getStudentShowList } from "../../../../core/selectors/studentShow";
 import Paging from "../../../../components/paging/Paging";
 import Page from "../../../../components/page/Page";
@@ -52,7 +52,7 @@ function PendingTutor(props) {
     return (
         <div>
             <Page></Page>
-            <FilterBar fetchPendingTutorShowList={fetchPendingTutorShowList} />
+            <FilterBar fetchPendingTutorShowList={fetchStudentShowList} />
             <br />
             <ListGroup>
                 {data.map((item, i) => {

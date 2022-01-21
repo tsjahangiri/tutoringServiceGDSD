@@ -1,5 +1,4 @@
 // @flow
-
 export const getUserType = (state: Object) => {
   if (state.user.current === undefined) return "guest";
   switch (state.user.current.user_type) {

@@ -5,13 +5,34 @@ import {
   SAVE_OFFER_COURSE_LOADING,
   SAVE_OFFER_COURSE_SUCCESS,
   SAVE_OFFER_COURSE_FAILED,
+  FETCH_OFFER_COURSE_LIST,
+  SET_OFFER_COURSE_LIST,
 } from "../actionTypes/offerCourse";
 
-export const INITIAL_STATE = {};
+export const INITIAL_STATE = {
+  data: [],
+  filters: {
+    subjectId: undefined,
+    level: undefined,
+    minRate: 0,
+    gender: undefined,
+  },
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case FETCH_OFFER_COURSE_LIST:
+      const { filters } = action.payload;
+      return {
+        ...state,
+        filters: filters,
+      };
+    case SET_OFFER_COURSE_LIST:
+      return {
+        ...state,
+        data: action.payload,
+      };
     case SAVE_OFFER_COURSE:
       return {
         ...state,

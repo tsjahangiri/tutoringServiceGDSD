@@ -4,6 +4,7 @@ import {
   SAVE_COURSE_LOADING,
   SAVE_COURSE_SUCCESS,
   SAVE_COURSE_FAILED,
+  SET_APPROVED_COURSE_LIST
 } from "../actionTypes/course";
 
 export const INITIAL_STATE = {};
@@ -14,6 +15,11 @@ export default (state = INITIAL_STATE, action) => {
     case SAVE_COURSE:
       return {
         ...state,
+      };
+    case SET_APPROVED_COURSE_LIST:
+      return {
+        ...state,
+        approvedCourseList: action.payload,
       };
     case SAVE_COURSE_LOADING:
       return INITIAL_STATE;
