@@ -1,31 +1,31 @@
 // @flow
 import {
-    FETCH_STUDENT_SHOW_LIST,
-    SET_STUDENT_SHOW_LIST_LOADING,
-    GET_STUDENT_SHOW_LIST_SUCCESS,
-    GET_STUDENT_SHOW_LIST_FAILED,
-} from "../actionTypes/studentShow";
+    FETCH_TUTOR_LIST,
+    SET_TUTOR_LIST_LOADING,
+    GET_TUTOR_LIST_SUCCESS,
+    GET_TUTOR_LIST_FAILED,
+} from "../actionTypes/tutor";
 
-export const fetchStudentShowList = (payload) => {
+export const fetchTutorList = (payload) => {
     const { filters = {} } = payload;
     return {
-        type: FETCH_STUDENT_SHOW_LIST,
+        type: FETCH_TUTOR_LIST,
         payload: {
             filters,
         },
     };
 };
 
-export const setStudentShowListLoading = (payload) => ({
-    type: SET_STUDENT_SHOW_LIST_LOADING,
+export const setTutorListLoading = (payload) => ({
+    type: SET_TUTOR_LIST_LOADING,
     payload,
 });
 
-export const getStudentShowListSuccess = (payload) => ({
-    type: GET_STUDENT_SHOW_LIST_SUCCESS,
+export const getTutorListSuccess = (payload) => ({
+    type: GET_TUTOR_LIST_SUCCESS,
     payload,
 });
 
-export const getStudentShowListFailed = () => ({
-    type: GET_STUDENT_SHOW_LIST_FAILED,
+export const getTutorListFailed = () => ({
+    type: GET_TUTOR_LIST_FAILED,
 });

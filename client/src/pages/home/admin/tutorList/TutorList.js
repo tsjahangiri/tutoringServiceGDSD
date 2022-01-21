@@ -2,39 +2,16 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { ListGroup } from "react-bootstrap";
 import TutorShow from "./TutorShow";
-import { getTutorList } from "../../../../core/selectors/tutor";
+//import { getTutorList } from "../../../../core/selectors/tutor";
 import Paging from "../../../../components/paging/Paging";
 import { fetchTutorList } from "../../../../core/actionCreators/tutor";
 import Page from "../../../../components/page/Page";
 import FilterBar from "../filterBar/FilterBar";
 
 function TutorList(props) {
-    const data = useSelector(getTutorList); //TODO: Change var to const 
+    // var data = useSelector(getTutorList); //TODO: Change var to const
 
-    if (data === undefined) {
-        return <div></div>;
-    }
-
-    return (
-        <div>
-            <Page></Page>
-            <FilterBar fetchTutorList={fetchTutorList} />
-            <br />
-            <ListGroup>
-                {data.map((item, i) => {
-                    return <TutorShow key={i} item={item} />;
-                })}
-            </ListGroup>
-            <br />
-            <Paging className="float-end" itemCount={data.length} />
-        </div>
-    );
-}
-
-export default TutorList;
-
-
-    /* TODO: Remove this code
+    // TODO: Remove this code
     var data = [
         {
             id: 1,
@@ -67,4 +44,25 @@ export default TutorList;
             teaches: ["Maths", "English"],
         },
     ];
-    */
+
+    if (data === undefined) {
+        return <div></div>;
+    }
+
+    return (
+        <div>
+            <Page></Page>
+            <FilterBar fetchTutorList={fetchTutorList} />
+            <br />
+            <ListGroup>
+                {data.map((item, i) => {
+                    return <TutorShow key={i} item={item} />;
+                })}
+            </ListGroup>
+            <br />
+            <Paging className="float-end" itemCount={data.length} />
+        </div>
+    );
+}
+
+export default TutorList;
