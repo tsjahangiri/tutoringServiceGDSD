@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import "./AddCourse.css";
-import { saveCourse, fetchCourseListByStatus } from "../../core/actionCreators/course";
+import { saveCourse } from "../../core/actionCreators/course";
 
 function AddCourse(props) {
   const dispatch = useDispatch();
@@ -22,9 +22,9 @@ function AddCourse(props) {
     dispatch(saveCourse(course));
   };
   //test
-   const getCourse = () => {
-    dispatch(fetchCourseListByStatus(1));
-  };
+  //  const getCourse = () => {
+  //   dispatch(fetchCourseListByStatus(1));
+  // };
 
   return (
     <div className="course-page">
@@ -53,7 +53,7 @@ function AddCourse(props) {
           <Button
             className="btn btn-success"
             variant="primary"
-            onClick={getCourse}
+            onClick={submitCourse}
             type="submit"
           >
             Add Course
