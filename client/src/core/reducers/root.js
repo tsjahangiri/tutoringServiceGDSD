@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
 import tutor from "./tutor";
 import user from "./user";
-import studentShow from "./studentShow"
 import course from "./course"
 import pendingTutorListShow from "./PendingTutorShow"
 
@@ -11,7 +10,7 @@ const rootReducer = combineReducers({
   user,
   studentShow,
   course, 
-  pendingTutorListShow
+  pendingTutorListShow,
 });
 
 export default rootReducer;

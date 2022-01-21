@@ -11,13 +11,12 @@ const {
   createCourseValidation,
   updateCourseValidation,
   createQualificationValidation,
-  updateQualificationValidation,
+  updateQualificationValidation
 } = require("../middleware/validation.js");
 const router = express.Router();
 
 let auth = require("../middleware/auth");
 let adminAuth = require("../middleware/adminAuth");
-let tutorAuth = require("../middleware/tutorAuth");
 
 let postController = require("../controller/postController");
 router.post("/posts", createPostValidation, postController.createPost);
@@ -72,19 +71,29 @@ router.post("/login", loginController.loginUser);
 let adminController = require("../controller/adminController");
 router.delete("/user", adminAuth.isAdmin, adminController.deleteUser);
 
-<<<<<<< HEAD
+let TutorProfileController = require("../controller/TutorProfileController");
+router.get("/tutors/Info/:id", TutorProfileController.getTutorAbouInfoById);
+router.get("/tutors/courses/:id", TutorProfileController.getTutorOfferedCoursesById);
+router.get("/tutors/qualification/:id", TutorProfileController.getTutorQualificationById);
+router.get("/tutors/reviews/:id", TutorProfileController.getReviewsById);
+router.post("/tutors", TutorProfileController.saveTutorInfo);
+router.put("/tutors", TutorProfileController.updateTutorInfo);
+
+let searchController = require("../controller/searchController");
+router.get("/tutors/search", searchController.getTutorsByFilters);
+
 let tutorController = require("../controller/tutorController");
 router.post("/qualifications", createQualificationValidation, tutorController.createQualification);
 router.delete("/qualifications/:id", tutorController.deleteQualification);
 router.put("/qualifications", updateQualificationValidation, tutorController.updateQualification);
+
 router.get("/qualifications/:tutorProfileId", tutorController.getQualificationByTutorProfileId);
-=======
 let uploadController = require("../controller/uploadController");
 router.post("/upload", tutorAuth.isTutor, uploadController.upload);
 
 let fetchController = require("../controller/fetchFileController");
 router.get("/fetch/file", tutorAuth.isTutor, fetchController.file);
 router.get("/fetch/image", tutorAuth.isTutor, fetchController.image);
->>>>>>> dev-salman-new
+
 
 module.exports = router;

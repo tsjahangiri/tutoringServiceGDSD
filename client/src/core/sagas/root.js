@@ -3,9 +3,8 @@ import { all, fork } from "redux-saga/effects";
 import type { Saga } from "redux-saga";
 import tutorSaga from "./tutor";
 import userSaga from "./user";
-import courseSaga from "./course"
-import studentShowSaga from "./studentShow"
-import qualificationSaga from "./qualification"
+import courseSaga from "./course";
+import qualificationSaga from "./qualification";
 import offerCourseSaga from "./offerCourse"
 import pendingTutorListShowSaga from "./PendingTutorShow"
 

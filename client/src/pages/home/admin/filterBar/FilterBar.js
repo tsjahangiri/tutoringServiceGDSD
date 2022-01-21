@@ -27,7 +27,6 @@ export default function FilterBar(props: Props) {
             dispatch(props.fetchPendingTutorShowList({ filters }));
         }
     });
-    
 
     const filterTutors = () => {
         var newFilters = {
@@ -45,16 +44,29 @@ export default function FilterBar(props: Props) {
             >
                 <Row>
                     <Col>
-                        <Form.Label>First Name</Form.Label>
+                        <Form.Label>Subject</Form.Label>
                         <Form.Control size="sm" ref={subjectControl} type="text" />
                     </Col>
                     <Col>
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Control size="sm" ref={subjectControl} type="text" />
+                        <Form.Label>Level</Form.Label>
+                        <Form.Select size="sm" defaultValue="Any">
+                            <option>Any</option>
+                            <option>Undergraduate</option>
+                            <option>Graduate</option>
+                        </Form.Select>
                     </Col>
                     <Col>
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control size="sm" ref={subjectControl} type="text" />
+                        <Form.Label>Price</Form.Label>
+                        <Form.Control size="sm" type="number" />
+                    </Col>
+                    <Col>
+                        <Form.Label>Gender</Form.Label>
+                        <Form.Select size="sm" defaultValue="Any">
+                            <option>Any</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </Form.Select>
                     </Col>
                 </Row>
                 <br />
