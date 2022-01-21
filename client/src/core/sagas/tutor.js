@@ -3,7 +3,7 @@ import { takeEvery, call, put } from "redux-saga/effects";
 import { executeApiCall } from "./api";
 import type { Saga } from "redux-saga";
 import { FETCH_TUTOR_LIST } from "../actionTypes/tutor";
-import { allTutorListApi } from "../endpoints";
+import {allTutorListApi} from "../endpoints"
 import {
   getTutorListFailed,
   getTutorListSuccess,
@@ -31,6 +31,7 @@ export function* getTutorList(action: Object): Saga<void> {
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
 
   const { isSuccessful, response = {} } = apiResponse;
+
   if (isSuccessful) {
     var data = response;
     yield put(getTutorListSuccess({ data }));

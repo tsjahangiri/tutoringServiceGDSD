@@ -1,34 +1,34 @@
 let database = require("../database");
-const { param } = require("../routes/user-routes");
 
 module.exports={
 
-    search : async (req, res) => {
+    getTutorsByFilters : async (req, res) => {
 
-        let subject = req.query.subjectname;
+        let subjectId = req.query.subjectId;
         let level = req.query.level;
-        let rating = req.query.rating;
-        // console.log(subject);
-        // console.log(level);
-        // console.log(rating);
-        query = `SELECT * FROM tutorprofile`;
+        let rate = req.query.rating;
+        let gender = req.query.gender;
 
-        if (subject != undefined && level != undefined && rating != undefined) {
-            query = `SELECT * FROM tutorprofile WHERE rating >= ` + rating + ` AND level LIKE '%` + level + `%' AND subject LIKE '%` + subject + `%'`;
+        // console.log(subjectId); && level != undefined && rating != undefined && gender != undefined
+        // WHERE rating >= ` + rate + ` AND level LIKE '%` + level + `%' AND 
+
+        query = `SELECT tutorProfileId, firstName, lastName, ratePerHour, description FROM hm_post A, hm_user B WHERE A.tutorProfileId = B.id `;
+
+
+        if (subjectId != undefined) {
+            query = query + ` AND subjectId = ` + subjectId + ``;
         }
-        else if (subject != undefined && level != undefined) {
-            query = `SELECT * FROM tutorprofile WHERE level LIKE '%` + level + `%' AND subject LIKE '%` + subject + `%'`;
+        else if (rate != undefined) {
+            query = query + ` AND ratePerHour >= ` + rate + ``;
         }
-        else if (subject != undefined && rating != undefined) {
-            query = `SELECT * FROM tutorprofile WHERE rating >= ` + rating + ` AND subject LIKE '%` + subject + `%'`;
+        else if (gender != undefined) {
+            query = query + ` AND gender LIKE '%` + gender + `%'`;
         }
-        else if (subject != undefined) {
-            query = `SELECT * FROM tutorprofile WHERE subject LIKE '%` + subject + `%'`;
-        }
-      
-           database.query(query, function (err, result, fields) {
-             if (err) throw err;
-             res.json(result);
-           });
+
+        console.log(query);
+        database.query(query, function (err, result, fields) {
+            if (err) throw err;
+            res.json(result);
+        });
    },
-}
+};

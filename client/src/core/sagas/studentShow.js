@@ -21,7 +21,7 @@ export function* getStudentShowList(action: Object): Saga<void> {
     if (filters.subjectName) {
         url += `subjectname=${filters.subjectName}&`;
     }
-    console.log(url)
+    
     const apiOptions: ApiOptions = {
         url: allStudentListApi,
         method: "GET",

@@ -3,13 +3,7 @@ import { Link } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 function StudentShow(props) {
-  //const { id, pictureUrl, name, rate, about, teaches } = props.item;
-  /*
-          <Col xs={2}>
-            <img src={pictureUrl} style={{ width: "100px", height: "100px" }} />
-          </Col>
-
-  */
+  //const { id, pictureUrl, name, rate, about, teaches } = props.item
 
   const { id, firstName, lastName, gender } = props.item;
 

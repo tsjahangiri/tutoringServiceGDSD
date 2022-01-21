@@ -9,7 +9,9 @@ import Page from "../../../../components/page/Page";
 import FilterBar from "../filterBar/FilterBar";
 
 function TutorList(props) {
-    const data = useSelector(getTutorList); //TODO: Change var to const 
+    var data = useSelector(getTutorList); //TODO: Change var to const
+
+
 
     if (data === undefined) {
         return <div></div>;
@@ -67,4 +69,4 @@ export default TutorList;
             teaches: ["Maths", "English"],
         },
     ];
-    */
+*/

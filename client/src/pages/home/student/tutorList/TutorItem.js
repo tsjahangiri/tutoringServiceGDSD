@@ -4,7 +4,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 
 export default function TutorItem(props) {
-  const { id, pictureUrl, name, rate, about, teaches } = props.item;
+  const {
+    tutorProfileId,
+    firstName,
+    lastName,
+    ratePerHour,
+    description,
+    teaches = ["N/A"],
+    pictureUrl = "logo512.png",
+  } = props.item;
 
   const navigate = useNavigate();
 
@@ -15,7 +23,7 @@ export default function TutorItem(props) {
     >
       <Row
         style={{ cursor: "pointer" }}
-        onClick={() => navigate(`/tutor/${id}`)}
+        onClick={() => navigate(`/tutor/${tutorProfileId}`)}
       >
         <Col xs={2}>
           <img src={pictureUrl} style={{ width: "148px" }} />
@@ -24,11 +32,13 @@ export default function TutorItem(props) {
           <Row>
             <Col>
               {" "}
-              <span style={{ float: "left" }}>{name}</span>
+              <span
+                style={{ float: "left" }}
+              >{`${firstName} ${lastName}`}</span>
             </Col>
             <Col>
               {" "}
-              <span style={{ float: "right" }}>{`$${rate}/hr`}</span>
+              <span style={{ float: "right" }}>{`$${ratePerHour}/hr`}</span>
             </Col>
           </Row>
           <br />
@@ -36,7 +46,7 @@ export default function TutorItem(props) {
             <Col>
               {" "}
               <span className="text-muted" style={{ float: "left" }}>
-                {about}
+                {description}
               </span>
             </Col>
           </Row>

@@ -1,2 +1,3 @@
 // @flow
-export const saveCourse = (state: Object) => state.course;
+export const getApprovedCourseList = (state: Object) => state.course.approvedCourseList;
+export const getCourseListByStatus = (state: Object) => state.course.data;

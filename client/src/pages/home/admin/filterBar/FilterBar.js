@@ -6,6 +6,7 @@ import { Form, Button, Container, Row, Col } from "react-bootstrap";
 type Props = {
     fetchTutorList: Function,
     fetchStudentShowList: Function,
+    fetchPendingTutorShowList: Function,
 };
 
 export default function FilterBar(props: Props) {
@@ -20,11 +21,12 @@ export default function FilterBar(props: Props) {
     React.useEffect(() => {
         if(props.fetchTutorList)
             dispatch(props.fetchTutorList({ filters }));
-        else {
+        else if(props.fetchStudentShowList){
             dispatch(props.fetchStudentShowList({ filters }));
+        } else {
+            dispatch(props.fetchPendingTutorShowList({ filters }));
         }
     });
-    
 
     const filterTutors = () => {
         var newFilters = {
@@ -34,7 +36,7 @@ export default function FilterBar(props: Props) {
         setFilters(newFilters);
     };
 
-    return (
+return (
         <div>
             <Container
                 style={{ borderColor: "#808080" }}

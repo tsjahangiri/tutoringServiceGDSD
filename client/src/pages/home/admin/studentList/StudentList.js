@@ -10,6 +10,7 @@ import { fetchStudentShowList } from "../../../../core/actionCreators/studentSho
 
 function StudentList(props) {
     const data = useSelector(getStudentShowList); //TODO: Change var to const
+
     
     if (data === undefined) {
         return <div></div>;
