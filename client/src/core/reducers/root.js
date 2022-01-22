@@ -4,6 +4,7 @@ import user from "./user";
 import studentShow from "./studentShow";
 import offerCourse from "./offerCourse";
 import course from "./course";
+import qualification from "./qualification";
 import pendingTutorListShow from "./PendingTutorShow";
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   course,
   offerCourse,
   pendingTutorListShow,
+  qualification
 });
 
 export default rootReducer;
