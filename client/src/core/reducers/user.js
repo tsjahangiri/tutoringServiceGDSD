@@ -14,6 +14,7 @@ export const INITIAL_STATE = {
 
 // A reducer is a pure function that takes an action and the *previous state* of the application
 // and returns the new state.
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (state = INITIAL_STATE, action = {}) => {
   switch (action.type) {
     case LOGIN_USER:
