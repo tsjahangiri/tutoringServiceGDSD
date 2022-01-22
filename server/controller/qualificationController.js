@@ -2,6 +2,19 @@ let database = require("../database");
 const { validationResult } = require("express-validator");
 
 module.exports = {
+  // Get Qualification By Id Method
+  getQualificationById: async (req, res) => {
+    // Query
+    database.query(
+      "SELECT * FROM hm_qualification WHERE id = ?",
+      [req.params.id],
+      (err, result) => {
+        if (err) res.status(400).send(`Request Error: ${err}`);
+        else res.status(200).json(result);
+      }
+    );
+  }
+
   createQualification: async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
