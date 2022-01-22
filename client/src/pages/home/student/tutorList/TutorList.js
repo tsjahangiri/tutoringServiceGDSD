@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { ListGroup } from "react-bootstrap";
 import TutorItem from "./TutorItem";
-import { getTutorList } from "../../../../core/selectors/tutor";
+import { getCourseSearchResult } from "../../../../core/selectors/offerCourse";
 import Paging from "../../../../components/paging/Paging";
 
-
 export default function TutorList() {
-  //var data = useSelector(getTutorList); //TODO: Change var to const
+  const data = useSelector(getCourseSearchResult); //TODO: Change var to const
 
   // TODO: Remove this code
+  /*
   var data = [
     {
       id: 1,
@@ -73,6 +73,7 @@ export default function TutorList() {
       teaches: ["Maths", "English"],
     },
   ];
+  */
 
   const [active, toggleActive] = useState(1);
   if (data === undefined) {
@@ -101,4 +102,3 @@ export default function TutorList() {
     </div>
   );
 }
-

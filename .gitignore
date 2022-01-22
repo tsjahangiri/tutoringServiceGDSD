@@ -1,1 +1,3 @@
 server/.env copy
+
+.package-lock.json

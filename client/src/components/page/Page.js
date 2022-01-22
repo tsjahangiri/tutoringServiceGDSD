@@ -14,11 +14,9 @@ function Page(props: Props) {
 
   let userType = useSelector(getUserType);
 
-  var headerOptions;
-  /*
-  if (userType === "student" || userType === "tutor") {
-    headerOptions = [];
-  } else {
+  var headerOptions = [];
+
+  if (userType === "admin") {
     headerOptions = [
       {
         title: "Student List",
@@ -28,10 +26,13 @@ function Page(props: Props) {
         title: "Tutor List",
         url: "/#/tutorList",
       },
+      {
+        title: "Pending Courses",
+        url: "/#/pendingTutorList",
+      },
     ];
   }
-  */
- 
+
   return (
     <div>
       <Header headerOptions={headerOptions} />

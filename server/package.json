@@ -18,8 +18,7 @@
     "nodemon": "^2.0.15",
     "pbkdf2": "^3.1.2",
     "socket.io": "^2.4.1",
-    "trim": "0.0.1",
-    "util": "^0.12.4"
+    "trim": "0.0.1"
   },
   "scripts": {
     "start": "node App.js",

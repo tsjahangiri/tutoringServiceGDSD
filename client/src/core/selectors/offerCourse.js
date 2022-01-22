@@ -1,0 +1,1 @@
+export const getCourseSearchResult = (state: Object) => state.offerCourse.data;

@@ -29,4 +29,5 @@ module.exports = {
       res.status(400).send("No token found!");
     }
   },
+  //implement necessary auth for Tutor
 };

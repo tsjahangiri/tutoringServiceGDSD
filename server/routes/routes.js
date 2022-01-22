@@ -11,7 +11,7 @@ const {
   createCourseValidation,
   updateCourseValidation,
   createQualificationValidation,
-  updateQualificationValidation,
+  updateQualificationValidation
 } = require("../middleware/validation.js");
 const router = express.Router();
 
@@ -72,11 +72,22 @@ router.post("/login", loginController.loginUser);
 let adminController = require("../controller/adminController");
 router.delete("/user", adminAuth.isAdmin, adminController.deleteUser);
 
-let tutorController = require("../controller/tutorController");
-router.post("/qualifications", createQualificationValidation, tutorController.createQualification);
-router.delete("/qualifications/:id", tutorController.deleteQualification);
-router.put("/qualifications", updateQualificationValidation, tutorController.updateQualification);
-router.get("/qualifications/:tutorProfileId", tutorController.getQualificationByTutorProfileId);
+let tutorProfileController = require("../controller/tutorProfileController");
+router.get("/tutors/Info/:id", tutorProfileController.getTutorAbouInfoById);
+router.get("/tutors/courses/:id", tutorProfileController.getTutorOfferedCoursesById);
+router.get("/tutors/qualification/:id", tutorProfileController.getTutorQualificationById);
+router.get("/tutors/reviews/:id", tutorProfileController.getReviewsById);
+router.post("/tutors", tutorProfileController.saveTutorInfo);
+router.put("/tutors", tutorProfileController.updateTutorInfo);
+
+let searchController = require("../controller/searchController");
+router.get("/tutors/search", searchController.getTutorsByFilters);
+
+let qualificationController = require("../controller/qualificationController");
+router.post("/qualifications", createQualificationValidation, qualificationController.createQualification);
+router.delete("/qualifications/:id", qualificationController.deleteQualification);
+router.put("/qualifications", updateQualificationValidation, qualificationController.updateQualification);
+router.get("/qualifications/:tutorProfileId", qualificationController.getQualificationByTutorProfileId);
 
 let uploadController = require("../controller/uploadController");
 router.post("/upload", tutorAuth.isTutor, uploadController.upload);
@@ -84,5 +95,6 @@ router.post("/upload", tutorAuth.isTutor, uploadController.upload);
 let fetchController = require("../controller/fetchFileController");
 router.get("/fetch/file", tutorAuth.isTutor, fetchController.file);
 router.get("/fetch/image", tutorAuth.isTutor, fetchController.image);
+
 
 module.exports = router;

@@ -2,17 +2,18 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { executeApiCall } from "./api";
 import type { Saga } from "redux-saga";
-import { FETCH_TUTOR_LIST } from "../actionTypes/tutor";
+import { FETCH_STUDENT_SHOW_LIST } from "../actionTypes/studentShow";
+import { allStudentListApi } from "../endpoints";
 import {
-    getTutorListFailed,
-    getTutorListSuccess,
-} from "../actionCreators/tutor";
+    getStudentShowListFailed,
+    getStudentShowListSuccess,
+} from "../actionCreators/studentShow";
 
-export default function* tutorSaga(): Saga<void> {
-    yield takeEvery(FETCH_TUTOR_LIST, getTutorList);
+export default function* studentShowSaga(): Saga<void> {
+    yield takeEvery(FETCH_STUDENT_SHOW_LIST, getStudentShowList);
 }
 
-export function* getTutorList(action: Object): Saga<void> {
+export function* getStudentShowList(action: Object): Saga<void> {
     const { filters } = action.payload;
 
     var url = process.env.REACT_APP_API_URL;
@@ -20,21 +21,21 @@ export function* getTutorList(action: Object): Saga<void> {
     if (filters.subjectName) {
         url += `subjectname=${filters.subjectName}&`;
     }
-
+    
     const apiOptions: ApiOptions = {
-        url,
+        url: allStudentListApi,
         method: "GET",
+        useJwtSecret: false,
     };
 
-    const apiResponse: ApiResponse = yield call(callApi, apiOptions);
+    const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
+    const { isSuccessful, response = {} } = apiResponse;
 
-    const { success, response = {} } = apiResponse;
-
-    if (success) {
+    if (isSuccessful) {
         var data = response;
-        yield put(getTutorListSuccess({ data }));
+        yield put(getStudentShowListSuccess({ data }));
     } else {
         var msg = "Failed to load data from API"; //FIXME Improve error message
-        yield put(getTutorListFailed({ msg }));
+        yield put(getStudentShowListFailed({ msg }));
     }
 }

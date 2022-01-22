@@ -43,7 +43,6 @@ const upload = async (req, res) => {
 
                       res.status(200).send({
                         message: "Uploaded the file successfully: " + req.file.originalname,
-                        filePath: "resources/static/"+req.file.originalname,
                       });
                     });
                   }
@@ -66,7 +65,6 @@ const upload = async (req, res) => {
 
                 res.status(200).send({
                   message: "Uploaded the file successfully: " + req.file.originalname,
-                  filePath: "resources/static/"+req.file.originalname,
                 });
               });
             }
@@ -108,7 +106,6 @@ const upload = async (req, res) => {
                         }
                         res.status(200).send({
                             message: "Uploaded the image successfully: " + req.file.originalname,
-                            filePath: "resources/static/"+req.file.originalname,
                             });
                     });
                   }
@@ -128,7 +125,6 @@ const upload = async (req, res) => {
                   }
                   res.status(200).send({
                       message: "Uploaded the image successfully: " + req.file.originalname,
-                      filePath: "resources/static/"+req.file.originalname,
                     });
               });
             }
