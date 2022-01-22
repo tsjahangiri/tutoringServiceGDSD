@@ -74,11 +74,11 @@ const upload = async (req, res) => {
     }
     else if(req.file.mimetype === "image/jpg" || req.file.mimetype === "image/jpeg" || req.file.mimetype === "image/png") {
        
-      var today = new Date();
+        var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var dateTime = date+' '+time;
-
+        console.log(req.userid);
         database.execute("SELECT * FROM `helpmelearn`.`hm_image` WHERE `userId`= ?",
         [req.userid],
         (err, result) => {
