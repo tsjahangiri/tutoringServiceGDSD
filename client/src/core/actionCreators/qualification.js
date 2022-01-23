@@ -1,29 +1,94 @@
 // @flow
 import {
-   SAVE_QUALIFICATION,
+  FETCH_QUALIFICATION_BY_ID,
+  SET_QUALIFICATION,
+
+  SAVE_QUALIFICATION,
   SAVE_QUALIFICATION_LOADING,
   SAVE_QUALIFICATION_SUCCESS,
   SAVE_QUALIFICATION_FAILED,
+
+  UPDATE_QUALIFICATION,
+  UPDATE_QUALIFICATION_SUCCESS,
+  UPDATE_QUALIFICATION_FAILED,
 } from "../actionTypes/qualification";
 
-export const saveQualification = (data) => {
-  console.log("from creators" + data);
+//GET
+export const fetchQualificationById = (id) => {
+  
   return {
-    type: SAVE_QUALIFICATION,
-    payload: data
+    type: FETCH_QUALIFICATION_BY_ID,
+    payload: {
+      id,
+    },
   };
 };
 
-export const saveQualificationLoading = (data) => ({
-  type: SAVE_QUALIFICATION_LOADING,
-  data,
+export const setQualification = (payload) => {
+  return {
+    type: SET_QUALIFICATION,
+    payload,
+  };
+};
+
+
+//SAVE
+export const saveQualification = (payload) => {
+  return {
+    type: SAVE_QUALIFICATION,
+    payload
+  };
+};
+
+export const saveQualificationLoading = (payload) => ({
+  type: SAVE_QUALIFICATION_LOADING
 });
 
-export const saveQualificationSuccess = (data) => ({
+export const saveQualificationSuccess = (message: string, type: string = "success") => ({
   type: SAVE_QUALIFICATION_SUCCESS,
-  data,
+   payload: {
+    saveAlert: {
+      message,
+      type,
+    },
+  },
 });
 
-export const saveQualificationFailed = () => ({
+export const saveQualificationFailed = (message: string, type: string = "danger") => ({
   type: SAVE_QUALIFICATION_FAILED,
+  payload: {
+    saveAlert: {
+      message,
+      type,
+    },
+  },
 });
+
+//UPDATE
+export const updateQualification = (payload) => {
+  return {
+    type: UPDATE_QUALIFICATION,
+    payload
+  };
+};
+
+export const updateQualificationSuccess = (message: string, type: string = "success") => ({
+  type: UPDATE_QUALIFICATION_SUCCESS,
+   payload: {
+    updateAlert: {
+      message,
+      type,
+    },
+  },
+});
+
+export const updateQualificationFailed = (message: string, type: string = "danger") => ({
+  type: UPDATE_QUALIFICATION_FAILED,
+  payload: {
+    updateAlert: {
+      message,
+      type,
+    },
+  },
+});
+

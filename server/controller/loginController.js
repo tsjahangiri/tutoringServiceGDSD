@@ -6,34 +6,54 @@ require("dotenv").config();
 module.exports = {
   //Registering User
   registerUser: (req, res) => {
-    let { username, first_name, last_name, usertype, email, password, status } =
+    let {first_name, last_name, usertype, email, password, status, gender } =
       req.body;
 
     bcrypt.hash(password, 10, (err, encrypted_password) => {
       if (err) throw err;
       database.execute(
-        "SELECT * FROM `helpmelearn`.`hm_user` WHERE `username`= ? OR `email`= ?",
-        [username, email],
+        "SELECT * FROM `helpmelearn`.`hm_user` WHERE `email`= ?",
+        [email],
         function (err, result, fields) {
           console.log(result.length);
 
           if (result.length === 0) {
             database.execute(
-              "INSERT INTO `helpmelearn`.`hm_user` (`username`, `first_name`, `last_name`, `usertype`, `email`, `password`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?)",
+              "INSERT INTO `helpmelearn`.`hm_user` (`firstName`, `lastName`, `usertype`, `email`, `password`, `status`, gender) VALUES (?, ?, ?, ?, ?, ?, ?)",
               [
-                username,
                 first_name,
                 last_name,
                 usertype,
                 email,
                 encrypted_password,
                 status,
+                gender,
               ],
               (err, result) => {
                 if (err) console.log(err);
                 else {
+                  if(usertype === 101){
+                  database.execute(
+                    "INSERT INTO `helpmelearn`.`tutorprofile` (`first_name`, `last_name`) VALUES (?, ?)",
+                    [
+                      first_name,
+                      last_name,
+                    ],
+                    (err, result) => {
+                      if (err) console.log(err);
+                      else {
+                        // INSERT INTO `helpmelearn`.`tutorprofile` (`first_name`, `last_name`, `subject`, `age`, `level`, `rate`, `rating`, `numOfStudents`) VALUES ('salman', 'haydar', '', '', '', '', '', '');
+      
+                        res.json({ message: "User Created" });
+                      }
+                    }
+                  );
+                  // res.json({ message: "User Created" });
+                }
+                else {
                   res.json({ message: "User Created" });
                 }
+              }
               }
             );
           } else {
@@ -46,22 +66,22 @@ module.exports = {
 
   //Login check
   loginUser: async (req, res) => {
-    let { username, password } = req.body;
+    let { email, password } = req.body;
 
     database.execute(
-      "SELECT * FROM `helpmelearn`.`hm_user` WHERE `username`= ?",
-      [username],
+      "SELECT * FROM `helpmelearn`.`hm_user` WHERE `email`= ?",
+      [email],
       function (err, result, fields) {
         if (err) throw err;
 
         if (result.length === 0) {
           res.json({ message: "User Do Not Exists" });
         } else {
-          let db_user_name = result[0].username;
+          let db_email = result[0].email;
           let db_password = result[0].password;
 
           let payload = {
-            user_name: username,
+            id: result[0].id,
             email: result[0].email,
             user_type: result[0].usertype,
             status: result[0].status,
@@ -74,7 +94,7 @@ module.exports = {
                 expiresIn: process.env.TOKEN_EXPIRE,
               });
 
-              res.json({ email: result[0].email, token: token });
+              res.json({ id: result[0].id, email: result[0].email, token: token });
             } else {
               {
                 res.json({ message: "Invalid Credentials!" });

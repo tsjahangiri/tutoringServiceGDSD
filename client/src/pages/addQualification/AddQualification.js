@@ -10,6 +10,7 @@ function AddQualification(props) {
   const subjectRef = useRef(null);
   const qualificationRef = useRef(null);
   const gradeRef = useRef(null);
+  const descriptionRef = useRef(null);
 
   //function to save the qualification
   const submitQualification = () => {
@@ -17,9 +18,12 @@ function AddQualification(props) {
       subject: subjectRef.current.value,
       qualification: qualificationRef.current.value,
       grade: gradeRef.current.value,
+      description: descriptionRef.current.value,
     };
     console.log(qualification);
     dispatch(saveQualification(qualification));
+    //test
+    // dispatch(fetchQualificationById(1));
   };
 
   return (
@@ -35,6 +39,12 @@ function AddQualification(props) {
           <br />
           <Form.Control type="text" ref={gradeRef} placeholder="Grade" />
           <br />
+          <Form.Control
+            ref={descriptionRef}
+            as="textarea"
+            rows={3}
+            placeholder="Description"
+          />
           <Button className="btn btn-success" variant="primary" onClick={submitQualification} type="submit">
             Save
           </Button>
