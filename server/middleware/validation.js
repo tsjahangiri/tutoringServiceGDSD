@@ -1,4 +1,4 @@
-const { query, param, body } = require("express-validator");
+const { body } = require("express-validator");
 
 exports.createUserValidation = [
   body("Email").notEmpty().isEmail(),
@@ -11,12 +11,23 @@ exports.updateUserValidation = [
   body("Email").notEmpty().isEmail(),
   body("UserType").notEmpty().isIn([100, 101, 102]),
   body("Status").notEmpty().isIn([100, 101, 102]),
-  body("Password").notEmpty().isString().isLength({ min: 1}),
+  body("Password").notEmpty().isString().isLength({ min: 1 }),
+];
+
+exports.createTutorProfileValidation = [
+  body("UserId").notEmpty().isInt(),
+];
+
+exports.updateTutorProfileValidation = [
+  body("Id").notEmpty().isInt(),
+  body("UserId").notEmpty().isInt(),
+  body("About").notEmpty().isString(),
+  body("Age").notEmpty().isString(),
 ];
 
 exports.createPostValidation = [
   body("TutorProfileId").notEmpty().isInt(),
-  body("SubjectId").notEmpty().isInt(),
+  body("SubjectName").notEmpty().isString(),
   body("Status").notEmpty().isIn([100, 101, 102]),
   body("RatePerHour").notEmpty(),
 ];
@@ -24,7 +35,7 @@ exports.createPostValidation = [
 exports.updatePostValidation = [
   body("Id").notEmpty().isInt(),
   body("TutorProfileId").notEmpty().isInt(),
-  body("SubjectId").notEmpty().isInt(),
+  body("SubjectName").notEmpty().isString(),
   body("Status").notEmpty().isIn([100, 101, 102]),
   body("RatePerHour").notEmpty(),
 ];
@@ -71,9 +82,7 @@ exports.createQualificationValidation = [
   body("SubjectId").notEmpty(),
   body("Description").notEmpty(),
   body("Grade").notEmpty(),
-  body("TutorProfileId").isString().isInt()
+  body("TutorProfileId").isString().isInt(),
 ];
 
-exports.updateQualificationValidation = [
-  body("Id").notEmpty().isInt()
-];
+exports.updateQualificationValidation = [body("Id").notEmpty().isInt()];
