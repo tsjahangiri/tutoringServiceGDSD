@@ -79,7 +79,7 @@ exports.updateCourseValidation = [
 ];
 
 exports.createQualificationValidation = [
-  body("SubjectId").notEmpty(),
+  body("SubjectName").notEmpty(),
   body("Description").notEmpty(),
   body("Grade").notEmpty(),
   body("TutorProfileId").isString().isInt(),

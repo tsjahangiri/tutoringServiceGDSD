@@ -80,9 +80,6 @@ router.delete("/user", adminAuth.isAdmin, adminController.deleteUser);
 // Tutor Profile
 let tutorProfileController = require("../controller/TutorProfileController");
 router.get("/tutors/Info/:id", tutorProfileController.getTutorAbouInfoById);
-router.get("/tutors/courses/:id", tutorProfileController.getTutorOfferedCoursesById);
-router.get("/tutors/qualification/:id", tutorProfileController.getTutorQualificationById);
-router.get("/tutors/reviews/:id", tutorProfileController.getReviewsById);
 router.post("/tutors", createTutorProfileValidation, tutorProfileController.saveTutorInfo);
 router.put("/tutors", updateTutorProfileValidation, tutorProfileController.updateTutorInfo);
 
