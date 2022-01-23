@@ -72,7 +72,7 @@ router.post("/login", loginController.loginUser);
 let adminController = require("../controller/adminController");
 router.delete("/user", adminAuth.isAdmin, adminController.deleteUser);
 
-let tutorProfileController = require("../controller/tutorProfileController");
+let tutorProfileController = require("../controller/TutorProfileController");
 router.get("/tutors/Info/:id", tutorProfileController.getTutorAbouInfoById);
 router.get("/tutors/courses/:id", tutorProfileController.getTutorOfferedCoursesById);
 router.get("/tutors/qualification/:id", tutorProfileController.getTutorQualificationById);

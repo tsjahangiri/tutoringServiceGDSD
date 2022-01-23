@@ -20,6 +20,7 @@ app.use(cors());
 app.use(jsonParser);
 app.use(cors());
 app.use("/api/", routes);
+global.__basedir = __dirname;
 // app.use(function (req, res, next) {
 //   next(createError(404));
 // });
