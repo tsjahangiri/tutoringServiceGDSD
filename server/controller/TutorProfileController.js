@@ -13,26 +13,6 @@ module.exports = {
     });
   },
 
-  getTutorOfferedCoursesById: async (req, res) => {
-    let id = req.params.id;
-    let query = `SELECT courseCode, courseName, ratePerHour FROM hm_post A, hm_course B WHERE A.subjectId = B.courseCode AND A.tutorProfileId = ?`;
-    console.log(query);
-    database.query(query, [id], (err, result) => {
-      if (err) console.log(err);
-      else res.json(result);
-    });
-  },
-
-  getTutorQualificationById: async (req, res) => {
-    let id = req.params.id;
-    let query = `SELECT A.id, courseCode, courseName, description, grade FROM hm_qualification A, hm_course B WHERE A.subjectId = B.courseCode AND tutorProfileId = ?`;
-
-    database.query(query, [id], (err, result) => {
-      if (err) console.log(err);
-      else res.json(result);
-    });
-  },
-
   getTutorsByFilters: async (req, res) => {
     let subjectId = req.query.subjectId;
     let level = req.query.level;

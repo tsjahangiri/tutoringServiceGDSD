@@ -126,7 +126,7 @@ DROP TABLE IF EXISTS `hm_qualification`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hm_qualification` (
   `id` int(11) NOT NULL,
-  `subjectId` int(11) NOT NULL,
+  `subjectName` varchar(1000) NOT NULL,
   `description` varchar(80) NOT NULL,
   `grade` varchar(45) DEFAULT NULL,
   `tutorProfileId` int(11) NOT NULL,

@@ -20,11 +20,11 @@ module.exports = {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    let { SubjectId, Description, Grade, TutorProfileId  } = req.body;
+    let { SubjectName, Description, Grade, TutorProfileId  } = req.body;
     
     database.query(
-      "INSERT INTO hm_qualification (subjectId, description, grade, tutorProfileId) VALUES ( ?, ?, ?, ?)",
-      [SubjectId, Description, Grade, TutorProfileId],
+      "INSERT INTO hm_qualification (subjectName, description, grade, tutorProfileId) VALUES ( ?, ?, ?, ?)",
+      [SubjectName, Description, Grade, TutorProfileId],
       (err, result) => {
         if (err) console.log(err);
       }
@@ -37,7 +37,7 @@ module.exports = {
 
   getQualificationByTutorProfileId: async (req, res) => {
     database.query(
-      "SELECT id, subjectId, description, grade FROM hm_qualification WHERE tutorProfileId = ?",
+      "SELECT id, subjectName, description, grade FROM hm_qualification WHERE tutorProfileId = ?",
       [req.params.tutorProfileId],
       (err, result) => {
         if (err) console.log(err);
@@ -62,11 +62,11 @@ module.exports = {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    let { Subject, Qualification, Grade } = req.body;
+    let { SubjectName, Qualification, Grade } = req.body;
 
     database.query(
-      `UPDATE hm_qualification SET subjectId = ?, description= ?, grade = ? WHERE id = ?`,
-      [Subject, Qualification, Grade, Id],
+      `UPDATE hm_qualification SET subjectName = ?, description= ?, grade = ? WHERE id = ?`,
+      [SubjectName, Qualification, Grade, Id],
       (err) => {
         if (err) console.log(err);
         else {
