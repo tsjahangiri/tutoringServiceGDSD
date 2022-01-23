@@ -4,6 +4,8 @@ import {
   SET_TUTOR_LIST_LOADING,
   GET_TUTOR_LIST_SUCCESS,
   GET_TUTOR_LIST_FAILED,
+  GET_TUTOR_INFO_BY_ID,
+  SET_TUTOR_INFO
 } from "../actionTypes/tutor";
 
 export const fetchTutorList = (payload) => {
@@ -28,4 +30,16 @@ export const getTutorListSuccess = (payload) => ({
 
 export const getTutorListFailed = () => ({
   type: GET_TUTOR_LIST_FAILED,
+});
+
+export const getTutorInfoById = (id) => ({
+  type: GET_TUTOR_INFO_BY_ID,
+  payload: {
+    id,
+  },
+});
+
+export const setTutorInfo = (payload) => ({
+  type: SET_TUTOR_INFO,
+  payload,
 });
