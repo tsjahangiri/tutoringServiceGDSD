@@ -1,6 +1,9 @@
 /* eslint-disable no-duplicate-case */
 // @flow
 import {
+  FETCH_QUALIFICATION_BY_ID,
+  SET_QUALIFICATION,
+  
   SAVE_QUALIFICATION,
   SAVE_QUALIFICATION_SUCCESS,
   SAVE_QUALIFICATION_FAILED,
@@ -15,6 +18,18 @@ export const INITIAL_STATE = {};
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = INITIAL_STATE, action = {}) => {
   switch (action.type) {
+    case FETCH_QUALIFICATION_BY_ID:
+      const { id } = action.payload;
+      return {
+        ...state,
+        id: id,
+      };
+    case SET_QUALIFICATION:
+      return {
+        ...state,
+        data: action.payload,
+      };
+
     case SAVE_QUALIFICATION:
       return {
         ...state,

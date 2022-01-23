@@ -1,5 +1,9 @@
 const prefix = "qualification";
 
+//GET
+export const FETCH_QUALIFICATION_BY_ID = `${prefix}/FETCH_QUALIFICATION_BY_ID`;
+export const SET_QUALIFICATION = `${prefix}/SET_QUALIFICATION`;
+
 //POST
 export const SAVE_QUALIFICATION = `${prefix}/SAVE_QUALIFICATION`;
 export const SAVE_QUALIFICATION_LOADING = `${prefix}/SAVE_QUALIFICATION_LOADING`;

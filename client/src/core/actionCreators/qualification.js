@@ -1,5 +1,8 @@
 // @flow
 import {
+  FETCH_QUALIFICATION_BY_ID,
+  SET_QUALIFICATION,
+
   SAVE_QUALIFICATION,
   SAVE_QUALIFICATION_LOADING,
   SAVE_QUALIFICATION_SUCCESS,
@@ -9,6 +12,25 @@ import {
   UPDATE_QUALIFICATION_SUCCESS,
   UPDATE_QUALIFICATION_FAILED,
 } from "../actionTypes/qualification";
+
+//GET
+export const fetchQualificationById = (id) => {
+  
+  return {
+    type: FETCH_QUALIFICATION_BY_ID,
+    payload: {
+      id,
+    },
+  };
+};
+
+export const setQualification = (payload) => {
+  return {
+    type: SET_QUALIFICATION,
+    payload,
+  };
+};
+
 
 //SAVE
 export const saveQualification = (payload) => {
