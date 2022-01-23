@@ -5,13 +5,15 @@ import {
   GET_TUTOR_LIST_SUCCESS,
   GET_TUTOR_LIST_FAILED,
   SET_TUTOR_INFO,
-  SET_TUTOR_OFFERED_COURSE
+  SET_TUTOR_OFFERED_COURSE,
+  SET_TUTOR_QUALIFICATION
 } from "../actionTypes/tutor";
 
 export const INITIAL_STATE = {
   data: [],
   tutorInfoData: [],
   tutorCourseData: [],
+  tutorQualificationData: [],
   filters: {
     subjectId: undefined,
     level: "%",
@@ -50,5 +52,11 @@ export default (state = INITIAL_STATE, action = {}) => {
         ...state,
         tutorCourseData: action.payload,
       };
+    case SET_TUTOR_QUALIFICATION:
+      return {
+        ...state,
+        tutorQualificationData: action.payload,
+      };
+      
   }
 };

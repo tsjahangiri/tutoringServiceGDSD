@@ -1,28 +1,27 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React,{ useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { ListGroup } from "react-bootstrap";
+import { getTutorQualificationDataById } from "../../../core/selectors/tutor";
+import { getTutorQualificationById } from "../../../core/actionCreators/tutor";
 
-export default function QualificationList() {
-  // var data = useSelector(); //TODO: Change var to const
+export default function QualificationList(props) {
 
-  var data = [
-    {
-      id: 1,
-      subject: "Math 101",
-      description:
-        "Some quick example text to build on the card title and make up the bulk of the card's content",
-      grade: "A+",
-    },
-    {
-      id: 2,
-      subject: "Math 102",
-      description:
-        "Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content",
-      grade: "B",
-    },
-  ];
+  const dispatch = useDispatch();
+  let { tutorId } = useParams();
+  if (props.tutorId !== undefined && props.tutorId != "") {
+    tutorId = props.tutorId;
+  }
+  const tutorQualificationData = useSelector(getTutorQualificationDataById);
+  const [tutorQualifications, setTutorQualifications] = useState([]);
+  useEffect(() => {
+    dispatch(getTutorQualificationById(tutorId));
+  },[]);
+  useEffect(() => {
+    setTutorQualifications(tutorQualificationData);
+  },[tutorQualificationData]);
 
-  if (data === undefined || data.length === undefined || data.length === 0) {
+  if (tutorQualifications === undefined || tutorQualifications.length === undefined || tutorQualifications.length === 0) {
     return null;
   }
 
@@ -30,7 +29,7 @@ export default function QualificationList() {
     <div>
       <span>MY QUALIFICATIONS</span>
       <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
-        {data.map((item, i) => {
+        {tutorQualifications.map((item, i) => {
           return (
             <ListGroup.Item
               style={{ cursor: "pointer" }}
@@ -39,7 +38,7 @@ export default function QualificationList() {
             >
               <div className="me-auto">
                 <div>
-                  <span className="fw-bold">{item.subject}</span>
+                  <span className="fw-bold">{item.courseName+' '+item.courseCode}</span>
                 </div>
                 <div className="mb-2">
                   <span className="text-muted">{`Grade: ${item.grade}`}</span>

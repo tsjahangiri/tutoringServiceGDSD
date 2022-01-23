@@ -30,10 +30,6 @@ export default function TutorProfile(props) {
 
   // TODO: Remove
   const photo = "/logo192.png";
-  // const age = 22;
-  // const name = "Amlan Chowdhury";
-  // const about =
-  //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque volutpat placerat consequat. Mauris ornare, mi ac aliquet condimentum, quam nibh fringilla dui, sed lobortis ligula metus eget eros. Mauris facilisis lectus tortor, et malesuada urna accumsan vitae. Nullam dignissim, arcu sit amet placerat feugiat.";
 
   const userType = useSelector(getUserType);
 
@@ -85,7 +81,7 @@ export default function TutorProfile(props) {
       <CourseList tutorId={tutorId}/>
       <br />
       <br />
-      <QualificationList />
+      <QualificationList tutorId={tutorId} />
       <br />
       <br />
       <ReviewList />
