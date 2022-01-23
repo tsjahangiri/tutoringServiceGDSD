@@ -14,6 +14,7 @@ import OfferCourse from "../pages/offerCourse/OfferCourse";
 import { Anonymous } from "./Anonymous";
 import { Authorized } from "./Authorized";
 import TutorProfile from "../pages/tutorProfile/TutorProfile";
+import FileUpload from "../pages/tutorProfile/fileUpload/FileUpload";
 
 function AppNavigator() {
   return (
@@ -31,6 +32,7 @@ function AppNavigator() {
       <Route path="/add-qualification" element={<AddQualification />} />
       <Route path="/offer-course" element={<OfferCourse />} />
       <Route path="/tutor/:tutorId" element={<TutorProfile />} />
+      <Route path="/file" element={<FileUpload />} />
     </Routes>
   );
 }

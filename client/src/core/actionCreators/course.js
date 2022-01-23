@@ -28,7 +28,7 @@ export const setApprovedCourseList = (payload) => {
 
 //POST
 export const saveCourse = (data) => {
-  console.log("from creators" + data);
+  // console.log("from creators" + data.file.name);
   return {
     type: SAVE_COURSE,
     payload: data,
