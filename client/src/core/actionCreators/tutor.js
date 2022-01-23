@@ -5,7 +5,9 @@ import {
   GET_TUTOR_LIST_SUCCESS,
   GET_TUTOR_LIST_FAILED,
   GET_TUTOR_INFO_BY_ID,
-  SET_TUTOR_INFO
+  SET_TUTOR_INFO,
+  GET_TUTOR_OFFERED_COURSE_BY_ID,
+  SET_TUTOR_OFFERED_COURSE
 } from "../actionTypes/tutor";
 
 export const fetchTutorList = (payload) => {
@@ -41,5 +43,17 @@ export const getTutorInfoById = (id) => ({
 
 export const setTutorInfo = (payload) => ({
   type: SET_TUTOR_INFO,
+  payload,
+});
+
+export const getTutorOfferedCourseById = (id) => ({
+  type: GET_TUTOR_OFFERED_COURSE_BY_ID,
+  payload: {
+    id,
+  },
+});
+
+export const setTutorOfferedCourse = (payload) => ({
+  type: SET_TUTOR_OFFERED_COURSE,
   payload,
 });

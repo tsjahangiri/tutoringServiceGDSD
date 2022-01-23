@@ -22,11 +22,9 @@ export default function TutorProfile(props) {
   const tutorInfoDataById = useSelector(getTutorInfoDataById);
   const [tutorInfoData, setTutorInfoData] = useState([]);
   useEffect(() => {
-    console.log("IN TUTOR id = ",tutorId);
     dispatch(getTutorInfoById(tutorId));
   },[]);
   useEffect(() => {
-    console.log("TUTOR DATA = ",tutorInfoDataById);
     setTutorInfoData(tutorInfoDataById[0]);
   },[tutorInfoDataById]);
 
@@ -84,7 +82,7 @@ export default function TutorProfile(props) {
     <Page>
       {renderProfile()}
       <br />
-      <CourseList />
+      <CourseList tutorId={tutorId}/>
       <br />
       <br />
       <QualificationList />

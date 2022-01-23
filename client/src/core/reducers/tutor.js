@@ -4,12 +4,14 @@ import {
   SET_TUTOR_LIST_LOADING,
   GET_TUTOR_LIST_SUCCESS,
   GET_TUTOR_LIST_FAILED,
-  SET_TUTOR_INFO
+  SET_TUTOR_INFO,
+  SET_TUTOR_OFFERED_COURSE
 } from "../actionTypes/tutor";
 
 export const INITIAL_STATE = {
   data: [],
   tutorInfoData: [],
+  tutorCourseData: [],
   filters: {
     subjectId: undefined,
     level: "%",
@@ -42,6 +44,11 @@ export default (state = INITIAL_STATE, action = {}) => {
       return {
         ...state,
         tutorInfoData: action.payload,
+      };
+    case SET_TUTOR_OFFERED_COURSE:
+      return {
+        ...state,
+        tutorCourseData: action.payload,
       };
   }
 };
