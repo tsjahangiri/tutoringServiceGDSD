@@ -16,14 +16,20 @@ export default function* studentShowSaga(): Saga<void> {
 export function* getStudentShowList(action: Object): Saga<void> {
     const { filters } = action.payload;
 
-    var url = process.env.REACT_APP_API_URL;
+    var url = allStudentListApi;
 
-    if (filters.subjectName) {
-        url += `subjectname=${filters.subjectName}&`;
+    if (filters.fName) {
+        url += `&FirstName=${filters.fName}`;
+    }
+    if (filters.lName) {
+        url += `&LastName=${filters.lName}`;
+    }
+    if (filters.email) {
+        url += `&Email=${filters.email}`;
     }
     
     const apiOptions: ApiOptions = {
-        url: allStudentListApi,
+        url: url,
         method: "GET",
         useJwtSecret: false,
     };

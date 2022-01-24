@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 import { useSelector } from "react-redux";
 import { ListGroup } from "react-bootstrap";
 import TutorShow from "./TutorShow";
@@ -11,11 +11,14 @@ import FilterBar from "../filterBar/FilterBar";
 function TutorList(props) {
     var data = useSelector(getTutorList); //TODO: Change var to const
 
-
-
+    const [active, toggleActive] = useState(1);
     if (data === undefined) {
         return <div></div>;
     }
+
+    const pageSize = 5;
+    const start = active * pageSize - pageSize;
+    const end = start + pageSize;
 
     return (
         <div>
@@ -23,12 +26,18 @@ function TutorList(props) {
             <FilterBar fetchTutorList={fetchTutorList} />
             <br />
             <ListGroup>
-                {data.map((item, i) => {
+                {data.slice(start, end).map((item, i) => {
                     return <TutorShow key={i} item={item} />;
                 })}
             </ListGroup>
             <br />
-            <Paging className="float-end" itemCount={data.length} />
+            <Paging
+                className="float-end"
+                active={active}
+                toggleActive={toggleActive}
+                pageSize={pageSize}
+                itemCount={data.length}
+            />
         </div>
     );
 }
