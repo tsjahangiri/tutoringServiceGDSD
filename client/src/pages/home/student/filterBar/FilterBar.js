@@ -60,7 +60,7 @@ export default function FilterBar(props: Props) {
           <Form.Label>Subject</Form.Label>
           <Form.Select size="sm" ref={subjectIdControl} defaultValue="Any">
             <option>Any</option>
-            {approvedCourses.map((item, i) => {
+            {approvedCourses?.map((item, i) => {
               return (
                 <option key={i} value={item.id}>
                   {item.courseName}
