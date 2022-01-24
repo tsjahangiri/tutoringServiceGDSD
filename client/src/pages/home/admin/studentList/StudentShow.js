@@ -1,21 +1,20 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { Row, Col } from "react-bootstrap";
 
 function StudentShow(props) {
-  //const { id, pictureUrl, name, rate, about, teaches } = props.item
-
-  const { id, firstName, lastName, gender } = props.item;
-
+  const { id, firstName, lastName, email, pictureUrl = "logo512.png" } = props.item;
+  const navigate = useNavigate();
 
   return (
     <div
       style={{ borderColor: "#808080" }}
-      className="border-top border-start border-end border-1 rounded"
-    >
-      <Link className="nav-link" to={`tutor/${id}`}>
-              
-        <Row>          
+      className="container-lg p-3 border-top border-start border-end border-1 rounded"
+    >              
+        <Row>  
+          <Col xs={2}>
+            <img src={pictureUrl} style={{ width: "80px", height: "80px" }} />
+          </Col>        
           <Col>
             <Row>
               <Col>
@@ -24,7 +23,10 @@ function StudentShow(props) {
               </Col>
               <Col>
                 {" "}
-                <span style={{ float: "right" }}><button>View Details</button></span>
+                <span style={{ float: "right" }}>
+                  <button onClick={() => navigate(`/tutor/${id}`)} style={{ marginRight: "10px" }}>View Details</button>
+                  <button onClick={() => navigate(`/tutor/${id}`)} style={{ marginRight: "10px" }}>Delete</button>
+                </span>
               </Col>
             </Row>
             <br />
@@ -32,14 +34,13 @@ function StudentShow(props) {
               <Col>
                 {" "}
                 <span className="text-muted" style={{ float: "left" }}>
-                  {gender}
+                  {email}
                 </span>
               </Col>
             </Row>
             <br />
           </Col>
         </Row>
-      </Link>
     </div>
   );
 }

@@ -20,7 +20,7 @@ function PendingTutor(props) {
     return (
         <div>
             <Page></Page>
-            <FilterBar fetchPendingTutorShowList={fetchPendingTutorShowList} />
+            
             <br />
             <ListGroup>
                 {data.map((item, i) => {
@@ -36,6 +36,7 @@ function PendingTutor(props) {
 export default PendingTutor;
 
 /*
+//<FilterBar fetchPendingTutorShowList={fetchPendingTutorShowList} />
     var data = [
         {
             id: 1,

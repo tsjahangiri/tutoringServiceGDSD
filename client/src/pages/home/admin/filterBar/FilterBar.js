@@ -12,10 +12,14 @@ type Props = {
 export default function FilterBar(props: Props) {
     const dispatch = useDispatch();
 
-    var subjectControl = useRef(null);
+    var fNameControl = useRef(null);
+    var lNameControl = useRef(null);
+    var emailControl = useRef(null);
 
     const [filters, setFilters] = useState({
-        subjectName: "",
+        fName: undefined,
+        lName: undefined,
+        email: undefined,
     });
 
     React.useEffect(() => {
@@ -28,14 +32,16 @@ export default function FilterBar(props: Props) {
         }
     });
 
-    const filterTutors = () => {
-        var newFilters = {
-            ...filters,
-            subjectName: subjectControl.current.value,
-        };
-        setFilters(newFilters);
+  const filterTutors = () => {
+    var newFilters = {
+      ...filters,
+      fName: fNameControl.current.value,
+      lName: lNameControl.current.value,
+      email: emailControl.current.value,
     };
-
+    console.log(newFilters)
+    setFilters(newFilters);
+  };
 return (
         <div>
             <Container
@@ -45,15 +51,15 @@ return (
                 <Row>
                     <Col>
                         <Form.Label>First Name</Form.Label>
-                        <Form.Control size="sm" ref={subjectControl} type="text" />
+                        <Form.Control size="sm" ref={fNameControl} type="text" />
                     </Col>
                     <Col>
                         <Form.Label>Last Name</Form.Label>
-                        <Form.Control size="sm" ref={subjectControl} type="text" />
+                        <Form.Control size="sm" ref={lNameControl} type="text" />
                     </Col>
                     <Col>
                         <Form.Label>Email</Form.Label>
-                        <Form.Control size="sm" ref={subjectControl} type="text" />
+                        <Form.Control size="sm" ref={emailControl} type="text" />
                     </Col>
                 </Row>
                 <br />
