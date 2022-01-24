@@ -16,7 +16,7 @@ const port = 8080;
 require("dotenv").config();
 
 var jsonParser = bodyParser.json();
-app.use("/images", express.static(path.join(__dirname, "public/images")));
+app.use("/public/images", express.static(path.join(__dirname, "public/images")));
 
 app.use(cors());
 app.use(jsonParser);

@@ -30,8 +30,13 @@ export default function FilterBar(props: Props) {
   });
 
   const filterTutors = () => {
+    var subjectName = subjectNameControl.current.value;
+
+    if(subjectName === undefined || subjectName == "")
+      subjectName = undefined;
+
     var newFilters = {
-      subjectName: subjectNameControl.current.value,
+      subjectName: subjectName,
       level:
         levelControl.current.value === "Any"
           ? undefined

@@ -13,7 +13,7 @@ const {
   createQualificationValidation,
   updateQualificationValidation,
   createTutorProfileValidation,
-  updateTutorProfileValidation
+  updateTutorProfileValidation,
 } = require("../middleware/validation.js");
 const router = express.Router();
 let adminAuth = require("../middleware/adminAuth");
@@ -42,7 +42,6 @@ router.delete("/reviews/:id", reviewController.deleteReview);
 router.put("/reviews", updateReviewValidation, reviewController.updateReview);
 router.get("/reviews/:id", reviewController.getReviewById);
 router.get("/reviews", reviewController.getReviews);
-
 
 // Department
 let departmentController = require("../controller/deptController");
@@ -80,18 +79,39 @@ router.delete("/user", adminAuth.isAdmin, adminController.deleteUser);
 // Tutor Profile
 let tutorProfileController = require("../controller/TutorProfileController");
 router.get("/tutors/Info/:id", tutorProfileController.getTutorAbouInfoById);
+router.get(
+  "/tutors/courses/:id",
+  tutorProfileController.getTutorOfferedCoursesById
+);
+router.get(
+  "/tutors/qualification/:id",
+  tutorProfileController.getTutorQualificationById
+);
+router.get("/tutors/reviews/:id", tutorProfileController.getReviewsById);
+router.get("/tutors", tutorProfileController.searchTutorProfile);
 router.post("/tutors", createTutorProfileValidation, tutorProfileController.saveTutorInfo);
 router.put("/tutors", updateTutorProfileValidation, tutorProfileController.updateTutorInfo);
 
-let searchController = require("../controller/searchController");
-router.get("/tutors/search", searchController.getTutorsByFilters);
-
 let qualificationController = require("../controller/qualificationController");
 router.get("/qualifications/:id", qualificationController.getQualificationById);
-router.post("/qualifications", createQualificationValidation, qualificationController.createQualification);
-router.delete("/qualifications/:id", qualificationController.deleteQualification);
-router.put("/qualifications", updateQualificationValidation, qualificationController.updateQualification);
-router.get("/qualifications/:tutorProfileId", qualificationController.getQualificationByTutorProfileId);
+router.post(
+  "/qualifications",
+  createQualificationValidation,
+  qualificationController.createQualification
+);
+router.delete(
+  "/qualifications/:id",
+  qualificationController.deleteQualification
+);
+router.put(
+  "/qualifications",
+  updateQualificationValidation,
+  qualificationController.updateQualification
+);
+router.get(
+  "/qualifications/:tutorProfileId",
+  qualificationController.getQualificationByTutorProfileId
+);
 
 let uploadController = require("../controller/uploadController");
 router.post("/upload", tutorAuth.isTutor, uploadController.upload);
@@ -99,6 +119,5 @@ router.post("/upload", tutorAuth.isTutor, uploadController.upload);
 let fetchController = require("../controller/fetchFileController");
 router.get("/fetch/file", tutorAuth.isTutor, fetchController.file);
 router.get("/fetch/image", tutorAuth.isTutor, fetchController.image);
-
 
 module.exports = router;

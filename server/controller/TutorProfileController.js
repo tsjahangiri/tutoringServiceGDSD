@@ -13,6 +13,37 @@ module.exports = {
     });
   },
 
+  getTutorOfferedCoursesById: async (req, res) => {
+    let id = req.params.id;
+    let query = `SELECT courseCode, courseName, ratePerHour FROM hm_post A, hm_course B WHERE A.subjectId = B.courseCode AND A.tutorProfileId = ?`;
+    console.log(query);
+    database.query(query, [id], (err, result) => {
+      if (err) console.log(err);
+      else res.json(result);
+    });
+  },
+
+  getTutorQualificationById: async (req, res) => {
+    let id = req.params.id;
+    let query = `SELECT A.id, courseCode, courseName, description, grade FROM hm_qualification A, hm_course B WHERE A.subjectName = B.courseCode AND tutorProfileId = ?`;
+
+    database.query(query, [id], (err, result) => {
+      if (err) console.log(err);
+      else res.json(result);
+    });
+  },
+
+  getReviewsById: async (req, res) => {
+    let id = req.params.id;
+    database.query(
+      `SELECT text, rating, createdDateTime, modifiedDateTime, firstName, lastName, userId FROM hm_review A, hm_user B WHERE A.userId = B.id AND tutorProfileId = ?;`,
+      [id],
+      (err, result) => {
+        res.json(result);
+      }
+    );
+  },
+
   getTutorsByFilters: async (req, res) => {
     let subjectId = req.query.subjectId;
     let level = req.query.level;
@@ -37,16 +68,96 @@ module.exports = {
       res.json(result);
     });
   },
+  searchTutorProfile: async (req, res) => {
+    let joinQuery = "";
+    if (req.query.TutorProfileId !== undefined) {
+      joinQuery += `id = ${database.escape(req.query.TutorProfileId)}`;
+    }
+
+    if (req.query.Status !== undefined) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `status = ${database.escape(req.query.Status)}`;
+    }
+
+    if (req.query.RatePerHour !== undefined) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `ratePerHour = ${database.escape(req.query.RatePerHour)}`;
+    }
+
+    if (req.query.SubjectName !== undefined) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `MATCH(subjectName) AGAINST (${database.escape(
+        `*${req.query.SubjectName}*`
+      )} IN BOOLEAN MODE)`;
+    }
+    let dbQuery =
+      "SELECT hm_post.id, hm_post.description, hm_post.tutorProfileId, hm_post.status, hm_post.language, hm_post.subjectName, hm_post.ratePerHour, hm_post.experienceYears, hm_post.availableTime, hm_user.firstName, hm_user.lastName, hm_tutor_profile.picPath, hm_tutor_profile.about FROM hm_post" +
+      " LEFT JOIN hm_tutor_profile ON (hm_tutor_profile.id = hm_post.tutorProfileId)" +
+      " LEFT JOIN hm_user ON (hm_user.id = hm_post.tutorProfileId)";
+    if (joinQuery !== "") dbQuery += ` where ${joinQuery}`;
+    database.query(dbQuery, (err, input) => {
+      if (err) console.log(err);
+      else {
+        /**
+         * [
+         *  {
+         *    tutorId
+         *    tutorName
+         *    picPath
+         *    posts: [
+         *      {
+         *        id,
+         *        description
+         *        subjectName
+         *        ratePerHour
+         *      }
+         *    ]
+         *  }
+         * ]
+         */
+        result = [];
+        input.forEach((item) => {
+          var tutor = result.find((x) => x.tutorId == item.tutorProfileId);
+          if (tutor === undefined) {
+            tutor = {
+              tutorId: item.tutorProfileId,
+              tutorFirstName: item.firstName,
+              tutorLastName: item.lastName,
+              picPath: item.picPath,
+              about: item.about,
+              posts: [],
+            };
+            result.push(tutor);
+          }
+
+          tutor.posts.push({
+            id: item.id,
+            description: item.description,
+            status: item.status,
+            language: item.language,
+            ratePerHour: item.ratePerHour,
+            subjectName: item.subjectName,
+            availableTime: item.availableTime,
+            experienceYears: item.experienceYears,
+          });
+        });
+
+        res.json(result);
+      }
+    });
+  },
 
   saveTutorInfo: async (req, res) => {
-    
     await uploadFile(req, res);
     if (req.file == undefined) {
       return res.status(400).send({ message: "Please upload a Image!" });
     }
 
     let { UserId, About, Age } = req.body;
-    let PicturePath = "public/images/"+req.file.originalname;
+    let PicturePath = "public/images/" + req.file.originalname;
     database.query(
       "INSERT INTO hm_tutor_profile(userId, about, age, picPath) VALUES (?, ?, ?, ?)",
       [UserId, About, Age, PicturePath],
@@ -72,7 +183,7 @@ module.exports = {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    let PicturePath = "public/images/"+req.file.originalname;
+    let PicturePath = "public/images/" + req.file.originalname;
     let { Id, About, Age } = req.body;
     database.query(
       `UPDATE hm_tutor_profile SET about = ?, age= ?, picPath = ? WHERE id = ?`,

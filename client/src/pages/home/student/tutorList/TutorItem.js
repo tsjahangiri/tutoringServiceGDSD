@@ -5,16 +5,30 @@ import { Row, Col } from "react-bootstrap";
 
 export default function TutorItem(props) {
   const {
-    tutorProfileId,
-    firstName,
-    lastName,
+    tutorId,
+    tutorFirstName,
+    tutorLastName,
     ratePerHour,
-    description,
-    teaches = ["N/A"],
-    pictureUrl = "logo512.png",
+    about,
+    posts = [],
+    picPath,
   } = props.item;
 
+  var profilePicPath;
+  if (picPath === undefined) profilePicPath = "logo512.png";
+  else profilePicPath = `${process.env.REACT_APP_API_URL}/${picPath}`;
+
   const navigate = useNavigate();
+  const getSubjectNames = (posts) => {
+    var subjectNames = [];
+
+    posts.forEach((x) => subjectNames.push(x.subjectName));
+    return subjectNames.join(", ");
+  };
+
+  const getHighestRate = (posts) => {
+    return Math.max(...posts.map((item) => item.ratePerHour))
+  };
 
   return (
     <div
@@ -23,10 +37,10 @@ export default function TutorItem(props) {
     >
       <Row
         style={{ cursor: "pointer" }}
-        onClick={() => navigate(`/tutor/${tutorProfileId}`)}
+        onClick={() => navigate(`/tutor/${tutorId}`)}
       >
         <Col xs={2}>
-          <img src={pictureUrl} style={{ width: "148px" }} />
+          <img src={profilePicPath} style={{ width: "148px" }} />
         </Col>
         <Col>
           <Row>
@@ -34,11 +48,11 @@ export default function TutorItem(props) {
               {" "}
               <span
                 style={{ float: "left" }}
-              >{`${firstName} ${lastName}`}</span>
+              >{`${tutorFirstName} ${tutorLastName}`}</span>
             </Col>
             <Col>
               {" "}
-              <span style={{ float: "right" }}>{`$${ratePerHour}/hr`}</span>
+              <span style={{ float: "right" }}>{`$${getHighestRate(posts)}/hr`}</span>
             </Col>
           </Row>
           <br />
@@ -46,7 +60,7 @@ export default function TutorItem(props) {
             <Col>
               {" "}
               <span className="text-muted" style={{ float: "left" }}>
-                {description}
+                {about}
               </span>
             </Col>
           </Row>
@@ -55,7 +69,7 @@ export default function TutorItem(props) {
             <Col>
               {" "}
               <span className="text-muted" style={{ float: "left" }}>
-                {`Teaches: ${teaches.join(", ")}`}
+                {`Teaches: ${getSubjectNames(posts)}`}
               </span>
             </Col>
           </Row>
