@@ -127,19 +127,27 @@ module.exports = {
     if (req.query.Status !== undefined) {
       if (joinQuery != "") joinQuery += " and ";
 
-      joinQuery += `Status = ${database.escape(req.query.Status)}`;
+      joinQuery += `status = ${database.escape(req.query.Status)}`;
+    }
+
+    if (req.query.RatePerHour !== undefined) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `ratePerHour = ${database.escape(req.query.RatePerHour)}`;
     }
 
     if (req.query.SubjectName !== undefined) {
       if (joinQuery != "") joinQuery += " and ";
 
-      joinQuery += `MATCH(SubjectName) AGAINST (${database.escape(
+      joinQuery += `MATCH(subjectName) AGAINST (${database.escape(
         req.query.SubjectName
       )})`;
     }
 
     let dbQuery =
-      "SELECT id, description, tutorProfileId, status, `language`, subjectName, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime FROM hm_post";
+      "SELECT hm_post.id, hm_post.description, hm_post.tutorProfileId, hm_post.status, hm_post.language, hm_post.subjectName, hm_post.ratePerHour, hm_post.createdDateTime, hm_post.modifiedDateTime, hm_post.experienceYears, hm_post.isActive, hm_post.availableTime, hm_user.firstName, hm_user.lastName FROM hm_post" + 
+      " LEFT JOIN hm_tutor_profile ON (hm_tutor_profile.id = hm_post.tutorProfileId)"+
+      " LEFT JOIN hm_user ON (hm_user.id = hm_post.tutorProfileId)";
     if (joinQuery !== "") dbQuery += ` where ${joinQuery}`;
 
     database.query(dbQuery, (err, result) => {
