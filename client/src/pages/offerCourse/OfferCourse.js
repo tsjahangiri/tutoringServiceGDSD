@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import {Link} from 'react-router-dom'
 import "./OfferCourse.css";
+import Page from "../../components/page/Page";
 import { saveOfferCourse } from "../../core/actionCreators/offerCourse";
 
 function OfferCourse(props) {
@@ -31,6 +32,8 @@ function OfferCourse(props) {
 
 
   return (
+    <div>
+    <Page></Page>
     <div className="course-page">
       <div className="course-content">
         <h1>Offer Course</h1>
@@ -69,6 +72,7 @@ function OfferCourse(props) {
           <br />
         </Form>
       </div>
+    </div>
     </div>
   );
 }

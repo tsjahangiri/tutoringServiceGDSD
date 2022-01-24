@@ -1,7 +1,8 @@
 import React,{ useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { ListGroup } from "react-bootstrap";
+import { ListGroup, Button, Row, Col } from "react-bootstrap";
+import {Link} from 'react-router-dom'
 import { getTutorQualificationDataById } from "../../../core/selectors/tutor";
 import { getTutorQualificationById } from "../../../core/actionCreators/tutor";
 
@@ -27,7 +28,11 @@ export default function QualificationList(props) {
 
   return (
     <div>
-      <span>MY QUALIFICATIONS</span>
+      <Row class="row no-gutters" >
+        <Col xs={10}>MY QUALIFICATION</Col>
+        <Col xs={2}> <Link className="btn btn-info" to={"/add-qualification"}> Add QUALIFICATION</Link>
+        </Col>
+      </Row>
       <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
         {tutorQualifications.map((item, i) => {
           return (

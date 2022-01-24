@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import "./AddQualification.css";
+import Page from "../../components/page/Page";
 import { saveQualification } from "../../core/actionCreators/qualification";
 
 function AddQualification(props) {
@@ -27,6 +28,8 @@ function AddQualification(props) {
   };
 
   return (
+    <div>
+    <Page></Page>
     <div className="qualification-page">
       <div className="qualification-content">
         <h1>Add Qualification</h1>
@@ -50,6 +53,7 @@ function AddQualification(props) {
           </Button>
         </Form>
       </div>
+    </div>
     </div>
   );
 }
