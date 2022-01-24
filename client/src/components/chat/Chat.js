@@ -1,5 +1,6 @@
 // @flow
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import {
   Container,
   Row,
@@ -8,96 +9,136 @@ import {
   ListGroup,
   Form,
 } from "react-bootstrap";
-import socketIOClient from "socket.io-client";
+import { io } from "socket.io-client";
+import { getCurrentUser } from "../../core/selectors/user";
 import "./Chat.css";
+import { socketIOUrl } from "../../core/endpoints";
 
 type Props = {
   showChat: Boolean,
   chatClosed: Function,
-  currentUserId?: number,
+  selectedUserId?: number,
 };
 
-export default function Chat(props: Props) {
-  const { showChat, chatClosed, currentUserId } = props;
+/**
+ * texts = Array of Conversations
+ * [
+ *  {
+ *    userID: int
+ *    userName: string
+ *    lastContactDate: date --not required
+ *    lastText: string --not required
+ *    unread: boolean --not required
+ *    texts: [
+ *      {
+ *        id: int
+ *        text: string
+ *        date: date
+ *        inbox: boolean
+ *      }
+ *    ]
+ *  }, ...
+ * ]
+ */
 
+function getDefaultSelectedChat(selectedUserId, texts) {
+  let defaultSelectedChat = undefined;
+  if (selectedUserId !== undefined && texts?.length != 0) {
+    defaultSelectedChat = texts.find(
+      (element) => element.userID == selectedUserId
+    );
+  }
+  return defaultSelectedChat;
+}
+
+export default function Chat(props: Props) {
   // TODO: Remove
   const pictureUrl = "logo512.png";
+  // TODO: Remove
 
-  let text =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque volutpat placerat consequat. Mauris ornare, mi ac aliquet condimentum, quam nibh fringilla dui, sed lobortis ligula metus eget eros. Mauris facilisis lectus tortor, et malesuada urna accumsan vitae. Nullam dignissim, arcu sit amet placerat feugiat.";
-  let date = "12-01-2022";
-  let texts = [
-    {
-      id: 1,
-      name: "Rohat Sagar",
-      lastContact: date,
-      lastText: text,
-      texts: [
-        {
-          text: "Hi. Sam",
-          date: date,
-          inbox: true,
-        },
-        {
-          text: "Michael. Good to meet you!",
-          date: date,
-          inbox: false,
-        },
-        {
-          text: "Did you just arrive here?",
-          date: date,
-          inbox: true,
-        },
-        {
-          text: "Yeah, We arrived last week.",
-          date: date,
-          inbox: false,
-        },
-        {
-          text: "How do you like it?",
-          date: date,
-          inbox: true,
-        },
-        {
-          text: "It’s exciting! It’s much busier than the last city we lived in. I was working in Seattle for the last 3 years.",
-          date: date,
-          inbox: false,
-        },
-        {
-          text: "It really is very busy. I moved here from Tokyo 5 years ago and I still have trouble sometimes. Did you move here with your wife?",
-          date: date,
-          inbox: true,
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "Ammar",
-      lastContact: date,
-      lastText: text,
-      texts: [
-        {
-          text: text,
-          date: date,
-          inbox: true,
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: "Vishal",
-      lastContact: date,
-      lastText: text,
-      texts: [],
-    },
-  ];
+  const { showChat, chatClosed, selectedUserId } = props;
 
-  let defaultSelectedChat = undefined;
-  if (currentUserId !== undefined && texts?.length != 0) {
-    defaultSelectedChat = texts.find((element) => element.id == currentUserId);
-  }
+  const socket = useRef();
+  const textControl = useRef();
+  const [texts, setTexts] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [selectedChat, setSelectedChat] = useState(
+    getDefaultSelectedChat(selectedUserId, texts)
+  );
+  const currentUser = useSelector(getCurrentUser);
 
-  const [selectedChat, setSelectedChat] = useState(defaultSelectedChat); //TODO: Rename chat
+  useEffect(() => {
+    if (arrivalMessage) {
+      const { userID, userName, id, date, text, inbox } = arrivalMessage;
+
+      let recipientIndex = texts.findIndex((text) => text.userID == userID);
+
+      if (recipientIndex === -1) return;
+
+      let recipientUser = texts[recipientIndex];
+      recipientUser.texts.push({ id, text, date, inbox }); // Add new text
+
+      setTexts([
+        ...texts.slice(0, recipientIndex),
+        recipientUser,
+        ...texts.slice(recipientIndex + 1),
+      ]);
+    }
+  }, [arrivalMessage]);
+
+  // Only runs once.
+  useEffect(() => {
+    if (currentUser !== undefined) {
+      socket.current = io(socketIOUrl);
+      socket.current.emit("connectUser", { userId: currentUser.id });
+      socket.current.on("userTextsFetched", (data) => {
+        setTexts(data);
+      });
+
+      socket.current.on("textReceived", (data) => {
+        handleNewReceivedText(data);
+      });
+
+      socket.current.on("textSent", (data) => {
+        handleNewSentText(data);
+        // event.target.value = "";
+      });
+    }
+  }, []);
+
+  if (currentUser === undefined) return null;
+
+  /**
+   * userID: int,
+   * userName: string,
+   * id: int
+   * date: date,
+   * text: string,
+   */
+  const handleNewReceivedText = (data) => {
+    const { userID, userName, id, date, text } = data;
+    setArrivalMessage({ userID, userName, id, date, text, inbox: true });
+  };
+
+  const handleNewSentText = (data) => {
+    const { userID, userName, id, date, text } = data;
+    setArrivalMessage({ userID, userName, id, date, text, inbox: false });
+    textControl.current.value = "";
+  };
+
+  const handleSubmit = (event) => {
+    if (event.keyCode == 13) {
+      let text = event.target.value;
+      let data = {
+        from: currentUser.id,
+        to: selectedChat.userID,
+        text,
+      };
+      socket.current.emit("sendText", data);
+    } else {
+      return false;
+    }
+  };
 
   function renderChat(item, i) {
     const renderBorder = texts.length === i + 1;
@@ -122,7 +163,7 @@ export default function Chat(props: Props) {
                 <span
                   style={{ float: "left", fontSize: 16, fontWeight: "500" }}
                 >
-                  {item.name}
+                  {item.userName}
                 </span>
               </Col>
               <Col>
@@ -150,7 +191,7 @@ export default function Chat(props: Props) {
     );
   }
 
-  function renderText(item) {
+  function renderText(item, i) {
     // Outbound
     let float = "right";
     let bgColor = "#D1E7DD";
@@ -162,7 +203,7 @@ export default function Chat(props: Props) {
     }
 
     return (
-      <Container>
+      <Container key={i}>
         <div
           style={{
             borderColor: "#808080",
@@ -180,42 +221,40 @@ export default function Chat(props: Props) {
     );
   }
 
-  if (selectedChat === undefined) {
-    return (
-      <Offcanvas
-        style={{ zIndex: 9999 /** to overlay fab button */ }}
-        placement="end"
-        show={showChat}
-        onHide={chatClosed}
-      >
+  function renderHeader(selectedChat) {
+    if (selectedChat === undefined) {
+      return (
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Chats</Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>
-          <ListGroup>
-            {texts.map((item, i) => {
-              return renderChat(item, i);
-            })}
-          </ListGroup>
-        </Offcanvas.Body>
-      </Offcanvas>
-    );
-  } else {
-    return (
-      <Offcanvas
-        style={{ zIndex: 9999 /** to overlay fab button */ }}
-        placement="end"
-        show={showChat}
-        onHide={chatClosed}
-      >
+      );
+    } else {
+      return (
         <Offcanvas.Header closeButton>
           <i
             onClick={() => setSelectedChat(undefined)}
             className="bi bi-arrow-left-short"
             style={{ fontSize: "2rem", cursor: "pointer", opacity: ".5" }}
           ></i>
-          <Offcanvas.Title>{selectedChat.name}</Offcanvas.Title>
+          <Offcanvas.Title>{selectedChat.userName}</Offcanvas.Title>
         </Offcanvas.Header>
+      );
+    }
+  }
+
+  function renderBody(selectedChat) {
+    if (selectedChat === undefined) {
+      return (
+        <Offcanvas.Body>
+          <ListGroup>
+            {texts?.map((item, i) => {
+              return renderChat(item, i);
+            })}
+          </ListGroup>
+        </Offcanvas.Body>
+      );
+    } else {
+      return (
         <Offcanvas.Body>
           <ListGroup
             style={{
@@ -226,12 +265,29 @@ export default function Chat(props: Props) {
             }}
           >
             {selectedChat?.texts.map((item, i) => {
-              return renderText(item);
+              return renderText(item, i);
             })}
           </ListGroup>
-          <Form.Control as="textarea" rows={3} />
+          <Form.Control
+            ref={textControl}
+            onKeyDown={handleSubmit}
+            as="textarea"
+            rows={3}
+          />
         </Offcanvas.Body>
-      </Offcanvas>
-    );
+      );
+    }
   }
+
+  return (
+    <Offcanvas
+      style={{ zIndex: 9999 /** to overlay fab button */ }}
+      placement="end"
+      show={showChat}
+      onHide={chatClosed}
+    >
+      {renderHeader(selectedChat)}
+      {renderBody(selectedChat)}
+    </Offcanvas>
+  );
 }

@@ -43,7 +43,7 @@ export const DEFAULT_API_OPTIONS: ApiOptions = {
   method: "POST",
   headers: DEFAULT_HEADERS,
   timeout: DEFAULT_TIMEOUT,
-  useJwtSecret: true,
+  useJwtSecret: false,
 };
 
 export function* executeApiCall(
