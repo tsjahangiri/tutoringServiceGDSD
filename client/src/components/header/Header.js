@@ -77,8 +77,7 @@ function Header(props: Props) {
     dispatch(logoutUser());
   };
 
-  return (
-    
+  return (    
       <div style={{ width: '100%'}}>
         <div style={{ width: '100%'}}>
           <p style={{ textAlign: "center", marginTop: "10px"}}>Global Distributed Software Development Project of HS Fulda : Winter Semester 2021 Team 04</p>

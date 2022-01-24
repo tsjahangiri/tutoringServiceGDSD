@@ -79,6 +79,4 @@ export default PendingTutor;
             teaches: ["Maths", "English"],
         },
     ];
-
-
 */
