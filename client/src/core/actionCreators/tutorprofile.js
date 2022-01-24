@@ -3,7 +3,7 @@ import {
     FETCH_TUTORPROFILE_LIST,
     SET_TUTORPROFILE_LIST_LOADING,
     GET_TUTORPROFILE_LIST_SUCCESS,
-    GET_TUTORPROFILE_LIST_FAILED,
+    GET_TUTORPROFILE_LIST_FAILED
   } from "../actionTypes/tutorprofile";
   
   export const fetchTutorProfileList = (payload) => {
@@ -29,4 +29,3 @@ import {
   export const getTutorProfileListFailed = () => ({
     type: GET_TUTORPROFILE_LIST_FAILED,
   });
-  

@@ -12,7 +12,7 @@ import {
 export const INITIAL_STATE = {
   data: [],
   filters: {
-    subjectId: undefined,
+    subjectName: undefined,
     level: undefined,
     minRate: 0,
     gender: undefined,

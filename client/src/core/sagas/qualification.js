@@ -3,8 +3,9 @@ import { takeEvery, call, put } from "redux-saga/effects";
 import { executeApiCall } from "./api";
 import { qualificationApi } from "../endpoints"
 import type { Saga } from "redux-saga";
-import {  SAVE_QUALIFICATION,  UPDATE_QUALIFICATION} from "../actionTypes/qualification";
+import {  SAVE_QUALIFICATION,  UPDATE_QUALIFICATION, FETCH_QUALIFICATION_BY_ID} from "../actionTypes/qualification";
 import {
+  setQualification,
   saveQualificationSuccess,
   saveQualificationFailed,
   updateQualificationSuccess,
@@ -12,8 +13,30 @@ import {
 } from "../actionCreators/qualification";
 
 export default function* qualificationSaga(): Saga<void> {
+  yield takeEvery(FETCH_QUALIFICATION_BY_ID, fetchQualificationById);
   yield takeEvery(SAVE_QUALIFICATION, saveQualification);
-   yield takeEvery(UPDATE_QUALIFICATION, updateQualification);
+  yield takeEvery(UPDATE_QUALIFICATION, updateQualification);
+}
+
+export function* fetchQualificationById(action: Object): Saga<void> {
+  const { id } = action.payload;
+ 
+  console.log(action.payload)
+  // qualificationApi+=`/id=${id}`;
+
+  var url = qualificationApi + `/id:${id}`;
+
+  const apiOptions: ApiOptions = {
+    url: url,
+    method: "GET",
+    useJwtSecret: false,
+  };
+
+  const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
+  const { isSuccessful, response = {} } = apiResponse;
+  if (isSuccessful) {
+    yield put(setQualification(response));
+  }
 }
 
 

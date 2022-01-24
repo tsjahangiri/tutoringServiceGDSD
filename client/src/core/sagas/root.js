@@ -9,6 +9,7 @@ import offerCourseSaga from "./offerCourse";
 import qualificationSaga from "./qualification";
 import profilePictureSaga from "./profilePicture";
 import pendingTutorListShowSaga from "./PendingTutorShow";
+import fileUploadSaga from "./fileUpload"
 
 export default function* rootSaga(): Saga<void> {
   yield all([
@@ -20,5 +21,6 @@ export default function* rootSaga(): Saga<void> {
     fork(offerCourseSaga),
     fork(profilePictureSaga),
     fork(pendingTutorListShowSaga),
+    fork(fileUploadSaga),
   ]);
 }

@@ -12,7 +12,6 @@ import rootSaga from "./sagas/root";
 const persistConfig = {
   key: "root",
   storage: storage,
-  blacklist: ["user.registrationAlert", "user.loginAlert"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

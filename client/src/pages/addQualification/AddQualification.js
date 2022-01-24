@@ -22,6 +22,8 @@ function AddQualification(props) {
     };
     console.log(qualification);
     dispatch(saveQualification(qualification));
+    //test
+    // dispatch(fetchQualificationById(1));
   };
 
   return (
