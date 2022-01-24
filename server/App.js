@@ -22,6 +22,7 @@ app.use(cors());
 app.use(jsonParser);
 app.use(cors());
 app.use("/api/", routes);
+global.__basedir = __dirname;
 
 server.listen(port, () => {
   console.log(`Help Me Learn API listening at http://localhost:${port}`);

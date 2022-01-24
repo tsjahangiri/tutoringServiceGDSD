@@ -30,6 +30,7 @@ export function* uploadFile(action: Object): Saga<void> {
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
 
   const { isSuccessful } = apiResponse;
+  console.log(apiResponse)
   var msg = "";
   if (isSuccessful) {
     msg = "Course Saved Successfully";
