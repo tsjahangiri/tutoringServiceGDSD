@@ -8,3 +8,5 @@ export const qualificationApi = `${baseUrl}/qualifications`;
 export const allStudentListApi = `${baseUrl}/users/?UserType=102`;
 export const allTutorListApi = `${baseUrl}/users/?UserType=101`;
 export const pendingTutorListApi = `${baseUrl}/courses?Status=100`;
+
+export const socketIOUrl = `${process.env.REACT_APP_API_URL}`;

@@ -17,7 +17,7 @@
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.15",
     "pbkdf2": "^3.1.2",
-    "socket.io": "^2.4.1",
+    "socket.io": "^4.4.1",
     "trim": "0.0.1"
   },
   "scripts": {
