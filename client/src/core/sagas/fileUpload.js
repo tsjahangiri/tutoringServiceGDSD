@@ -24,7 +24,7 @@ export function* uploadFile(action: Object): Saga<void> {
     method: "POST",
     params: formData,
     headers: headers,
-    useJwtSecret: false,
+    useJwtSecret: true,
   };
 
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
