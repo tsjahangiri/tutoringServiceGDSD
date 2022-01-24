@@ -13,7 +13,7 @@ module.exports = {
         else res.status(200).json(result);
       }
     );
-  }
+  },
 
   createQualification: async (req, res) => {
     const errors = validationResult(req);
