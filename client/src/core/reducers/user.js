@@ -46,10 +46,6 @@ export default (state = INITIAL_STATE, action = {}) => {
         isAuthenticated: false,
       };
     default:
-      return {
-        ...state,
-        loginAlert: undefined,
-        registrationAlert: undefined,
-      };
+      return state;
   }
 };
