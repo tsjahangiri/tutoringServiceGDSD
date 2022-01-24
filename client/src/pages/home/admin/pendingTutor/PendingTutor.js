@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { ListGroup } from "react-bootstrap";
 import PendingTutorShow from "./PendingTutorShow";
@@ -12,10 +12,14 @@ function PendingTutor(props) {
     const data = useSelector(pendingTutorShowList); //TODO: Change var to const
 
     // TODO: Remove this code
-
+    const [active, toggleActive] = useState(1);
     if (data === undefined) {
         return <div></div>;
     }
+
+    const pageSize = 5;
+    const start = active * pageSize - pageSize;
+    const end = start + pageSize;
 
     return (
         <div>
@@ -23,12 +27,18 @@ function PendingTutor(props) {
             
             <br />
             <ListGroup>
-                {data.map((item, i) => {
+                {data.slice(start, end).map((item, i) => {
                     return <PendingTutorShow key={i} item={item} />;
                 })}
             </ListGroup>
             <br />
-            <Paging className="float-end" itemCount={data.length} />
+            <Paging
+                className="float-end"
+                active={active}
+                toggleActive={toggleActive}
+                pageSize={pageSize}
+                itemCount={data.length}
+            />
         </div>
     );
 }
