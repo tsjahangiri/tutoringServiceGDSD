@@ -1,8 +1,9 @@
 import React,{ useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import {Link} from 'react-router-dom'
 
-import { ListGroup, Badge } from "react-bootstrap";
+import { ListGroup, Badge, Button, Row, Col } from "react-bootstrap";
 import { getTutorCourseDataById } from "../../../core/selectors/tutor";
 import { getTutorOfferedCourseById } from "../../../core/actionCreators/tutor";
 
@@ -28,7 +29,11 @@ export default function CourseList(props) {
 
   return (
     <div>
-      <span>MY COURSES</span>
+      <Row class="row no-gutters" >
+        <Col xs={10}>MY COURSES</Col>
+        <Col xs={2}> <Link className="btn btn-info" to={"/offer-course"}> Request For Subject</Link>
+        </Col>
+      </Row>
       <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
         {tutorCourses.map((item, i) => {
           return (

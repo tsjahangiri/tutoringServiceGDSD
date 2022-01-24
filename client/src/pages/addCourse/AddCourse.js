@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import "./AddCourse.css";
+import Page from "../../components/page/Page";
 import { saveCourse } from "../../core/actionCreators/course";
 
 function AddCourse(props) {
@@ -27,6 +28,8 @@ function AddCourse(props) {
   // };
 
   return (
+    <div>
+    <Page></Page>
     <div className="course-page">
       <div className="course-content">
         <h1>Add New Course</h1>
@@ -60,6 +63,7 @@ function AddCourse(props) {
           </Button>
         </Form>
       </div>
+    </div>
     </div>
   );
 }
