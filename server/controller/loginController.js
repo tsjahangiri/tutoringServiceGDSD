@@ -32,7 +32,7 @@ module.exports = {
               (err, result) => {
                 if (err) console.log(err);
                 else {
-                  
+                  if(usertype === 101){
                   database.execute(
                     "INSERT INTO `helpmelearn`.`tutorprofile` (`first_name`, `last_name`) VALUES (?, ?)",
                     [
@@ -50,6 +50,10 @@ module.exports = {
                   );
                   // res.json({ message: "User Created" });
                 }
+                else {
+                  res.json({ message: "User Created" });
+                }
+              }
               }
             );
           } else {

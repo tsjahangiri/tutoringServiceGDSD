@@ -104,13 +104,14 @@ CREATE TABLE `hm_post` (
   `tutorProfileId` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `language` varchar(55) DEFAULT NULL,
-  `subjectId` int(11) NOT NULL,
+  `subjectName` varchar(1000) NOT NULL,
   `ratePerHour` float NOT NULL,
   `createdDateTime` date NOT NULL,
   `modifiedDateTime` date NOT NULL,
   `experienceYears` int(11) DEFAULT NULL,
   `isActive` int(11) DEFAULT NULL,
   `availableTime` varchar(75) DEFAULT NULL,
+  FULLTEXT(`subjectName`),
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -125,7 +126,7 @@ DROP TABLE IF EXISTS `hm_qualification`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hm_qualification` (
   `id` int(11) NOT NULL,
-  `subjectId` int(11) NOT NULL,
+  `subjectName` varchar(1000) NOT NULL,
   `description` varchar(80) NOT NULL,
   `grade` varchar(45) DEFAULT NULL,
   `tutorProfileId` int(11) NOT NULL,
@@ -163,9 +164,9 @@ DROP TABLE IF EXISTS `hm_tutor_profile`;
 CREATE TABLE `hm_tutor_profile` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
-  `about` varchar(250) NOT NULL,
-  `age` int(11) NOT NULL,
-  `rating` float NOT NULL,
+  `about` varchar(250) NULL,
+  `age` int(11) NULL,
+  `rating` float NULL,
   `picPath` varchar(180) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)

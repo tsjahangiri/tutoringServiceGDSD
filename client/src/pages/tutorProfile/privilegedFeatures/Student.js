@@ -25,7 +25,7 @@ export default function Student(props) {
     return (
       <div>
         {renderFabOption()}
-        <Chat currentUserId={tutorId} showChat={showChat} chatClosed={chatClosed} />
+        <Chat selectedUserId={tutorId} showChat={showChat} chatClosed={chatClosed} />
       </div>
     );
   }
