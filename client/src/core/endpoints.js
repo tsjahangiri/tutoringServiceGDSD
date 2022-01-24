@@ -1,8 +1,10 @@
-const baseUrl = `${process.env.REACT_APP_API_URL}/api`;
+//const baseUrl = `${process.env.REACT_APP_API_URL}/api`;
+
+const baseUrl = `http://localhost:8080/api`;
 
 export const loginApi = `${baseUrl}/login`;
 export const registerApi = `${baseUrl}/register`;
-export const tutorSearchApi = `${baseUrl}/tutors/search`;
+export const tutorSearchApi = `${baseUrl}/tutors`;
 export const courseApi = `${baseUrl}/courses`;
 export const qualificationApi = `${baseUrl}/qualifications`;
 export const fileUploadApi = `${baseUrl}/upload`;

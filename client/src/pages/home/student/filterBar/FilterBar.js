@@ -13,13 +13,13 @@ export default function FilterBar(props: Props) {
 
   const approvedCourses = useSelector(getApprovedCourseList);
 
-  var subjectIdControl = useRef(null);
+  var subjectNameControl = useRef(null);
   var levelControl = useRef(null);
   var minRateControl = useRef(null);
   var genderControl = useRef(null);
 
   const [filters, setFilters] = useState({
-    subjectId: undefined,
+    subjectName: undefined,
     level: undefined,
     minRate: 0,
     gender: undefined,
@@ -30,12 +30,13 @@ export default function FilterBar(props: Props) {
   });
 
   const filterTutors = () => {
+    var subjectName = subjectNameControl.current.value;
+
+    if(subjectName === undefined || subjectName == "")
+      subjectName = undefined;
+
     var newFilters = {
-      ...filters,
-      subjectId:
-        subjectIdControl.current.value === "Any"
-          ? undefined
-          : subjectIdControl.current.value,
+      subjectName: subjectName,
       level:
         levelControl.current.value === "Any"
           ? undefined
@@ -58,16 +59,11 @@ export default function FilterBar(props: Props) {
       <Row>
         <Col>
           <Form.Label>Subject</Form.Label>
-          <Form.Select size="sm" ref={subjectIdControl} defaultValue="Any">
-            <option>Any</option>
-            {approvedCourses?.map((item, i) => {
-              return (
-                <option key={i} value={item.id}>
-                  {item.courseName}
-                </option>
-              );
-            })}
-          </Form.Select>
+          <Form.Control
+            size="sm"
+            ref={subjectNameControl}
+            type="text"
+          />
         </Col>
         <Col>
           <Form.Label>Level</Form.Label>

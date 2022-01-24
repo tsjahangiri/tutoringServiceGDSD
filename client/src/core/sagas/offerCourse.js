@@ -46,12 +46,12 @@ export function* saveOfferCourse(action: Object): Saga<void> {
 
 export function* fetchOfferCourse(action: Object): Saga<void> {
   const { filters } = action.payload;
-  const { subjectId, level, minRate, gender } = filters;
+  const { subjectName, level, minRate, gender } = filters;
   const apiOptions: ApiOptions = {
     url: tutorSearchApi,
     method: "GET",
     params: {
-      subjectId,
+      SubjectName: subjectName,
       level,
       rating: minRate,
       gender,

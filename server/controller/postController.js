@@ -13,7 +13,7 @@ module.exports = {
       TutorProfileId,
       Status,
       Language,
-      SubjectId,
+      SubjectName,
       RatePerHour,
       ExperinceYears,
       AvailableTime,
@@ -23,13 +23,13 @@ module.exports = {
     var isActive = true;
 
     database.query(
-      "INSERT INTO hm_post(description, tutorProfileId, status, `language`, subjectId, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO hm_post(description, tutorProfileId, status, `language`, subjectName, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         Description,
         TutorProfileId,
         Status,
         Language,
-        SubjectId,
+        SubjectName,
         RatePerHour,
         date,
         date,
@@ -76,7 +76,7 @@ module.exports = {
       TutorProfileId,
       Status,
       Language,
-      SubjectId,
+      SubjectName,
       RatePerHour,
       ExperinceYears,
       AvailableTime,
@@ -84,13 +84,13 @@ module.exports = {
 
     var date = new Date().toISOString().split("T")[0];
     database.query(
-      "UPDATE hm_post SET description=?, tutorProfileId=?, status=?, `language`=?, subjectId=?, ratePerHour=?, modifiedDateTime=?, experienceYears=?, availableTime=? WHERE id = ?;",
+      "UPDATE hm_post SET description=?, tutorProfileId=?, status=?, `language`=?, subjectName=?, ratePerHour=?, modifiedDateTime=?, experienceYears=?, availableTime=? WHERE id = ?;",
       [
         Description,
         TutorProfileId,
         Status,
         Language,
-        SubjectId,
+        SubjectName,
         RatePerHour,
         date,
         ExperinceYears,
@@ -107,27 +107,47 @@ module.exports = {
   getPost: async (req, res) => {
     let id = req.params.id;
     database.query(
-      "SELECT id, description, tutorProfileId, status, `language`, subjectId, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime FROM hm_post WHERE id = ?;",
+      "SELECT id, description, tutorProfileId, status, `language`, subjectName, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime FROM hm_post WHERE id = ?;",
       [id],
       (err, result) => {
         if (err) res.status(400).send(`Response Error: ${err}`);
-        else res.status(200).json(result);      }
+        else res.status(200).json(result);
+      }
     );
   },
 
   searchPost: async (req, res) => {
     let joinQuery = "";
     if (req.query.TutorProfileId !== undefined) {
-      joinQuery += `tutorProfileId = ${database.escape(req.query.TutorProfileId)}`;
+      joinQuery += `tutorProfileId = ${database.escape(
+        req.query.TutorProfileId
+      )}`;
     }
 
     if (req.query.Status !== undefined) {
       if (joinQuery != "") joinQuery += " and ";
 
-      joinQuery += `Status = ${database.escape(req.query.Status)}`;
+      joinQuery += `status = ${database.escape(req.query.Status)}`;
     }
-    
-    let dbQuery = "SELECT id, description, tutorProfileId, status, `language`, subjectId, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime FROM hm_post";
+
+    if (req.query.RatePerHour !== undefined) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `ratePerHour = ${database.escape(req.query.RatePerHour)}`;
+    }
+
+    if (req.query.SubjectName !== undefined) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `MATCH(subjectName) AGAINST (${database.escape(
+        req.query.SubjectName
+      )})`;
+    }
+
+    let dbQuery =
+      "SELECT hm_post.id, hm_post.description, hm_post.tutorProfileId, hm_post.status, hm_post.language, hm_post.subjectName, hm_post.ratePerHour, hm_post.createdDateTime, hm_post.modifiedDateTime, hm_post.experienceYears, hm_post.isActive, hm_post.availableTime, hm_user.firstName, hm_user.lastName FROM hm_post" + 
+      " LEFT JOIN hm_tutor_profile ON (hm_tutor_profile.id = hm_post.tutorProfileId)"+
+      " LEFT JOIN hm_user ON (hm_user.id = hm_post.tutorProfileId)";
     if (joinQuery !== "") dbQuery += ` where ${joinQuery}`;
 
     database.query(dbQuery, (err, result) => {

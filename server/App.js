@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 var bodyParser = require("body-parser");
 const routes = require("./routes/routes.js");
+const path = require("path");
 const app = express();
 const socketIO = require("./socketIO/socketIO");
 
@@ -15,6 +16,7 @@ const port = 8080;
 require("dotenv").config();
 
 var jsonParser = bodyParser.json();
+app.use("/public/images", express.static(path.join(__dirname, "public/images")));
 
 app.use(cors());
 app.use(jsonParser);
