@@ -20,11 +20,12 @@ module.exports = {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    let { SubjectName, Description, Grade, TutorProfileId  } = req.body;
+    let { SubjectName, Description, Grade, UserId  } = req.body;
     
     database.query(
-      "INSERT INTO hm_qualification (subjectName, description, grade, tutorProfileId) VALUES ( ?, ?, ?, ?)",
-      [SubjectName, Description, Grade, TutorProfileId],
+      `INSERT INTO hm_qualification (subjectName, description, grade, tutorProfileId) VALUES ( ?, ?, ?,
+        SELECT id FROM hm_tutor_profile T WHERE T.userId = ? LIMIT 1)`,
+      [SubjectName, Description, Grade, UserId],
       (err, result) => {
         if (err) console.log(err);
       }
