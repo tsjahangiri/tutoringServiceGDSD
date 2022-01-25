@@ -28,11 +28,7 @@ export default function QualificationList(props) {
 
   return (
     <div>
-      <Row class="row no-gutters" >
-        <Col xs={10}>MY QUALIFICATION</Col>
-        <Col xs={2}> <Link className="btn btn-info" to={"/add-qualification"}> Add QUALIFICATION</Link>
-        </Col>
-      </Row>
+      <span>MY QUALIFICATION</span>
       <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
         {tutorQualifications.map((item, i) => {
           return (
@@ -43,7 +39,7 @@ export default function QualificationList(props) {
             >
               <div className="me-auto">
                 <div>
-                  <span className="fw-bold">{item.courseName+' '+item.courseCode}</span>
+                  <span className="fw-bold">{item.subjectName}</span>
                 </div>
                 <div className="mb-2">
                   <span className="text-muted">{`Grade: ${item.grade}`}</span>

@@ -1,6 +1,6 @@
 // @flow
-import React,{ useState, useEffect } from "react";
-import { useSelector, useDispatch  } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import CourseList from "./courseList/CourseList";
@@ -12,6 +12,7 @@ import Tutor from "./privilegedFeatures/Tutor";
 import { getUserType } from "../../core/selectors/user";
 import { getTutorInfoDataById } from "../../core/selectors/tutor";
 import { getTutorInfoById } from "../../core/actionCreators/tutor";
+import { filesApi } from "../../core/endpoints";
 
 export default function TutorProfile(props) {
   const dispatch = useDispatch();
@@ -23,28 +24,37 @@ export default function TutorProfile(props) {
   const [tutorInfoData, setTutorInfoData] = useState([]);
   useEffect(() => {
     dispatch(getTutorInfoById(tutorId));
-  },[]);
+  }, []);
   useEffect(() => {
     setTutorInfoData(tutorInfoDataById[0]);
-  },[tutorInfoDataById]);
+  }, [tutorInfoDataById]);
 
   // TODO: Remove
   const photo = "/logo192.png";
 
   const userType = useSelector(getUserType);
 
+  const getPicPath = () => {
+    if (tutorInfoData && tutorInfoData.picPath) {
+      return `${filesApi}/${tutorInfoData.picPath}`;
+    }
+    return photo;
+  };
+
   function renderProfile() {
     return (
       <Container className="border border-1 rounded">
         <Row style={{ padding: 5 }}>
           <Col xs={2}>
-            <img src={tutorInfoData?.picPath ? tutorInfoData?.picPath : photo} style={{ width: "148px" }} />
+            <img src={getPicPath()} style={{ width: "148px" }} />
           </Col>
           <Col>
             <Row>
               <Col>
                 {" "}
-                <span style={{ float: "left", fontSize: 20 }}>{tutorInfoData?.firstName +' '+tutorInfoData?.lastName}</span>
+                <span style={{ float: "left", fontSize: 20 }}>
+                  {tutorInfoData?.firstName + " " + tutorInfoData?.lastName}
+                </span>
               </Col>
             </Row>
             <br />
@@ -78,7 +88,7 @@ export default function TutorProfile(props) {
     <Page>
       {renderProfile()}
       <br />
-      <CourseList tutorId={tutorId}/>
+      <CourseList tutorId={tutorId} />
       <br />
       <br />
       <QualificationList tutorId={tutorId} />

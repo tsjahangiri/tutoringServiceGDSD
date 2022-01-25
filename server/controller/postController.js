@@ -16,17 +16,17 @@ module.exports = {
       RatePerHour,
       ExperinceYears,
       AvailableTime,
-      TutorProfileId
+      UserId
     } = req.body;
 
     var date = new Date().toISOString().split("T")[0];
     var isActive = true;
 
     database.query(
-      "INSERT INTO hm_post(description, tutorProfileId, status, `language`, subjectName, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO hm_post(description, tutorProfileId, status, `language`, subjectName, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime) VALUES (?, (SELECT id FROM hm_tutor_profile T WHERE T.userId = ? LIMIT 1), ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         Description,
-        TutorProfileId,
+        UserId,
         Status,
         Language,
         SubjectName,

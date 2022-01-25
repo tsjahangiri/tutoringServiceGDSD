@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Offcanvas, Row, Col, Button, Form } from "react-bootstrap";
 import { Fab, Action } from "react-tiny-fab";
 import Avatar from "react-avatar-edit";
 import Chat from "../../../components/chat/Chat";
 import { uploadProfilePicture } from "../../../core/actionCreators/profilePicture";
+import { getCurrentUser } from "../../../core/selectors/user";
 
 export default function Tutor() {
   const navigate = useNavigate();
@@ -14,10 +15,15 @@ export default function Tutor() {
   const [src, setSrc] = useState(undefined);
   const [preview, setPreview] = useState(null);
 
+  const currentUser = useSelector(getCurrentUser);
+
   const editorClosed = () => {
     toggleEditor(false);
     setPreview(null);
   };
+
+  const ageRef = useRef(null);
+  const aboutRef = useRef(null);
 
   const editorOpened = () => toggleEditor(true);
 
@@ -45,17 +51,31 @@ export default function Tutor() {
 
   const dispatch = useDispatch();
   const onProfileEdit = () => {
-    dispatch(uploadProfilePicture(src));
-    console.log(typeof src);
+    dispatch(
+      uploadProfilePicture({
+        profilePicture: src,
+        UserId: currentUser.id,
+        About: aboutRef.current.value,
+        Age: ageRef.current.value,
+      })
+    );
   };
 
   function renderChatOption() {
     return (
       <Fab alwaysShowTitle={true} icon={<i className="bi bi-plus"></i>}>
-        <Action onClick={() => navigate(`/add-qualification`)} style={{ backgroundColor: "#0D6EFD" }} text="Add Qualification">
+        <Action
+          onClick={() => navigate(`/add-qualification`)}
+          style={{ backgroundColor: "#0D6EFD" }}
+          text="Add Qualification"
+        >
           <i className="bi bi-journal-medical" />
         </Action>
-        <Action onClick={() => navigate(`/offer-course`)} style={{ backgroundColor: "#0D6EFD" }} text="Offer Course">
+        <Action
+          onClick={() => navigate(`/offer-course`)}
+          style={{ backgroundColor: "#0D6EFD" }}
+          text="Offer Course"
+        >
           <i className="bi bi-person-workspace" />
         </Action>
         <Action
@@ -106,9 +126,14 @@ export default function Tutor() {
               </Col>
             </Row>
             <br />
-            <Form.Control placeholder="Age" type="number" />
+            <Form.Control ref={ageRef} placeholder="Age" type="number" />
             <br />
-            <Form.Control placeholder="Description" as="textarea" rows={3} />
+            <Form.Control
+              ref={aboutRef}
+              placeholder="About"
+              as="textarea"
+              rows={3}
+            />
             <br />
             <div>
               <Button

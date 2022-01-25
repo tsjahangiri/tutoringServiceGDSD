@@ -28,10 +28,11 @@ function OfferCourse(props) {
       Language: languageRef.current.value,
       Level: levelRef.current.value,
       Description: descriptionRef.current.value,
-      PerHourFee: perHourFeeRef.current.value,
-      YearsOfExperience: yearsOfExperienceRef.current.value,
+      RatePerHour: perHourFeeRef.current.value,
+      ExperinceYears: yearsOfExperienceRef.current.value,
       AvailableTime: availableTimeRef.current.value,
-      UserId: user.id
+      UserId: user.id,
+      Status: 101 //Approved
     };
     console.log(offerCourse);
     dispatch(saveOfferCourse(offerCourse));
@@ -39,12 +40,11 @@ function OfferCourse(props) {
 
 
   return (
-    <div>
-    <Page></Page>
+    <Page>
     <div className="course-page">
       <div className="course-content">
         <h1>Offer Course</h1>
-        <Form>
+        <Form onSubmit={submitOfferCourse}>
           <Form.Control type="text" ref={subjectRef} placeholder="Subject" />
           <br />
           <Form.Control type="text" ref={languageRef} placeholder="Language of Instruction" />
@@ -59,14 +59,14 @@ function OfferCourse(props) {
           <br />
           <Form.Control as="textarea" ref={descriptionRef} rows={3} placeholder="Description" />
           <br />
-          <Button className="btn btn-success" variant="primary" onClick={submitOfferCourse} type="submit">
+          <Button className="btn btn-success" variant="primary" type="submit">
             Request for Approval
           </Button>
           <br />
         </Form>
       </div>
     </div>
-    </div>
+    </Page>
   );
 }
 

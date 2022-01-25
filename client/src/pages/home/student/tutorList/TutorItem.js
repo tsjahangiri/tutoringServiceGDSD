@@ -5,6 +5,7 @@ import { Row, Col } from "react-bootstrap";
 
 export default function TutorItem(props) {
   const {
+    userId,
     tutorId,
     tutorFirstName,
     tutorLastName,
@@ -15,7 +16,7 @@ export default function TutorItem(props) {
   } = props.item;
 
   var profilePicPath;
-  if (picPath === undefined) profilePicPath = "logo512.png";
+  if (picPath == undefined) profilePicPath = "logo512.png";
   else profilePicPath = `${process.env.REACT_APP_API_URL}/${picPath}`;
 
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ export default function TutorItem(props) {
     >
       <Row
         style={{ cursor: "pointer" }}
-        onClick={() => navigate(`/tutor/${tutorId}`)}
+        onClick={() => navigate(`/tutor/${userId}`)}
       >
         <Col xs={2}>
           <img src={profilePicPath} style={{ width: "148px" }} />

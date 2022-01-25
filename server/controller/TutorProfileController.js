@@ -15,7 +15,7 @@ module.exports = {
 
   getTutorOfferedCoursesById: async (req, res) => {
     let id = req.params.id;
-    let query = `SELECT subjectName, ratePerHour FROM hm_post A left join hm_tutor_profile B on
+    let query = `SELECT subjectName, ratePerHour FROM hm_post A inner join hm_tutor_profile B on
     (A.tutorProfileId = B.id and B.userId = ?);`;
     console.log(query);
     database.query(query, [id], (err, result) => {
@@ -27,7 +27,7 @@ module.exports = {
   getTutorQualificationById: async (req, res) => {
     let id = req.params.id;
     let query = `SELECT A.id, A.subjectName, A.description, A.grade FROM hm_qualification A
-     left join hm_tutor_profile B on (A.tutorProfileId = B.id and B.userId = ?);`;
+     inner join hm_tutor_profile B on (A.tutorProfileId = B.id and B.userId = ?);`;
 
     database.query(query, [id], (err, result) => {
       if (err) console.log(err);
@@ -39,8 +39,8 @@ module.exports = {
     let id = req.params.id;
     database.query(
       `SELECT A.id, A.text, A.rating, A.createdDateTime, A.modifiedDateTime, U.firstName, U.lastName, A.userId FROM hm_review A,
-      left join hm_user U on (A.userId = u.id)
-      left join hm_tutor_profile T on (A.tutorProfileId = T.id and T.userId = ?);`,
+      inner join hm_user U on (A.userId = u.id)
+      inner join hm_tutor_profile T on (A.tutorProfileId = T.id and T.userId = ?);`,
       [id],
       (err, result) => {
         res.json(result);
@@ -84,10 +84,10 @@ module.exports = {
       joinQuery += `status = ${database.escape(req.query.Status)}`;
     }
 
-    if (req.query.RatePerHour !== undefined) {
+    if (req.query.maxRatePerHour !== undefined) {
       if (joinQuery != "") joinQuery += " and ";
 
-      joinQuery += `ratePerHour = ${database.escape(req.query.RatePerHour)}`;
+      joinQuery += `ratePerHour <= ${database.escape(req.query.maxRatePerHour)}`;
     }
 
     if (req.query.SubjectName !== undefined) {
@@ -98,10 +98,11 @@ module.exports = {
       )} IN BOOLEAN MODE)`;
     }
     let dbQuery =
-      "SELECT hm_post.id, hm_post.description, hm_post.tutorProfileId, hm_post.status, hm_post.language, hm_post.subjectName, hm_post.ratePerHour, hm_post.experienceYears, hm_post.availableTime, hm_user.firstName, hm_user.lastName, hm_tutor_profile.picPath, hm_tutor_profile.about FROM hm_post" +
+      "SELECT hm_tutor_profile.userId as userId, hm_post.id, hm_post.description, hm_post.tutorProfileId, hm_post.status, hm_post.language, hm_post.subjectName, hm_post.ratePerHour, hm_post.experienceYears, hm_post.availableTime, hm_user.firstName, hm_user.lastName, hm_tutor_profile.picPath, hm_tutor_profile.about FROM hm_post" +
       " LEFT JOIN hm_tutor_profile ON (hm_tutor_profile.id = hm_post.tutorProfileId)" +
-      " LEFT JOIN hm_user ON (hm_user.id = hm_post.tutorProfileId)";
+      " LEFT JOIN hm_user ON (hm_user.id = hm_tutor_profile.userId)";
     if (joinQuery !== "") dbQuery += ` where ${joinQuery}`;
+    console.log(dbQuery);
     database.query(dbQuery, (err, input) => {
       if (err) console.log(err);
       else {
@@ -127,6 +128,7 @@ module.exports = {
           var tutor = result.find((x) => x.tutorId == item.tutorProfileId);
           if (tutor === undefined) {
             tutor = {
+              userId: item.userId,
               tutorId: item.tutorProfileId,
               tutorFirstName: item.firstName,
               tutorLastName: item.lastName,
@@ -163,8 +165,8 @@ module.exports = {
     let { UserId, About, Age } = req.body;
     let PicturePath = "public/images/" + req.file.originalname;
     database.query(
-      "INSERT INTO hm_tutor_profile(userId, about, age, picPath) VALUES (?, ?, ?, ?)",
-      [UserId, About, Age, PicturePath],
+      "UPDATE hm_tutor_profile SET about = ?, age = ?, rating = 0, picPath = ? WHERE userId = ?",
+      [About, Age, PicturePath, UserId],
       (err) => {
         if (err) res.status(400).send(`Response Error: ${err}`);
       }
