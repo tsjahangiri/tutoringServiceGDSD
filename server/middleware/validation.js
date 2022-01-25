@@ -11,7 +11,6 @@ exports.updateUserValidation = [
   body("Email").notEmpty().isEmail(),
   body("UserType").notEmpty().isIn([100, 101, 102]),
   body("Status").notEmpty().isIn([100, 101, 102]),
-  body("Password").notEmpty().isString().isLength({ min: 1 }),
 ];
 
 exports.createTutorProfileValidation = [
@@ -26,7 +25,6 @@ exports.updateTutorProfileValidation = [
 ];
 
 exports.createPostValidation = [
-  body("TutorProfileId").notEmpty().isInt(),
   body("SubjectName").notEmpty().isString(),
   body("Status").notEmpty().isIn([100, 101, 102]),
   body("RatePerHour").notEmpty(),
@@ -82,7 +80,6 @@ exports.createQualificationValidation = [
   body("SubjectName").notEmpty(),
   body("Description").notEmpty(),
   body("Grade").notEmpty(),
-  body("TutorProfileId").isString().isInt(),
 ];
 
 exports.updateQualificationValidation = [body("Id").notEmpty().isInt()];

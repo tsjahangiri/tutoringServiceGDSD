@@ -33,7 +33,10 @@ export function* login(action: Object): Saga<void> {
 
   const { isSuccessful, response = {} } = apiResponse;
 
-  if (isSuccessful) {
+  if (
+    isSuccessful &&
+    (response.message == undefined || response.message == "")
+  ) {
     const { id, email, token } = response;
     if (token !== undefined) {
       var decoded = jwt_decode(token);
@@ -41,7 +44,7 @@ export function* login(action: Object): Saga<void> {
       yield put(setCurrentUser({ id, email, user_type, status, exp, token }));
     }
   } else {
-    const errorMessage = response.ErrorMessage || response.message;
+    const errorMessage = response.message || response.ErrorMessage;
     yield put(setLoginAlert(errorMessage));
   }
 }

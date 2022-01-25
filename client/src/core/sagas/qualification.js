@@ -41,12 +41,12 @@ export function* fetchQualificationById(action: Object): Saga<void> {
 
 
 export function* saveQualification(action: Object): Saga<void> {
-  console.log("saga" + qualificationApi);
+  console.log("saga" +  action.payload);
   const apiOptions: ApiOptions = {
     url:qualificationApi,
     method: "POST",
     params: action.payload,
-    useJwtSecret: false
+    useJwtSecret: true
   };
   console.log("saga" + apiOptions.url);
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);

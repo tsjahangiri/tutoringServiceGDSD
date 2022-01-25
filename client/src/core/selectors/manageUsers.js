@@ -1,0 +1,1 @@
+export const getUsersList = (state: Object) => state.manageUsers.data;

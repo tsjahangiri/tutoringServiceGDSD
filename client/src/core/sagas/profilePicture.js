@@ -1,7 +1,7 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import type { Saga } from "redux-saga";
 import { BaseHeaders, executeApiCall } from "./api";
-import { loginApi, registerApi } from "../endpoints";
+import { tutorsApi } from "../endpoints";
 import { UPLOAD_PROFILE_PICTURE } from "../actionTypes/profilePicture";
 
 export default function* profilePictureSaga(): Saga<void> {
@@ -15,9 +15,12 @@ export function* uploadProfilePicture(action: Object): Saga<void> {
 
   const formData = new FormData();
   formData.append("file", action.payload.profilePicture);
+  formData.append("UserId", action.payload.UserId);
+  formData.append("About", action.payload.About);
+  formData.append("Age", action.payload.Age);
 
   const apiOptions: ApiOptions = {
-    url: registerApi,
+    url: tutorsApi,
     method: "POST",
     params: formData,
     headers: headers,

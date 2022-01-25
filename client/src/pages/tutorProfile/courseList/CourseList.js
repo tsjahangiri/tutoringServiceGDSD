@@ -29,11 +29,7 @@ export default function CourseList(props) {
 
   return (
     <div>
-      <Row class="row no-gutters" >
-        <Col xs={10}>MY COURSES</Col>
-        <Col xs={2}> <Link className="btn btn-info" to={"/offer-course"}> Request For Subject</Link>
-        </Col>
-      </Row>
+      <span>MY COURSES</span>
       <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
         {tutorCourses.map((item, i) => {
           return (
@@ -43,7 +39,7 @@ export default function CourseList(props) {
               className="d-flex justify-content-between align-items-start"
             >
               <div className="ms-2 me-auto">
-                <div className="fw-bold">{item.courseName}</div>
+                <div className="fw-bold">{item.subjectName}</div>
               </div>
               <Badge variant="primary" pill>
                 {`$${item.ratePerHour}/hr`}

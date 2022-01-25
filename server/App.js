@@ -17,6 +17,7 @@ require("dotenv").config();
 
 var jsonParser = bodyParser.json();
 app.use("/public/images", express.static(path.join(__dirname, "public/images")));
+app.use("/resources/static", express.static(path.join(__dirname, "resources/static")));
 
 app.use(cors());
 app.use(jsonParser);

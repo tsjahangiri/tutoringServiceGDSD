@@ -43,10 +43,17 @@ type Props = {
 
 function getDefaultSelectedChat(selectedUserId, texts) {
   let defaultSelectedChat = undefined;
-  if (selectedUserId !== undefined && texts?.length != 0) {
-    defaultSelectedChat = texts.find(
+  if (selectedUserId !== undefined) {
+    defaultSelectedChat = texts?.find(
       (element) => element.userID == selectedUserId
     );
+
+    if (defaultSelectedChat === undefined) {
+      defaultSelectedChat = {
+        userID: selectedUserId,
+        texts: [],
+      };
+    }
   }
   return defaultSelectedChat;
 }
@@ -73,16 +80,24 @@ export default function Chat(props: Props) {
 
       let recipientIndex = texts.findIndex((text) => text.userID == userID);
 
-      if (recipientIndex === -1) return;
+      if (recipientIndex === -1) {
+        let newItem = {
+          userID: userID,
+          userName: userName,
+          texts: [],
+        };
+        newItem.texts.push({ id, text, date, inbox });
+        setTexts([...texts, newItem]);
+      } else {
+        let recipientUser = texts[recipientIndex];
+        recipientUser.texts.push({ id, text, date, inbox }); // Add new text
 
-      let recipientUser = texts[recipientIndex];
-      recipientUser.texts.push({ id, text, date, inbox }); // Add new text
-
-      setTexts([
-        ...texts.slice(0, recipientIndex),
-        recipientUser,
-        ...texts.slice(recipientIndex + 1),
-      ]);
+        setTexts([
+          ...texts.slice(0, recipientIndex),
+          recipientUser,
+          ...texts.slice(recipientIndex + 1),
+        ]);
+      }
     }
   }, [arrivalMessage]);
 
@@ -101,7 +116,6 @@ export default function Chat(props: Props) {
 
       socket.current.on("textSent", (data) => {
         handleNewSentText(data);
-        // event.target.value = "";
       });
     }
   }, []);
@@ -264,7 +278,7 @@ export default function Chat(props: Props) {
               height: "80%",
             }}
           >
-            {selectedChat?.texts.map((item, i) => {
+            {selectedChat?.texts?.map((item, i) => {
               return renderText(item, i);
             })}
           </ListGroup>

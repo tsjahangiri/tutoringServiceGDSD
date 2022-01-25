@@ -1,6 +1,9 @@
 const uploadFile = require("../middleware/upload");
 const database = require("../database");
+const util = require("util");
 require("dotenv").config();
+
+const executeQuery = util.promisify(database.query).bind(database);
 
 const upload = async (req, res) => {
   try {
@@ -11,10 +14,13 @@ const upload = async (req, res) => {
       return res.status(400).send({ message: "Please upload a file!" });
     }
 
+    var result = await executeQuery('SELECT id FROM hm_tutor_profile WHERE userId = ?', [req.userid]);
+    var tutorProfileId = result[0].id;
+
     if(req.file.mimetype === "application/pdf") {
       
         database.execute("SELECT * FROM `helpmelearn`.`hm_file` WHERE `tutorProfileId`= ?",
-        [req.userid],
+        [tutorProfileId],
         (err, result) => {
             if(err) {
                 console.log(err);
@@ -22,14 +28,14 @@ const upload = async (req, res) => {
             }
             else if(result.length >= 1) {
               database.execute("DELETE FROM `helpmelearn`.`hm_file` WHERE (`tutorProfileId` = ?)",
-              [req.userid],(err, result)=> {
+              [tutorProfileId],(err, result)=> {
                     if(err) {
                       console.log(err);
                       res.status(500).send({message:"Something went wrong"});
                   }
                   else {
                     database.execute("INSERT INTO `helpmelearn`.`hm_file` ( `tutorProfileId`, `fileName`, `fileType`, `fileExtension`, `filePath`) VALUES (?, ?, ?, ?, ?)", 
-                    [req.userid, 
+                    [tutorProfileId, 
                     req.file.originalname, 
                     0, 
                     "pdf", 
@@ -51,7 +57,7 @@ const upload = async (req, res) => {
             else {
 
               database.execute("INSERT INTO `helpmelearn`.`hm_file` ( `tutorProfileId`, `fileName`, `fileType`, `fileExtension`, `filePath`) VALUES (?, ?, ?, ?, ?)", 
-              [req.userid, 
+              [tutorProfileId, 
               req.file.originalname, 
               0, 
               "pdf", 

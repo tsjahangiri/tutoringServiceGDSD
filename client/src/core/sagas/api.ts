@@ -220,7 +220,7 @@ export function* retrieveJwtSecret(): Generator<any, any, any> {
   //   if (expiry >= now) {
   //     return Secret;
   //   }
-  //}
+  // }
 
   return Secret;
 }

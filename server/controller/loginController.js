@@ -4,6 +4,12 @@ let database = require("../database");
 require("dotenv").config();
 
 module.exports = {
+  /**
+   * UserType  Enums:
+      100 - Admin
+      101 - Tutor
+      102 - Student
+   */
   //Registering User
   registerUser: (req, res) => {
     let {first_name, last_name, usertype, email, password, status, gender } =
@@ -32,12 +38,11 @@ module.exports = {
               (err, result) => {
                 if (err) console.log(err);
                 else {
-                  if(usertype === 101){
+                  if(usertype == 101){
                   database.execute(
-                    "INSERT INTO `helpmelearn`.`tutorprofile` (`first_name`, `last_name`) VALUES (?, ?)",
+                    "INSERT INTO `helpmelearn`.`hm_tutor_profile` (`userId`, `rating`) VALUES (?, 0)",
                     [
-                      first_name,
-                      last_name,
+                      result.insertId,
                     ],
                     (err, result) => {
                       if (err) console.log(err);
@@ -64,6 +69,12 @@ module.exports = {
     });
   },
 
+  /**
+   * Status Enums:
+      100 - Pending
+      101 - Approved
+      102 - Rejected
+   */
   //Login check
   loginUser: async (req, res) => {
     let { email, password } = req.body;
@@ -76,7 +87,11 @@ module.exports = {
 
         if (result.length === 0) {
           res.json({ message: "User Do Not Exists" });
-        } else {
+        } else if(result[0].status == 100 || result[0].status == 102){
+          var errorMessage = result[0].status == 100? "Pending":"Rejected";
+          res.json({message: `User registration is: ${errorMessage}`});
+        }
+        else {
           let db_email = result[0].email;
           let db_password = result[0].password;
 

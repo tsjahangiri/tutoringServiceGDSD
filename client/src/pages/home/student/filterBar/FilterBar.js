@@ -1,7 +1,6 @@
 // @flow
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getApprovedCourseList } from "../../../../core/selectors/course";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 type Props = {
@@ -11,17 +10,15 @@ type Props = {
 export default function FilterBar(props: Props) {
   const dispatch = useDispatch();
 
-  const approvedCourses = useSelector(getApprovedCourseList);
-
   var subjectNameControl = useRef(null);
   var levelControl = useRef(null);
-  var minRateControl = useRef(null);
+  var maxRatePerHourControl = useRef(null);
   var genderControl = useRef(null);
 
   const [filters, setFilters] = useState({
     subjectName: undefined,
     level: undefined,
-    minRate: 0,
+    maxRatePerHour: 99,
     gender: undefined,
   });
 
@@ -32,8 +29,7 @@ export default function FilterBar(props: Props) {
   const filterTutors = () => {
     var subjectName = subjectNameControl.current.value;
 
-    if(subjectName === undefined || subjectName == "")
-      subjectName = undefined;
+    if (subjectName === undefined || subjectName == "") subjectName = undefined;
 
     var newFilters = {
       subjectName: subjectName,
@@ -41,7 +37,7 @@ export default function FilterBar(props: Props) {
         levelControl.current.value === "Any"
           ? undefined
           : levelControl.current.value,
-      minRate: minRateControl.current.value,
+      maxRatePerHour: maxRatePerHourControl.current.value,
       gender:
         genderControl.current.value === "Any"
           ? undefined
@@ -59,11 +55,7 @@ export default function FilterBar(props: Props) {
       <Row>
         <Col>
           <Form.Label>Subject</Form.Label>
-          <Form.Control
-            size="sm"
-            ref={subjectNameControl}
-            type="text"
-          />
+          <Form.Control size="sm" ref={subjectNameControl} type="text" />
         </Col>
         <Col>
           <Form.Label>Level</Form.Label>
@@ -74,11 +66,11 @@ export default function FilterBar(props: Props) {
           </Form.Select>
         </Col>
         <Col>
-          <Form.Label>Min Rate</Form.Label>
+          <Form.Label>Max Rate</Form.Label>
           <Form.Control
-            defaultValue={0}
+            defaultValue={99}
             size="sm"
-            ref={minRateControl}
+            ref={maxRatePerHourControl}
             type="number"
           />
         </Col>
