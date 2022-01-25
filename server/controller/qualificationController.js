@@ -1,5 +1,6 @@
 let database = require("../database");
 const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   // Get Qualification By Id Method
@@ -20,8 +21,9 @@ module.exports = {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    let { SubjectName, Description, Grade, TutorProfileId  } = req.body;
-    
+    let { SubjectName, Description, Grade  } = req.body;
+    const decodedToken = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
+    let TutorProfileId = decodedToken.id;
     database.query(
       "INSERT INTO hm_qualification (subjectName, description, grade, tutorProfileId) VALUES ( ?, ?, ?, ?)",
       [SubjectName, Description, Grade, TutorProfileId],

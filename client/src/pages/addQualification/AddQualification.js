@@ -16,7 +16,7 @@ function AddQualification(props) {
   //function to save the qualification
   const submitQualification = () => {
     const qualification = {
-      subject: subjectRef.current.value,
+      subjectName: subjectRef.current.value,
       qualification: qualificationRef.current.value,
       grade: gradeRef.current.value,
       description: descriptionRef.current.value,
@@ -35,7 +35,6 @@ function AddQualification(props) {
         <h1>Add Qualification</h1>
         <Form>
           <br />
-
           <Form.Control type="text" ref={subjectRef} placeholder="Subject" />
           <br />
           <Form.Control type="text" ref={qualificationRef} placeholder="Qualification" />

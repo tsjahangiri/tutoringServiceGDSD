@@ -214,13 +214,13 @@ export function* executeActualApiCall(
 
 export function* retrieveJwtSecret(): Generator<any, any, any> {
   const { Secret, Expiry } = yield select(getJwtSecret);
-  if (Secret) {
-    const now = yield call(Date.now);
-    const expiry = moment(Expiry).valueOf();
-    if (expiry >= now) {
-      return Secret;
-    }
-  }
+  // if (Secret) {
+  //   const now = yield call(Date.now);
+  //   const expiry = moment(Expiry).valueOf();
+  //   if (expiry >= now) {
+  //     return Secret;
+  //   }
+  // }
 
-  return null;
+  return Secret;
 }

@@ -46,7 +46,7 @@ export function* saveQualification(action: Object): Saga<void> {
     url:qualificationApi,
     method: "POST",
     params: action.payload,
-    useJwtSecret: false
+    useJwtSecret: true
   };
   console.log("saga" + apiOptions.url);
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
