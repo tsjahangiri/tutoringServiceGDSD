@@ -10,13 +10,13 @@ module.exports = {
 
     let {
       Description,
-      TutorProfileId,
       Status,
       Language,
       SubjectName,
       RatePerHour,
       ExperinceYears,
       AvailableTime,
+      TutorProfileId
     } = req.body;
 
     var date = new Date().toISOString().split("T")[0];
