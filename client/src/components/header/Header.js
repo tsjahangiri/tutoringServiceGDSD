@@ -1,7 +1,14 @@
 // @flow
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
+import {
+  Container,
+  Navbar,
+  Nav,
+  NavDropdown,
+  Button,
+  Row,
+} from "react-bootstrap";
 import "./Header.css";
 import { isAuthenticated, getCurrentUser } from "../../core/selectors/user";
 import { logoutUser } from "../../core/actionCreators/user";
@@ -30,11 +37,7 @@ function renderUserOptions(currentUser, isAuth, onSignOut) {
       <Navbar.Collapse className="justify-content-end">
         <span style={{ color: "#FFFFFF" }}>Signed in as:</span>
         <Nav>
-          <NavDropdown
-            title={currentUser.email}
-            drop="down"
-            menuVariant="dark"
-          >
+          <NavDropdown title={currentUser.email} drop="down" menuVariant="dark">
             <NavDropdown.Item onClick={onSignOut}>Logout</NavDropdown.Item>
           </NavDropdown>
         </Nav>
@@ -77,23 +80,21 @@ function Header(props: Props) {
     dispatch(logoutUser());
   };
 
-  return (    
-      <div style={{ width: '100%'}}>
-        <div style={{ width: '100%'}}>
-          <p style={{ textAlign: "center", marginTop: "10px"}}>Global Distributed Software Development Project of HS Fulda : Winter Semester 2021 Team 04</p>
-        </div>
-        <div>
-            <Navbar sticky="top" bg="primary" variant="dark">
-              <Container fluid="lg">
-                {renderBrand()}
-                <Navbar.Toggle />
-                {renderNavOptions(props.headerOptions)}
-                {renderUserOptions(currentUser, isAuth, onSignOut)}
-              </Container>
-            </Navbar>
-        </div>
-      </div>
-
+  return (
+    <div>
+      <p style={{ textAlign: "center", marginTop: "1rem" }}>
+        Fulda University of Applied Sciences Software Engineering Project,
+        Winter 2021 For Demonstration Only
+      </p>
+      <Navbar bg="primary" variant="dark">
+        <Container fluid="lg">
+          {renderBrand()}
+          <Navbar.Toggle />
+          {renderNavOptions(props.headerOptions)}
+          {renderUserOptions(currentUser, isAuth, onSignOut)}
+        </Container>
+      </Navbar>
+    </div>
   );
 }
 

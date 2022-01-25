@@ -15,7 +15,8 @@ module.exports = {
 
   getTutorOfferedCoursesById: async (req, res) => {
     let id = req.params.id;
-    let query = `SELECT courseCode, courseName, ratePerHour FROM hm_post A, hm_course B WHERE A.subjectId = B.courseCode AND A.tutorProfileId = ?`;
+    let query = `SELECT subjectName, ratePerHour FROM hm_post A left join hm_tutor_profile B on
+    (A.tutorProfileId = B.id and B.userId = ?);`;
     console.log(query);
     database.query(query, [id], (err, result) => {
       if (err) console.log(err);
@@ -25,7 +26,8 @@ module.exports = {
 
   getTutorQualificationById: async (req, res) => {
     let id = req.params.id;
-    let query = `SELECT A.id, courseCode, courseName, description, grade FROM hm_qualification A, hm_course B WHERE A.subjectName = B.courseCode AND tutorProfileId = ?`;
+    let query = `SELECT A.id, A.subjectName, A.description, A.grade FROM hm_qualification A
+     left join hm_tutor_profile B on (A.tutorProfileId = B.id and B.userId = ?);`;
 
     database.query(query, [id], (err, result) => {
       if (err) console.log(err);
@@ -36,7 +38,9 @@ module.exports = {
   getReviewsById: async (req, res) => {
     let id = req.params.id;
     database.query(
-      `SELECT text, rating, createdDateTime, modifiedDateTime, firstName, lastName, userId FROM hm_review A, hm_user B WHERE A.userId = B.id AND tutorProfileId = ?;`,
+      `SELECT A.id, A.text, A.rating, A.createdDateTime, A.modifiedDateTime, U.firstName, U.lastName, A.userId FROM hm_review A,
+      left join hm_user U on (A.userId = u.id)
+      left join hm_tutor_profile T on (A.tutorProfileId = T.id and T.userId = ?);`,
       [id],
       (err, result) => {
         res.json(result);

@@ -24,7 +24,6 @@ function Registration(props) {
         data[name] = value;
       }
     });
-    data["status"] = 101;
 
     let errorMessage = undefined;
     if (data["email"] === undefined || !data["email"].includes("hs-fulda.de"))
@@ -36,9 +35,17 @@ function Registration(props) {
     if (data["usertype"] === undefined || data["usertype"] === "-1")
       errorMessage = "User type not selected.";
 
+    if (data["password"] != data["confirmPassword"])
+      errorMessage = "Confirm password does not match";
+
     if (errorMessage !== undefined) {
       dispatch(setRegistrationAlert(errorMessage));
     } else {
+      
+      if (data["usertype"] == "102") data["status"] = 101;
+      else data["status"] = 100;
+
+      data["confirmPassword"] = undefined;
       dispatch(registerUser({ data, navigate }));
     }
   };
@@ -81,6 +88,13 @@ function Registration(props) {
             type="password"
             name="password"
             placeholder="Password"
+            required
+          />
+          <Form.Control
+            className="mt-2"
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
             required
           />
           <div>

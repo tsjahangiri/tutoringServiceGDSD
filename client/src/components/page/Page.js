@@ -17,20 +17,7 @@ function Page(props: Props) {
   var headerOptions = [];
 
   if (userType === "admin") {
-    headerOptions = [
-      {
-        title: "Student List",
-        url: "/#/studentList",
-      },
-      {
-        title: "Tutor List",
-        url: "/#/tutorList",
-      },
-      {
-        title: "Pending Courses",
-        url: "/#/pendingTutorList",
-      },
-    ];
+    headerOptions = [];
   }
 
   return (

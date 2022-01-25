@@ -77,12 +77,12 @@ module.exports = {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    let { Id, FirstName, LastName, UserType, Email, Password, Status, Gender } =
+    let { Id, FirstName, LastName, UserType, Email, Status, Gender } =
       req.body;
 
     database.query(
-      "UPDATE hm_user SET firstName = ?, lastName = ?, usertype = ?, email = ?, password = ?, status = ?, gender = ? WHERE id= ?",
-      [FirstName, LastName, UserType, Email, Password, Status, Gender, Id],
+      "UPDATE hm_user SET firstName = ?, lastName = ?, usertype = ?, email = ?, status = ?, gender = ? WHERE id= ?",
+      [FirstName, LastName, UserType, Email, Status, Gender, Id],
       (err) => {
         if (err) res.status(400).send(`Response Error: ${err}`);
         else res.status(204).json({ message: "User Details Updated" });

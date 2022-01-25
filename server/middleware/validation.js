@@ -11,7 +11,6 @@ exports.updateUserValidation = [
   body("Email").notEmpty().isEmail(),
   body("UserType").notEmpty().isIn([100, 101, 102]),
   body("Status").notEmpty().isIn([100, 101, 102]),
-  body("Password").notEmpty().isString().isLength({ min: 1 }),
 ];
 
 exports.createTutorProfileValidation = [

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Offcanvas, Row, Col, Button, Form } from "react-bootstrap";
 import { Fab, Action } from "react-tiny-fab";
 import Avatar from "react-avatar-edit";
@@ -7,6 +8,7 @@ import Chat from "../../../components/chat/Chat";
 import { uploadProfilePicture } from "../../../core/actionCreators/profilePicture";
 
 export default function Tutor() {
+  const navigate = useNavigate();
   const [showChat, toggleChat] = useState(false);
   const [showEditor, toggleEditor] = useState(false);
   const [src, setSrc] = useState(undefined);
@@ -50,10 +52,10 @@ export default function Tutor() {
   function renderChatOption() {
     return (
       <Fab alwaysShowTitle={true} icon={<i className="bi bi-plus"></i>}>
-        <Action style={{ backgroundColor: "#0D6EFD" }} text="Add Qualification">
+        <Action onClick={() => navigate(`/add-qualification`)} style={{ backgroundColor: "#0D6EFD" }} text="Add Qualification">
           <i className="bi bi-journal-medical" />
         </Action>
-        <Action style={{ backgroundColor: "#0D6EFD" }} text="Offer Course">
+        <Action onClick={() => navigate(`/offer-course`)} style={{ backgroundColor: "#0D6EFD" }} text="Offer Course">
           <i className="bi bi-person-workspace" />
         </Action>
         <Action

@@ -2,28 +2,16 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Offcanvas,
-  Form,
-  Button,
-} from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-import { Fab, Action } from "react-tiny-fab";
-import StudentList from "./studentList/StudentList.js";
-import TutorList from "./tutorList/TutorList.js";
-import FilterBar from "./filterBar/FilterBar";
-import { fetchTutorList } from "../../../core/actionCreators/tutor";
 
 export default function Admin() {
   const navigate = useNavigate();
 
   const usersByStatus = [
-    { name: "Active", value: 400, color: "#0088FE" },
-    { name: "Inactive", value: 300, color: "#FF0000" },
+    { name: "Approved", value: 400, color: "#0088FE" },
+    { name: "Rejected", value: 50, color: "#FF0000" },
+    { name: "Pending", value: 150, color: "#FFBB28" },
   ];
 
   const postsByStatus = [
@@ -64,36 +52,31 @@ export default function Admin() {
     );
   };
 
-  const onUsersByStatus = (index, data) => {
-    navigate("/users");
+  const onUsersByStatus = (data, index) => {
+    var status;
+    if (data.name == "Approved") {
+      status = "101";
+    } else if (data.name == "Rejected") {
+      status = "102";
+    } else {
+      status = "100";
+    }
+    navigate(`/users?status=${status}`);
   };
 
-  const onUsersByType = (index, data) => {
-    navigate("/users");
+  const onUsersByType = (data, index) => {
+    var userType;
+    if (data.name == "Student") {
+      userType = "102";
+    } else {
+      userType = "101";
+    }
+    navigate(`/users?userType=${userType}`);
   };
 
   const onPostsByStatus = (index, data) => {
     navigate("/posts");
   };
-
-  const [showSubject, toggleSubject] = useState(false);
-
-  const subjectClosed = () => toggleSubject(false);
-  const subjectOpened = () => toggleSubject(true);
-
-  function renderFabOption() {
-    return (
-      <Fab alwaysShowTitle={true} icon={<i className="bi bi-plus"></i>}>
-        <Action
-          style={{ backgroundColor: "#0D6EFD" }}
-          text="Subject"
-          onClick={subjectOpened}
-        >
-          <i className="bi bi-journal-text" />
-        </Action>
-      </Fab>
-    );
-  }
 
   const renderPieChart = (title, data, onClick) => {
     return (
@@ -125,47 +108,6 @@ export default function Admin() {
     );
   };
 
-  const renderOffcanvas = () => {
-    return (
-      <Offcanvas
-        style={{ zIndex: 9999 /** to overlay fab button */ }}
-        placement="end"
-        show={showSubject}
-        onHide={subjectClosed}
-      >
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Create a new subject</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Department</Form.Label>
-              <Form.Control type="text" />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Subject</Form.Label>
-              <Form.Control type="text" />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Level</Form.Label>
-              <Form.Select defaultValue="Undergraduate">
-                <option>Undergraduate</option>
-                <option>Graduate</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" rows={3} />
-            </Form.Group>
-            <Button style={{ float: "right" }} variant="primary" type="submit">
-              Create
-            </Button>
-          </Form>
-        </Offcanvas.Body>
-      </Offcanvas>
-    );
-  };
-
   return (
     <div>
       <Row>
@@ -179,8 +121,6 @@ export default function Admin() {
           {renderPieChart("Posts by Status", postsByStatus, onPostsByStatus)}
         </Col>
       </Row>
-      {renderFabOption()}
-      {renderOffcanvas()}
     </div>
   );
 }
