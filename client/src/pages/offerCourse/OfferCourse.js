@@ -1,10 +1,11 @@
 import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import {Link} from 'react-router-dom';
 import "./OfferCourse.css";
 import Page from "../../components/page/Page";
 import { saveOfferCourse } from "../../core/actionCreators/offerCourse";
+import { getCurrentUser } from "../../core/selectors/user";
 
 function OfferCourse(props) {
   const dispatch = useDispatch();
@@ -17,16 +18,20 @@ function OfferCourse(props) {
   const yearsOfExperienceRef = useRef(null);
   const availableTimeRef = useRef(null);
 
+  const user = useSelector(getCurrentUser);
+  console.log(user);
+
   //function to save the offer course
   const submitOfferCourse = () => {
     const offerCourse = {
-      subjectName: subjectRef.current.value,
-      language: languageRef.current.value,
-      level: levelRef.current.value,
-      description: descriptionRef.current.value,
-      perHourFee: perHourFeeRef.current.value,
-      yearsOfExperience: yearsOfExperienceRef.current.value,
-      availableTime: availableTimeRef.current.value,
+      SubjectName: subjectRef.current.value,
+      Language: languageRef.current.value,
+      Level: levelRef.current.value,
+      Description: descriptionRef.current.value,
+      PerHourFee: perHourFeeRef.current.value,
+      YearsOfExperience: yearsOfExperienceRef.current.value,
+      AvailableTime: availableTimeRef.current.value,
+      UserId: user.id
     };
     console.log(offerCourse);
     dispatch(saveOfferCourse(offerCourse));

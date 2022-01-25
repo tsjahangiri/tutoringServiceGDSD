@@ -41,7 +41,7 @@ export function* fetchQualificationById(action: Object): Saga<void> {
 
 
 export function* saveQualification(action: Object): Saga<void> {
-  console.log("saga" + qualificationApi);
+  console.log("saga" +  action.payload);
   const apiOptions: ApiOptions = {
     url:qualificationApi,
     method: "POST",
