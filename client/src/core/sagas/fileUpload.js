@@ -24,12 +24,13 @@ export function* uploadFile(action: Object): Saga<void> {
     method: "POST",
     params: formData,
     headers: headers,
-    useJwtSecret: false,
+    useJwtSecret: true,
   };
 
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
 
   const { isSuccessful } = apiResponse;
+  console.log(apiResponse)
   var msg = "";
   if (isSuccessful) {
     msg = "Course Saved Successfully";
