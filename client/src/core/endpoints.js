@@ -1,6 +1,4 @@
-//const baseUrl = `${process.env.REACT_APP_API_URL}/api`;
-
-const baseUrl = `http://localhost:8080/api`;
+const baseUrl = `${process.env.REACT_APP_API_URL}/api`;
 
 export const loginApi = `${baseUrl}/login`;
 export const registerApi = `${baseUrl}/register`;
@@ -16,7 +14,7 @@ export const allTutorListApi = `${baseUrl}/users/?UserType=101`;
 export const pendingTutorListApi = `${baseUrl}/courses?Status=100`;
 
 export const socketIOUrl = `${process.env.REACT_APP_API_URL}`;
-export const filesApi = `http://localhost:8080`;
+export const filesApi = `${process.env.REACT_APP_API_URL}`;
 
 export const getTutorInfoById = (id) => `${baseUrl}/tutors/Info/`+id;
 export const getTutorOfferedCoursesById = (id) => `${baseUrl}/tutors/courses/`+id;
