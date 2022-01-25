@@ -77,15 +77,23 @@ function Header(props: Props) {
     dispatch(logoutUser());
   };
 
-  return (
-    <Navbar sticky="top" bg="primary" variant="dark">
-      <Container fluid="lg">
-        {renderBrand()}
-        <Navbar.Toggle />
-        {renderNavOptions(props.headerOptions)}
-        {renderUserOptions(currentUser, isAuth, onSignOut)}
-      </Container>
-    </Navbar>
+  return (    
+      <div style={{ width: '100%'}}>
+        <div style={{ width: '100%'}}>
+          <p style={{ textAlign: "center", marginTop: "10px"}}>Global Distributed Software Development Project of HS Fulda : Winter Semester 2021 Team 04</p>
+        </div>
+        <div>
+            <Navbar sticky="top" bg="primary" variant="dark">
+              <Container fluid="lg">
+                {renderBrand()}
+                <Navbar.Toggle />
+                {renderNavOptions(props.headerOptions)}
+                {renderUserOptions(currentUser, isAuth, onSignOut)}
+              </Container>
+            </Navbar>
+        </div>
+      </div>
+
   );
 }
 

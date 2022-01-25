@@ -10,16 +10,6 @@ var connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-
-// var connection = mysql.createConnection({
-//   host: "35.188.180.195",
-//   insecureAuth: true,
-//   user: "root",
-
-//   password: "root",
-//   database: "helpmelearn",
-// });
-
 connection.connect((err) => {
   if (err) {
     throw err;
