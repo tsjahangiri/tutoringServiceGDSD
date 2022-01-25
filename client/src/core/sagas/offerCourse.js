@@ -3,6 +3,7 @@ import { takeEvery, call, put } from "redux-saga/effects";
 import { executeApiCall } from "./api";
 import type { Saga } from "redux-saga";
 import { tutorSearchApi } from "../endpoints";
+import { offerCourseApi } from "../endpoints";
 import {
   SAVE_OFFER_COURSE,
   FETCH_OFFER_COURSE_LIST,
@@ -21,11 +22,8 @@ export default function* offerCourseSaga(): Saga<void> {
 export function* saveOfferCourse(action: Object): Saga<void> {
   // const { course } = action.payload;
 
-  var url = process.env.REACT_APP_API_URL;
-  url += `/tutor/course`;
-
   const apiOptions: ApiOptions = {
-    url,
+    url: offerCourseApi ,
     method: "POST",
     params: action.payload,
     useJwtSecret: false,

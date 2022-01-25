@@ -7,6 +7,7 @@ export const registerApi = `${baseUrl}/register`;
 export const usersApi = `${baseUrl}/users`;
 export const tutorSearchApi = `${baseUrl}/tutors`;
 export const courseApi = `${baseUrl}/courses`;
+export const offerCourseApi = `${baseUrl}/posts`;
 export const qualificationApi = `${baseUrl}/qualifications`;
 export const fileUploadApi = `${baseUrl}/upload`;
 export const allStudentListApi = `${baseUrl}/users/?UserType=102`;

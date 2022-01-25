@@ -1,30 +1,37 @@
 import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
 import "./OfferCourse.css";
 import Page from "../../components/page/Page";
 import { saveOfferCourse } from "../../core/actionCreators/offerCourse";
+import { getCurrentUser } from "../../core/selectors/user";
 
 function OfferCourse(props) {
   const dispatch = useDispatch();
 
   const subjectRef = useRef(null);
+  const languageRef = useRef(null);
   const levelRef = useRef(null);
   const descriptionRef = useRef(null);
   const perHourFeeRef = useRef(null);
   const yearsOfExperienceRef = useRef(null);
   const availableTimeRef = useRef(null);
 
+  const user = useSelector(getCurrentUser);
+  console.log(user);
+
   //function to save the offer course
   const submitOfferCourse = () => {
     const offerCourse = {
-      subject: subjectRef.current.value,
-      level: levelRef.current.value,
-      description: descriptionRef.current.value,
-      perHourFee: perHourFeeRef.current.value,
-      yearsOfExperience: yearsOfExperienceRef.current.value,
-      availableTime: availableTimeRef.current.value,
+      SubjectName: subjectRef.current.value,
+      Language: languageRef.current.value,
+      Level: levelRef.current.value,
+      Description: descriptionRef.current.value,
+      PerHourFee: perHourFeeRef.current.value,
+      YearsOfExperience: yearsOfExperienceRef.current.value,
+      AvailableTime: availableTimeRef.current.value,
+      UserId: user.id
     };
     console.log(offerCourse);
     dispatch(saveOfferCourse(offerCourse));
@@ -38,24 +45,10 @@ function OfferCourse(props) {
       <div className="course-content">
         <h1>Offer Course</h1>
         <Form>
+          <Form.Control type="text" ref={subjectRef} placeholder="Subject" />
           <br />
-          <Form.Control as="select">
-            <option value="">Select Department...</option>
-            <option value="CSE">CSE</option>
-            <option value="BBA">BBA</option>
-            <option value="EEE">EEE</option>
-          </Form.Control>
+          <Form.Control type="text" ref={languageRef} placeholder="Language of Instruction" />
           <br />
-          <Form.Control ref={subjectRef} as="select">
-            <option value="">Select Subject...</option>
-            <option value="CSE">Distributed Applications</option>
-            <option value="BBA">Machine Learning</option>
-            <option value="EEE">Parallel Programming</option>
-          </Form.Control>
-          <br /> 
-          <p>Subject Not Available ?
-          <Link className="btn btn-info" to={"/add-course"}> Request For Subject</Link></p>
-        
           <Form.Control type="text" ref={levelRef} placeholder="Level" />
           <br />
           <Form.Control type="number" ref={perHourFeeRef} placeholder="Per Hour Fee" />
