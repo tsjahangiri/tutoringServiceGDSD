@@ -16,7 +16,7 @@ export default function TutorItem(props) {
   } = props.item;
 
   var profilePicPath;
-  if (picPath == undefined) profilePicPath = "logo512.png";
+  if (picPath == undefined) profilePicPath = "no-image.png";
   else profilePicPath = `${process.env.REACT_APP_API_URL}/${picPath}`;
 
   const navigate = useNavigate();
