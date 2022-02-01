@@ -30,11 +30,6 @@ module.exports = function (server) {
     return connectedUsers.find((user) => user.userId === userId);
   };
 
-  // TODO: Remove
-  const getConnectedUserBySocketId = (socketId) => {
-    return connectedUsers.find((user) => user.socketId === socketId);
-  };
-
   io.on("connection", (socket) => {
     console.log("client connected");
 
