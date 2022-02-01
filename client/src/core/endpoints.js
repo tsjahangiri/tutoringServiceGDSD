@@ -19,3 +19,4 @@ export const filesApi = `${process.env.REACT_APP_API_URL}`;
 export const getTutorInfoById = (id) => `${baseUrl}/tutors/Info/`+id;
 export const getTutorOfferedCoursesById = (id) => `${baseUrl}/tutors/courses/`+id;
 export const getTutorQualificationById = (id) => `${baseUrl}/tutors/qualification/`+id;
+export const getTutorReviewsById = (id) => `${baseUrl}/tutors/reviews/`+id;

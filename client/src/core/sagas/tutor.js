@@ -2,14 +2,15 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { executeApiCall } from "./api";
 import type { Saga } from "redux-saga";
-import { FETCH_TUTOR_LIST, GET_TUTOR_INFO_BY_ID, GET_TUTOR_OFFERED_COURSE_BY_ID, GET_TUTOR_QUALIFICATION_BY_ID } from "../actionTypes/tutor";
-import {allTutorListApi, getTutorInfoById, getTutorOfferedCoursesById, getTutorQualificationById} from "../endpoints"
+import { FETCH_TUTOR_LIST, GET_TUTOR_INFO_BY_ID, GET_TUTOR_OFFERED_COURSE_BY_ID, GET_TUTOR_QUALIFICATION_BY_ID, GET_TUTOR_REVIEW_BY_ID } from "../actionTypes/tutor";
+import {allTutorListApi, getTutorInfoById, getTutorOfferedCoursesById, getTutorQualificationById, getTutorReviewsById} from "../endpoints"
 import {
   getTutorListFailed,
   getTutorListSuccess,
   setTutorInfo,
   setTutorOfferedCourse,
-  setTutorQualification
+  setTutorQualification,
+  setTutorReview
 } from "../actionCreators/tutor";
 
 export default function* tutorSaga(): Saga<void> {
@@ -17,6 +18,8 @@ export default function* tutorSaga(): Saga<void> {
   yield takeEvery(GET_TUTOR_INFO_BY_ID, getTutorInfoDataById);
   yield takeEvery(GET_TUTOR_OFFERED_COURSE_BY_ID, getTutorOfferedCourseDataById);
   yield takeEvery(GET_TUTOR_QUALIFICATION_BY_ID, getTutorQualificationDataById);
+  yield takeEvery(GET_TUTOR_REVIEW_BY_ID, getTutorReviewDataById);
+
 }
 
 export function* getTutorList(action: Object): Saga<void> {
@@ -98,5 +101,21 @@ export function* getTutorQualificationDataById(action: Object): Saga<void> {
   const { isSuccessful, response = {} } = apiResponse;
   if (isSuccessful) {
     yield(put(setTutorQualification(response)));
+  }
+}
+
+export function* getTutorReviewDataById(action: Object): Saga<void> {
+  const {id} = action.payload;
+  var url = `${process.env.REACT_APP_API_URL}`;
+  const apiOptions: ApiOptions = {
+    url : getTutorReviewsById(id),
+    method: "GET",
+    useJwtSecret: false,
+  };
+
+  const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
+  const { isSuccessful, response = {} } = apiResponse;
+  if (isSuccessful) {
+    yield(put(setTutorReview(response)));
   }
 }

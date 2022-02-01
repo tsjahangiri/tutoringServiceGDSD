@@ -30,14 +30,14 @@ module.exports = {
   },
 
   getReviewById: async (req, res) => {
-    database.query(
-      "SELECT id, `text`, rating, createdDateTime, modifiedDateTime, userId, tutorProfileId FROM hm_review WHERE id = ?",
-      [req.params.id],
-      (err, result) => {
-        if (err) res.status(400).send(`Response Error: ${err}`);
-        else res.status(200).json(result);
-      }
-    );
+    let id = req.params.tutorProfileId;
+    let query = `SELECT hmu.firstName, hmu.lastName, hmr.text, hmr.rating, hmr.createdDateTime FROM helpmelearn.hm_review hmr
+     inner join helpmelearn.hm_user hmu on (hmr.userId = hmu.id and hmr.tutorProfileId = ?);`;
+
+    database.query(query, [id], (err, result) => {
+      if (err) res.status(400).send(`Response Error: ${err}`);
+      else res.json(result);
+    });
   },
 
   getReviews: async (req, res) => {
@@ -52,7 +52,7 @@ module.exports = {
     }
 
     let query =
-      "SELECT id, `text`, rating, createdDateTime, modifiedDateTime, userId, tutorProfileId FROM helpmelearndatabase.hm_review";
+      "SELECT id, `text`, rating, createdDateTime, modifiedDateTime, userId, tutorProfileId FROM helpmelearn.hm_review";
     if (joinQuery !== "") query += ` where ${joinQuery}`;
     database.query(query, (err, result) => {
       if (err) res.status(400).send(`Response Error: ${err}`);

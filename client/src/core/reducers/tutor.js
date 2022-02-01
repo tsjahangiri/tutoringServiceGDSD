@@ -6,7 +6,8 @@ import {
   GET_TUTOR_LIST_FAILED,
   SET_TUTOR_INFO,
   SET_TUTOR_OFFERED_COURSE,
-  SET_TUTOR_QUALIFICATION
+  SET_TUTOR_QUALIFICATION,
+  SET_TUTOR_REVIEW
 } from "../actionTypes/tutor";
 
 export const INITIAL_STATE = {
@@ -57,6 +58,11 @@ export default (state = INITIAL_STATE, action = {}) => {
         ...state,
         tutorQualificationData: action.payload,
       };
-      
+    case SET_TUTOR_REVIEW:
+      return {
+        ...state,
+        tutorReviewData: action.payload,
+      };
+        
   }
 };

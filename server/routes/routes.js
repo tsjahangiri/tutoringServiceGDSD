@@ -87,7 +87,7 @@ router.get(
   "/tutors/qualification/:id",
   tutorProfileController.getTutorQualificationById
 );
-router.get("/tutors/reviews/:id", tutorProfileController.getReviewsById);
+router.get("/tutors/reviews/:tutorProfileId", tutorProfileController.getReviewsById);
 router.get("/tutors", tutorProfileController.searchTutorProfile);
 router.post("/tutors", createTutorProfileValidation, tutorProfileController.saveTutorInfo);
 router.put("/tutors", updateTutorProfileValidation, tutorProfileController.updateTutorInfo);
