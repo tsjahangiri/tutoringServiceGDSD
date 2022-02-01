@@ -1,5 +1,8 @@
 let database = require("../database");
 const { validationResult } = require("express-validator");
+const util = require("util");
+
+const executeQuery = util.promisify(database.query).bind(database);
 
 module.exports = {
   createPost: async (req, res) => {
@@ -16,41 +19,46 @@ module.exports = {
       RatePerHour,
       ExperinceYears,
       AvailableTime,
-      UserId
+      UserId,
     } = req.body;
 
     var date = new Date().toISOString().split("T")[0];
     var isActive = true;
 
-    database.query(
-      "INSERT INTO hm_post(description, tutorProfileId, status, `language`, subjectName, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime) VALUES (?, (SELECT id FROM hm_tutor_profile T WHERE T.userId = ? LIMIT 1), ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      [
-        Description,
-        UserId,
-        Status,
-        Language,
-        SubjectName,
-        RatePerHour,
-        date,
-        date,
-        ExperinceYears,
-        isActive,
-        AvailableTime,
-      ],
-      (err) => {
-        if (err) res.status(400).send(`Response Error: ${err}`);
-      }
-    );
+    try {
+      let result = await executeQuery(
+        "SELECT * FROM hm_tutor_profile T WHERE T.userId = ?;",
+        [UserId]
+      );
+      let tutorProfileId = result[0].id;
+      result = await executeQuery(
+        "INSERT INTO hm_post(description, tutorProfileId, status, `language`, subjectName, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [
+          Description,
+          tutorProfileId,
+          Status,
+          Language,
+          SubjectName,
+          RatePerHour,
+          date,
+          date,
+          ExperinceYears,
+          isActive,
+          AvailableTime,
+        ]
+      );
 
-    database.query("SELECT LAST_INSERT_ID() as id;", (err, result) => {
-      if (err)
-        res
-          .status(400)
-          .send(
-            `Successfully added Post, but unable get record Id. Request Error: ${err}`
-          );
-      else res.status(201).json({ message: `Post Id: ${result[0].id}` });
-    });
+      var postId = result.insertId;
+
+      await executeQuery(
+        "UPDATE hm_tutor_profile SET status = 100 WHERE id = ?;",
+        [tutorProfileId]
+      );
+
+      res.status(201).json({ message: `Post Id: ${postId}` });
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
   },
 
   deletePost: async (req, res) => {
@@ -145,9 +153,9 @@ module.exports = {
     }
 
     let dbQuery =
-      "SELECT hm_post.id, hm_post.description, hm_post.tutorProfileId, hm_post.status, hm_post.language, hm_post.subjectName, hm_post.ratePerHour, hm_post.createdDateTime, hm_post.modifiedDateTime, hm_post.experienceYears, hm_post.isActive, hm_post.availableTime, hm_user.firstName, hm_user.lastName FROM hm_post" + 
-      " LEFT JOIN hm_tutor_profile ON (hm_tutor_profile.id = hm_post.tutorProfileId)"+
-      " LEFT JOIN hm_user ON (hm_user.id = hm_post.tutorProfileId)";
+      "SELECT hm_post.id, hm_post.description, hm_post.tutorProfileId, hm_post.status, hm_post.language, hm_post.subjectName, hm_post.ratePerHour, hm_post.createdDateTime, hm_post.modifiedDateTime, hm_post.experienceYears, hm_post.isActive, hm_post.availableTime, hm_user.firstName, hm_user.lastName FROM hm_post" +
+      " INNER JOIN hm_tutor_profile ON (hm_tutor_profile.id = hm_post.tutorProfileId)" +
+      " INNER JOIN hm_user ON (hm_user.id = hm_tutor_profile.userId)";
     if (joinQuery !== "") dbQuery += ` where ${joinQuery}`;
 
     database.query(dbQuery, (err, result) => {

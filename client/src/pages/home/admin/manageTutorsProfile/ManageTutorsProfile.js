@@ -1,13 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { ListGroup } from "react-bootstrap";
-import UserItem from "./UserItem";
-import { getUsersList } from "../../../../core/selectors/manageUsers";
+import TutorProfileItem from "./TutorProfileItem";
+import { getTutorsProfileList } from "../../../../core/selectors/manageTutorsProfile";
 import Page from "../../../../components/page/Page";
 import FilterBar from "./filterBar/FilterBar";
 
-function ManageUsers(props) {
-  var data = useSelector(getUsersList);
+function ManageTutorsProfile(props) {
+  var data = useSelector(getTutorsProfileList);
 
   if (data === undefined) {
     return <div></div>;
@@ -19,7 +19,7 @@ function ManageUsers(props) {
       <br />
       <ListGroup>
         {data?.map((item, i) => {
-          return <UserItem key={i} item={item} />;
+          return <TutorProfileItem key={i} item={item} />;
         })}
       </ListGroup>
       <br />
@@ -27,4 +27,4 @@ function ManageUsers(props) {
   );
 }
 
-export default ManageUsers;
+export default ManageTutorsProfile;

@@ -74,8 +74,16 @@ export default function Admin() {
     navigate(`/users?userType=${userType}`);
   };
 
-  const onPostsByStatus = (index, data) => {
-    navigate("/posts");
+  const onPostsByStatus = (data, index) => {
+    var status;
+    if (data.name == "Approved") {
+      status = "101";
+    } else if (data.name == "Rejected") {
+      status = "102";
+    } else {
+      status = "100";
+    }
+    navigate(`/posts?status=${status}`);
   };
 
   const renderPieChart = (title, data, onClick) => {
