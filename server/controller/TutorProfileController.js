@@ -1,6 +1,10 @@
 let database = require("../database");
 const uploadFile = require("../middleware/uploadImage");
+const { validationResult } = require("express-validator");
 require("dotenv").config();
+const util = require("util");
+
+const executeQuery = util.promisify(database.query).bind(database);
 
 module.exports = {
   getTutorAbouInfoById: async (req, res) => {
@@ -48,30 +52,30 @@ module.exports = {
     );
   },
 
-  getTutorsByFilters: async (req, res) => {
-    let subjectId = req.query.subjectId;
-    let level = req.query.level;
-    let rate = req.query.rating;
-    let gender = req.query.gender;
+  getTutorsByStatus: async (req, res) => {
+    let status = req.query.status;
 
-    // console.log(subject); && level != undefined && rating != undefined && gender != undefined
-    // WHERE rating >= ` + rate + ` AND level LIKE '%` + level + `%' AND
+    try {
+      let query =
+        "SELECT T.*, U.firstName, U.lastName, U.email, U.gender FROM hm_tutor_profile T INNER JOIN hm_user U ON (T.userId = U.id)";
+      let queryParams = [];
+      if (
+        status != undefined &&
+        ["100", "101", "102"].some((x) => x == status)
+      ) {
+        query = query + " WHERE T.status = ?";
+        queryParams.push(status);
+      } else {
+        query = query + ";";
+      }
 
-    query = `SELECT tutorProfileId, firstName, lastName, ratePerHour, description FROM hm_post A, hm_user B WHERE A.tutorProfileId = B.id `;
-
-    if (subject != undefined) {
-      query = query + ` AND subjectId = ` + subjectId + ``;
-    } else if (rate != undefined) {
-      query = query + ` AND ratePerHour >= ` + rate + ``;
-    } else if (gender != undefined) {
-      query = query + ` AND gender LIKE '%` + gender + `%'`;
+      let result = await executeQuery(query, queryParams);
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ message: error });
     }
-
-    database.query(query, function (err, result, fields) {
-      if (err) throw err;
-      res.json(result);
-    });
   },
+
   searchTutorProfile: async (req, res) => {
     let joinQuery = "";
     if (req.query.TutorProfileId !== undefined) {
@@ -87,7 +91,9 @@ module.exports = {
     if (req.query.maxRatePerHour !== undefined) {
       if (joinQuery != "") joinQuery += " and ";
 
-      joinQuery += `ratePerHour <= ${database.escape(req.query.maxRatePerHour)}`;
+      joinQuery += `ratePerHour <= ${database.escape(
+        req.query.maxRatePerHour
+      )}`;
     }
 
     if (req.query.SubjectName !== undefined) {
@@ -99,8 +105,8 @@ module.exports = {
     }
     let dbQuery =
       "SELECT hm_tutor_profile.userId as userId, hm_post.id, hm_post.description, hm_post.tutorProfileId, hm_post.status, hm_post.language, hm_post.subjectName, hm_post.ratePerHour, hm_post.experienceYears, hm_post.availableTime, hm_user.firstName, hm_user.lastName, hm_tutor_profile.picPath, hm_tutor_profile.about FROM hm_post" +
-      " LEFT JOIN hm_tutor_profile ON (hm_tutor_profile.id = hm_post.tutorProfileId)" +
-      " LEFT JOIN hm_user ON (hm_user.id = hm_tutor_profile.userId)";
+      " INNER JOIN hm_tutor_profile ON (hm_tutor_profile.id = hm_post.tutorProfileId and hm_tutor_profile.status = 101)" +
+      " INNER JOIN hm_user ON (hm_user.id = hm_tutor_profile.userId)";
     if (joinQuery !== "") dbQuery += ` where ${joinQuery}`;
     console.log(dbQuery);
     database.query(dbQuery, (err, input) => {
@@ -165,22 +171,13 @@ module.exports = {
     let { UserId, About, Age } = req.body;
     let PicturePath = "public/images/" + req.file.originalname;
     database.query(
-      "UPDATE hm_tutor_profile SET about = ?, age = ?, rating = 0, picPath = ? WHERE userId = ?",
+      "UPDATE hm_tutor_profile SET about = ?, age = ?, rating = 0, picPath = ?, status = 100 WHERE userId = ?",
       [About, Age, PicturePath, UserId],
       (err) => {
         if (err) res.status(400).send(`Response Error: ${err}`);
+        else res.status(200).json({ message: "Tutor profile updated" });
       }
     );
-
-    database.query("SELECT LAST_INSERT_ID() as id;", (err, result) => {
-      if (err)
-        res
-          .status(400)
-          .send(
-            `Successfully added Tutor profile, but unable get record Id. Request Error: ${err}`
-          );
-      else res.status(201).json({ message: `Review Id: ${result[0].id}` });
-    });
   },
 
   updateTutorInfo: async (req, res) => {
@@ -189,14 +186,14 @@ module.exports = {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    let PicturePath = "public/images/" + req.file.originalname;
-    let { Id, About, Age } = req.body;
+    let { UserId, Status } = req.body;
     database.query(
-      `UPDATE hm_tutor_profile SET about = ?, age= ?, picPath = ? WHERE id = ?`,
-      [About, Age, PicturePath, Id],
+      `UPDATE hm_tutor_profile SET status = ? WHERE userId = ?`,
+      [Status, UserId],
       (err) => {
-        if (err) console.log(err);
-        else {
+        if (err) {
+          res.status(500).json({ message: error });
+        } else {
           res.json({ message: "Tutor Profile Updated" });
         }
       }
