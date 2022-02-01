@@ -12,15 +12,14 @@ export default function Tutor() {
   const navigate = useNavigate();
   const [showChat, toggleChat] = useState(false);
   const [showEditor, toggleEditor] = useState(false);
-
-  const [pictureFile, setPictureFile] = useState(undefined);
-  const [picturePreview, setPicturePreview] = useState(null);
+  const [src, setSrc] = useState(undefined);
+  const [preview, setPreview] = useState(null);
 
   const currentUser = useSelector(getCurrentUser);
 
   const editorClosed = () => {
     toggleEditor(false);
-    setPicturePreview(null);
+    setPreview(null);
   };
 
   const ageRef = useRef(null);
@@ -32,42 +31,29 @@ export default function Tutor() {
   const chatOpened = () => toggleChat(true);
 
   const onClose = () => {
-    setPicturePreview(null);
+    setPreview(null);
   };
 
   const onCrop = (preview) => {
-    setPicturePreview(preview);
+    setPreview(preview);
   };
 
-  const onBeforeFileLoad = (e) => {
-    /*if(e.target.files[0].size > 71680){
-      Large file size
+  const onBeforeFileLoad = (elem) => {
+    /*if(elem.target.files[0].size > 71680){
+      alert("File is too big!");
+      elem.target.value = "";
     };*/
   };
 
   const onFileLoad = (file) => {
-    setPictureFile(file);
-  };
-
-  const dataURLtoFile = (dataurl, filename) => {
-    var arr = dataurl.split(","),
-      mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]),
-      n = bstr.length,
-      u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], filename, { type: mime });
+    setSrc(file);
   };
 
   const dispatch = useDispatch();
   const onProfileEdit = () => {
     dispatch(
       uploadProfilePicture({
-        profilePicture: dataURLtoFile(picturePreview, pictureFile.name),
+        profilePicture: src,
         UserId: currentUser.id,
         About: aboutRef.current.value,
         Age: ageRef.current.value,
@@ -136,7 +122,7 @@ export default function Tutor() {
                 />
               </Col>
               <Col>
-                <img src={picturePreview} alt="Preview" />
+                <img src={preview} alt="Preview" />
               </Col>
             </Row>
             <br />

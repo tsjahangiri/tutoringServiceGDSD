@@ -41,8 +41,9 @@ function Registration(props) {
     if (errorMessage !== undefined) {
       dispatch(setRegistrationAlert(errorMessage));
     } else {
-      // Always approved
-      data["status"] = 101;
+      
+      if (data["usertype"] == "102") data["status"] = 101;
+      else data["status"] = 100;
 
       data["confirmPassword"] = undefined;
       dispatch(registerUser({ data, navigate }));

@@ -18,8 +18,10 @@ exports.createTutorProfileValidation = [
 ];
 
 exports.updateTutorProfileValidation = [
+  body("Id").notEmpty().isInt(),
   body("UserId").notEmpty().isInt(),
-  body("Status").notEmpty().isIn([100, 101, 102]),
+  body("About").notEmpty().isString(),
+  body("Age").notEmpty().isString(),
 ];
 
 exports.createPostValidation = [

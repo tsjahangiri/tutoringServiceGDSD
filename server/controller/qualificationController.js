@@ -1,8 +1,5 @@
 let database = require("../database");
 const { validationResult } = require("express-validator");
-const util = require("util");
-
-const executeQuery = util.promisify(database.query).bind(database);
 
 module.exports = {
   // Get Qualification By Id Method
@@ -23,31 +20,19 @@ module.exports = {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    let { SubjectName, Description, Grade, UserId } = req.body;
+    let { SubjectName, Description, Grade, UserId  } = req.body;
+    
+    database.query(
+      `INSERT INTO hm_qualification (subjectName, description, grade, tutorProfileId) VALUES ( ?, ?, ?, (SELECT id FROM hm_tutor_profile T WHERE T.userId = ? LIMIT 1));`,
+      [SubjectName, Description, Grade, UserId],
+      (err, result) => {
+        if (err) console.log(err);
+      }
+    );
 
-    try {
-      var result = await executeQuery(
-        "SELECT * FROM hm_tutor_profile T WHERE T.userId = ?",
-        [UserId]
-      );
-
-      var tutorProfileId = result[0].id;
-
-      result = await executeQuery(
-        `INSERT INTO hm_qualification (subjectName, description, grade, tutorProfileId) VALUES ( ?, ?, ?, ?);`,
-        [SubjectName, Description, Grade, tutorProfileId]
-      );
-      let qualificationId = result.insertId;
-
-      await executeQuery(
-        "UPDATE hm_tutor_profile SET status = 100 WHERE id = ?;",
-        [tutorProfileId]
-      );
-
-      res.json({ message: `Qualification Id: ${qualificationId}` });
-    } catch (error) {
-      res.status(500).json({ message: error });
-    }
+    database.query("SELECT LAST_INSERT_ID() as id;", (err, result) => {
+      res.json({ message: `Qualification Id: ${result[0].id}` });
+    });
   },
 
   getQualificationByTutorProfileId: async (req, res) => {

@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import { fetchUsersList } from "../../../../../core/actionCreators/manageUsers";
+import { fetchUsersList } from "../../../../core/actionCreators/manageUsers";
 
 export default function FilterBar() {
   const urlSearchParams = new URLSearchParams(useLocation().search);

@@ -4,7 +4,7 @@ import { ListGroup } from "react-bootstrap";
 import UserItem from "./UserItem";
 import { getUsersList } from "../../../../core/selectors/manageUsers";
 import Page from "../../../../components/page/Page";
-import FilterBar from "./filterBar/FilterBar";
+import FilterBar from "../filterBar/FilterBar";
 
 function ManageUsers(props) {
   var data = useSelector(getUsersList);

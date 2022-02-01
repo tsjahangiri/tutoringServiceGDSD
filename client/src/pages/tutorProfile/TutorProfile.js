@@ -30,7 +30,7 @@ export default function TutorProfile(props) {
   }, [tutorInfoDataById]);
 
   // TODO: Remove
-  const photo = "/no-image.png";
+  const photo = "/logo192.png";
 
   const userType = useSelector(getUserType);
 
