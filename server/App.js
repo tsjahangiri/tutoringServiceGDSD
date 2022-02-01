@@ -11,7 +11,7 @@ const server = http.createServer(app);
 
 socketIO(server);
 
-const port = 8080;
+const port = 9090;
 
 require("dotenv").config();
 
