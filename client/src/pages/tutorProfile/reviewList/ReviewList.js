@@ -1,12 +1,13 @@
-import React,{ useState, useEffect } from "react";
+import React,{ useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import { getTutorReviewDataById } from "../../../core/selectors/tutor";
 import { getTutorReviewById } from "../../../core/actionCreators/tutor";
-import { ListGroup } from "react-bootstrap";
+import { ListGroup, Row, Col, Button, Form } from "react-bootstrap";
 import Rate from "rc-rate";
 import "rc-rate/assets/index.css";
+import { getCurrentUser } from "../../../core/selectors/user";
 
 export default function ReviewList(props) {
   const dispatch = useDispatch();
@@ -27,6 +28,29 @@ export default function ReviewList(props) {
   if (tutorReviews === undefined || tutorReviews.length === undefined || tutorReviews.length === 0) {
     return null;
   }
+
+  const dispatch = useDispatch();
+
+  let starCountRef = useRef(null);
+  const textReviewRef = useRef(null);
+
+  const user = useSelector(getCurrentUser);
+  console.log("userid" + user);
+
+  function onChange(v: number) {
+    starCountRef = v;
+    console.log("selected star", v);
+  }
+
+  const submitReview = () => {
+    const qualification = {
+      starCount: starCountRef,
+      textReview: textReviewRef.current.value,
+      UserId: user.id,
+    };
+    console.log(qualification);
+    // dispatch(saveQualification(qualification));
+  };
 
   var data = [
     {
@@ -68,6 +92,34 @@ export default function ReviewList(props) {
           );
         })}
       </ListGroup>
+      <br />
+      <Row>
+        <span>ADD A REVIEW</span>
+        <Rate
+          defaultValue={2.5}
+          onChange={onChange}
+          style={{ fontSize: 40 }}
+          ref={starCountRef}
+          allowHalf
+          allowClear={false}
+        />
+        <Col sm={11}>
+          <Form.Control size="md" ref={textReviewRef} type="text" />
+        </Col>
+        <Col sm={1}>
+          <Button
+            className="float-end"
+            variant="primary"
+            size="md"
+            onClick={submitReview}
+            type="submit"
+          >
+            Submit
+          </Button>
+        </Col>
+      </Row>
     </div>
   );
 }
+
+// onClick={filterTutors}
