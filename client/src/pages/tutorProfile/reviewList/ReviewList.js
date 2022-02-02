@@ -17,18 +17,13 @@ export default function ReviewList() {
   const user = useSelector(getCurrentUser);
   console.log("userid" + user);
 
-  function onChange(v: number) {
-    starCountRef = v;
-    console.log("selected star", v);
-  }
-
   const submitReview = () => {
-    const qualification = {
-      starCount: starCountRef,
+    let review = {
+      starCount: starCountRef.current.state.value,
       textReview: textReviewRef.current.value,
       UserId: user.id,
     };
-    console.log(qualification);
+    console.log(review);
     // dispatch(saveQualification(qualification));
   };
 
@@ -80,7 +75,7 @@ export default function ReviewList() {
         <span>ADD A REVIEW</span>
         <Rate
           defaultValue={2.5}
-          onChange={onChange}
+          // onChange={onChange}
           style={{ fontSize: 40 }}
           ref={starCountRef}
           allowHalf
