@@ -1,4 +1,4 @@
-import React,{ useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import moment from "moment";
@@ -11,6 +11,9 @@ import { getCurrentUser } from "../../../core/selectors/user";
 
 export default function ReviewList(props) {
   const dispatch = useDispatch();
+  let starCountRef = useRef(null);
+  const textReviewRef = useRef(null);
+  const user = useSelector(getCurrentUser);
   let { tutorId } = useParams();
   if (props.tutorId !== undefined && props.tutorId != "") {
     tutorId = props.tutorId;
@@ -20,22 +23,18 @@ export default function ReviewList(props) {
 
   useEffect(() => {
     dispatch(getTutorReviewById(tutorId));
-  },[]);
+  }, []);
   useEffect(() => {
     setTutorReviews(tutorReviewData);
-  },[tutorReviewData]);
+  }, [tutorReviewData]);
 
-  if (tutorReviews === undefined || tutorReviews.length === undefined || tutorReviews.length === 0) {
+  if (
+    tutorReviews === undefined ||
+    tutorReviews.length === undefined ||
+    tutorReviews.length === 0
+  ) {
     return null;
   }
-
-  const dispatch = useDispatch();
-
-  let starCountRef = useRef(null);
-  const textReviewRef = useRef(null);
-
-  const user = useSelector(getCurrentUser);
-  console.log("userid" + user);
 
   const submitReview = () => {
     let review = {
@@ -63,7 +62,6 @@ export default function ReviewList(props) {
       text: "Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content",
     },
   ];
-
 
   return (
     <div>
