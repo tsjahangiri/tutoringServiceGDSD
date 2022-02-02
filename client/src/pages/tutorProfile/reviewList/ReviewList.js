@@ -11,9 +11,11 @@ import { getCurrentUser } from "../../../core/selectors/user";
 
 export default function ReviewList(props) {
   const dispatch = useDispatch();
+
   let starCountRef = useRef(null);
   const textReviewRef = useRef(null);
   const user = useSelector(getCurrentUser);
+
   let { tutorId } = useParams();
   if (props.tutorId !== undefined && props.tutorId != "") {
     tutorId = props.tutorId;
