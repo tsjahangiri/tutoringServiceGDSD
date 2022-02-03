@@ -12,3 +12,9 @@ export const GET_TUTOR_QUALIFICATION_BY_ID = `${prefix}/GET_TUTOR_QUALIFICATION_
 export const SET_TUTOR_QUALIFICATION = `${prefix}/SET_TUTOR_QUALIFICATION`;
 export const GET_TUTOR_REVIEW_BY_ID = `${prefix}/GET_TUTOR_REVIEW_BY_ID`;
 export const SET_TUTOR_REVIEW = `${prefix}/SET_TUTOR_REVIEW`;
+
+//POST REVIEW
+export const SAVE_REVIEW = `${prefix}/SAVE_REVIEW`;
+export const SAVE_REVIEW_LOADING = `${prefix}/SAVE_REVIEW_LOADING`;
+export const SAVE_REVIEW_SUCCESS = `${prefix}/SAVE_REVIEW_SUCCESS`;
+export const SAVE_REVIEW_FAILED = `${prefix}/SAVE_REVIEW_FAILED`;

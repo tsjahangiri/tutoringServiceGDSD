@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import moment from "moment";
 import { getTutorReviewDataById } from "../../../core/selectors/tutor";
 import { getTutorReviewById } from "../../../core/actionCreators/tutor";
+import { setTutorReview } from "../../../core/actionCreators/tutor";
+import { saveReview } from "../../../core/actionCreators/tutor";
 import { ListGroup, Row, Col, Button, Form } from "react-bootstrap";
 import Rate from "rc-rate";
 import "rc-rate/assets/index.css";
@@ -11,42 +13,6 @@ import { getCurrentUser } from "../../../core/selectors/user";
 
 export default function ReviewList(props) {
   const dispatch = useDispatch();
-
-  let starCountRef = useRef(null);
-  const textReviewRef = useRef(null);
-  const user = useSelector(getCurrentUser);
-
-  let { tutorId } = useParams();
-  if (props.tutorId !== undefined && props.tutorId != "") {
-    tutorId = props.tutorId;
-  }
-  const tutorReviewData = useSelector(getTutorReviewDataById);
-  const [tutorReviews, setTutorReviews] = useState([]);
-
-  useEffect(() => {
-    dispatch(getTutorReviewById(tutorId));
-  }, []);
-  useEffect(() => {
-    setTutorReviews(tutorReviewData);
-  }, [tutorReviewData]);
-
-  if (
-    tutorReviews === undefined ||
-    tutorReviews.length === undefined ||
-    tutorReviews.length === 0
-  ) {
-    return null;
-  }
-
-  const submitReview = () => {
-    let review = {
-      starCount: starCountRef.current.state.value,
-      textReview: textReviewRef.current.value,
-      UserId: user.id,
-    };
-    console.log(review);
-    // dispatch(saveQualification(qualification));
-  };
 
   var data = [
     {
@@ -65,21 +31,58 @@ export default function ReviewList(props) {
     },
   ];
 
+  let starCountRef = useRef(null);
+  const textReviewRef = useRef(null);
+  const user = useSelector(getCurrentUser);
+
+  let { tutorId } = useParams();
+  if (props.tutorId !== undefined && props.tutorId != "") {
+    tutorId = props.tutorId;
+  }
+  const tutorReviewData = useSelector(getTutorReviewDataById);
+  const [tutorReviews, setTutorReview] = useState([]);
+
+  useEffect(() => {
+    dispatch(getTutorReviewById(tutorId));
+  }, []);
+  useEffect(() => {
+    setTutorReview(tutorReviewData);
+  }, [tutorReviewData]);
+
+  if (
+    tutorReviews === undefined ||
+    tutorReviews.length === undefined ||
+    tutorReviews.length === 0
+  ) {
+    // return null;
+  }
+
+  const submitReview = () => {
+    let review = {
+      Rating: starCountRef.current.state.value,
+      Text: textReviewRef.current.value,
+      UserId: user.id,
+      TutorProfileId: Number(tutorId),
+    };
+    console.log(review);
+    dispatch(saveReview(review));
+  };
+
   return (
     <div>
       <span>REVIEWS</span>
       <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
-        {tutorReviews.map((item, i) => {
+        {data.map((item, i) => {
           return (
             <ListGroup.Item
               key={i}
               className="d-flex justify-content-between align-items-start"
             >
               <div className="me-auto">
-                <div className="fw-bold">{item.firstName}</div>
+                <div className="fw-bold">{item.name}</div>
                 <div>
                   <Rate defaultValue={item.rating} disabled />
-                  <span className="text-muted">{item.createdDateTime}</span>
+                  <span className="text-muted">{item.date}</span>
                 </div>
                 <div className="fw-light">{item.text}</div>
               </div>
