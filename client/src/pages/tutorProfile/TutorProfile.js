@@ -94,7 +94,7 @@ export default function TutorProfile(props) {
       <QualificationList tutorId={tutorId} />
       <br />
       <br />
-      <ReviewList />
+      <ReviewList tutorId={tutorId} />
       <br />
       {(userType === "student" || userType === "tutor") &&
         renderPrivilegedFeatures()}

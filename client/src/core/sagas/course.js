@@ -86,7 +86,7 @@ export function* fetchApprovedCourseList(action: Object): Saga<void> {
   };
 
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
-  
+
   const { isSuccessful, response = {} } = apiResponse;
 
   if (isSuccessful) {

@@ -6,7 +6,12 @@ import {
   GET_TUTOR_LIST_FAILED,
   SET_TUTOR_INFO,
   SET_TUTOR_OFFERED_COURSE,
-  SET_TUTOR_QUALIFICATION
+  SET_TUTOR_QUALIFICATION,
+  SET_TUTOR_REVIEW,
+  SAVE_REVIEW,
+  SAVE_REVIEW_LOADING,
+  SAVE_REVIEW_SUCCESS,
+  SAVE_REVIEW_FAILED,
 } from "../actionTypes/tutor";
 
 export const INITIAL_STATE = {
@@ -14,6 +19,7 @@ export const INITIAL_STATE = {
   tutorInfoData: [],
   tutorCourseData: [],
   tutorQualificationData: [],
+  tutorReviewData: [],
   filters: {
     subjectId: undefined,
     level: "%",
@@ -57,6 +63,20 @@ export default (state = INITIAL_STATE, action = {}) => {
         ...state,
         tutorQualificationData: action.payload,
       };
-      
+    case SET_TUTOR_REVIEW:
+      return {
+        ...state,
+        tutorReviewData: action.payload,
+      };
+    case SAVE_REVIEW:
+      return {
+        ...state,
+      };
+    case SAVE_REVIEW_LOADING:
+      return INITIAL_STATE;
+    case SAVE_REVIEW_SUCCESS:
+      return INITIAL_STATE;
+    case SAVE_REVIEW_FAILED:
+      return INITIAL_STATE;
   }
 };

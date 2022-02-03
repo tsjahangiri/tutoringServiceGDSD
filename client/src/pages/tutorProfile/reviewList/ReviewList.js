@@ -1,36 +1,18 @@
-import React, { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import moment from "moment";
+import { getTutorReviewDataById } from "../../../core/selectors/tutor";
+import { getTutorReviewById } from "../../../core/actionCreators/tutor";
+import { setTutorReview } from "../../../core/actionCreators/tutor";
+import { saveReview } from "../../../core/actionCreators/tutor";
 import { ListGroup, Row, Col, Button, Form } from "react-bootstrap";
 import Rate from "rc-rate";
 import "rc-rate/assets/index.css";
 import { getCurrentUser } from "../../../core/selectors/user";
 
-export default function ReviewList() {
-  // var data = useSelector(); //TODO: Change var to const
-
+export default function ReviewList(props) {
   const dispatch = useDispatch();
-
-  let starCountRef = useRef(null);
-  const textReviewRef = useRef(null);
-
-  const user = useSelector(getCurrentUser);
-  console.log("userid" + user);
-
-  function onChange(v: number) {
-    starCountRef = v;
-    console.log("selected star", v);
-  }
-
-  const submitReview = () => {
-    const qualification = {
-      starCount: starCountRef,
-      textReview: textReviewRef.current.value,
-      UserId: user.id,
-    };
-    console.log(qualification);
-    // dispatch(saveQualification(qualification));
-  };
 
   var data = [
     {
@@ -49,9 +31,42 @@ export default function ReviewList() {
     },
   ];
 
-  if (data === undefined || data.length === undefined || data.length === 0) {
-    return null;
+  let starCountRef = useRef(null);
+  const textReviewRef = useRef(null);
+  const user = useSelector(getCurrentUser);
+
+  let { tutorId } = useParams();
+  if (props.tutorId !== undefined && props.tutorId != "") {
+    tutorId = props.tutorId;
   }
+  const tutorReviewData = useSelector(getTutorReviewDataById);
+  const [tutorReviews, setTutorReview] = useState([]);
+
+  useEffect(() => {
+    dispatch(getTutorReviewById(tutorId));
+  }, []);
+  useEffect(() => {
+    setTutorReview(tutorReviewData);
+  }, [tutorReviewData]);
+
+  if (
+    tutorReviews === undefined ||
+    tutorReviews.length === undefined ||
+    tutorReviews.length === 0
+  ) {
+    // return null;
+  }
+
+  const submitReview = () => {
+    let review = {
+      Rating: starCountRef.current.state.value,
+      Text: textReviewRef.current.value,
+      UserId: user.id,
+      TutorProfileId: Number(tutorId),
+    };
+    console.log(review);
+    dispatch(saveReview(review));
+  };
 
   return (
     <div>
@@ -80,7 +95,7 @@ export default function ReviewList() {
         <span>ADD A REVIEW</span>
         <Rate
           defaultValue={2.5}
-          onChange={onChange}
+          // onChange={onChange}
           style={{ fontSize: 40 }}
           ref={starCountRef}
           allowHalf
