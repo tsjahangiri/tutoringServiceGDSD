@@ -87,7 +87,7 @@ router.get(
   "/tutors/qualification/:id",
   tutorProfileController.getTutorQualificationById
 );
-router.get("/tutors/reviews/:tutorProfileId", tutorProfileController.getReviewsById);
+router.get("/tutors/reviews/:id", tutorProfileController.getReviewsById);
 router.get("/tutors", tutorProfileController.searchTutorProfile);
 router.get("/tutors/status", tutorProfileController.getTutorsByStatus);
 router.post("/tutors", createTutorProfileValidation, tutorProfileController.saveTutorInfo);
@@ -118,7 +118,7 @@ let uploadController = require("../controller/uploadController");
 router.post("/upload", tutorAuth.isTutor, uploadController.upload);
 
 let fetchController = require("../controller/fetchFileController");
-router.get("/fetch/file", tutorAuth.isTutor, fetchController.file);
+router.get("/fetch/file/:id", fetchController.file);
 router.get("/fetch/image", tutorAuth.isTutor, fetchController.image);
 
 module.exports = router;

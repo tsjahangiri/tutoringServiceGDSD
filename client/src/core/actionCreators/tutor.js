@@ -16,6 +16,8 @@ import {
   SAVE_REVIEW_LOADING,
   SAVE_REVIEW_SUCCESS,
   SAVE_REVIEW_FAILED,
+  FETCH_TUTOR_FILES,
+  SET_TUTOR_FILES,
 } from "../actionTypes/tutor";
 
 export const fetchTutorList = (payload) => {
@@ -112,3 +114,17 @@ export const saveReviewSuccess = (data) => ({
 export const saveReviewFailed = () => ({
   type: SAVE_REVIEW_FAILED,
 });
+
+export const fetchTutorFiles = (payload) => {
+  return {
+    type: FETCH_TUTOR_FILES,
+    payload,
+  };
+};
+
+export const setTutorFiles = (payload) => {
+  return {
+    type: SET_TUTOR_FILES,
+    payload,
+  };
+};

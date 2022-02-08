@@ -17,6 +17,8 @@ export const pendingTutorListApi = `${baseUrl}/courses?Status=100`;
 export const socketIOUrl = `${process.env.REACT_APP_API_URL}`;
 export const filesApi = `${process.env.REACT_APP_API_URL}`;
 
+export const fetchApi = `${baseUrl}/fetch/file`;
+
 export const getTutorInfoById = (id) => `${baseUrl}/tutors/Info/` + id;
 export const getTutorOfferedCoursesById = (id) =>
   `${baseUrl}/tutors/courses/` + id;

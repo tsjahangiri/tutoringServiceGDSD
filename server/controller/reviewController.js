@@ -1,5 +1,7 @@
 let database = require("../database");
 const { validationResult } = require("express-validator");
+const util = require("util");
+const executeQuery = util.promisify(database.query).bind(database);
 
 module.exports = {
   createReview: async (req, res) => {
@@ -8,8 +10,19 @@ module.exports = {
       return res.status(400).json({ errors: errors.array() });
     }
     let { Text, Rating, UserId, TutorProfileId } = req.body;
-    var date = new Date().toISOString().split("T")[0];
+    var date = new Date();
 
+    let result = await executeQuery(
+      "SELECT id from hm_tutor_profile WHERE userId = ?;",
+      [TutorProfileId]
+    );
+    if (result.length == 0) {
+      res
+        .status(400)
+        .json({ message: `No tutor found with ID: ${TutorProfileId}` });
+      return;
+    }
+    TutorProfileId = result[0].id;
     database.query(
       "INSERT INTO hm_review (`text`, rating, createdDateTime, modifiedDateTime, userId, tutorProfileId) VALUES ( ?, ?, ?, ?, ?, ?)",
       [Text, Rating, date, date, UserId, TutorProfileId],
@@ -43,7 +56,9 @@ module.exports = {
   getReviews: async (req, res) => {
     let joinQuery = "";
     if (req.query.TutorProfileId !== undefined)
-      joinQuery += `tutorProfileId = ${database.escape(req.query.TutorProfileId)}`;
+      joinQuery += `tutorProfileId = ${database.escape(
+        req.query.TutorProfileId
+      )}`;
 
     if (req.query.UserId !== undefined) {
       if (joinQuery != "") joinQuery += " and ";
@@ -59,7 +74,6 @@ module.exports = {
       else res.status(200).json(result);
     });
   },
-
 
   deleteReview: async (req, res) => {
     let id = req.params.id;

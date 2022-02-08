@@ -9,6 +9,7 @@ import {
   GET_TUTOR_QUALIFICATION_BY_ID,
   GET_TUTOR_REVIEW_BY_ID,
   SAVE_REVIEW,
+  FETCH_TUTOR_FILES,
 } from "../actionTypes/tutor";
 import {
   allTutorListApi,
@@ -17,6 +18,7 @@ import {
   getTutorQualificationById,
   getTutorReviewsById,
   reviewApi,
+  fetchApi,
 } from "../endpoints";
 import {
   getTutorListFailed,
@@ -27,6 +29,7 @@ import {
   setTutorReview,
   saveReviewSuccess,
   saveReviewFailed,
+  setTutorFiles,
 } from "../actionCreators/tutor";
 
 export default function* tutorSaga(): Saga<void> {
@@ -39,6 +42,22 @@ export default function* tutorSaga(): Saga<void> {
   yield takeEvery(GET_TUTOR_QUALIFICATION_BY_ID, getTutorQualificationDataById);
   yield takeEvery(GET_TUTOR_REVIEW_BY_ID, getTutorReviewDataById);
   yield takeEvery(SAVE_REVIEW, saveReview);
+  yield takeEvery(FETCH_TUTOR_FILES, fetchTutorFiles);
+}
+
+export function* fetchTutorFiles(action: Object): Saga<void> {
+  const apiOptions: ApiOptions = {
+    url: `${fetchApi}/${action.payload}`,
+    method: "GET",
+    useJwtSecret: false,
+  };
+
+  const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
+
+  const { isSuccessful, response = {} } = apiResponse;
+  if (isSuccessful) {
+    yield put(setTutorFiles(response.data));
+  }
 }
 
 export function* getTutorList(action: Object): Saga<void> {

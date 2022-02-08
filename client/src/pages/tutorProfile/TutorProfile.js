@@ -6,6 +6,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import CourseList from "./courseList/CourseList";
 import ReviewList from "./reviewList/ReviewList";
 import QualificationList from "./qualificationList/QualificationList";
+import FileList from "./fileList/FileList";
 import Page from "../../components/page/Page";
 import Student from "./privilegedFeatures/Student";
 import Tutor from "./privilegedFeatures/Tutor";
@@ -92,6 +93,9 @@ export default function TutorProfile(props) {
       <br />
       <br />
       <QualificationList tutorId={tutorId} />
+      <br />
+      <br />
+      <FileList tutorId={tutorId} />
       <br />
       <br />
       <ReviewList tutorId={tutorId} />
