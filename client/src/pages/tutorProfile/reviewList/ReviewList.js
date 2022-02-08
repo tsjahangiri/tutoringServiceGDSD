@@ -9,32 +9,15 @@ import { saveReview } from "../../../core/actionCreators/tutor";
 import { ListGroup, Row, Col, Button, Form } from "react-bootstrap";
 import Rate from "rc-rate";
 import "rc-rate/assets/index.css";
-import { getCurrentUser } from "../../../core/selectors/user";
+import { getCurrentUser, getUserType } from "../../../core/selectors/user";
 
 export default function ReviewList(props) {
   const dispatch = useDispatch();
 
-  var data = [
-    {
-      id: 1,
-      name: "Hasib Iqbal",
-      rating: 3,
-      date: moment().format("MMMM D, YYYY"),
-      text: "Some quick example text to build on the card title and make up the bulk of the card's content",
-    },
-    {
-      id: 2,
-      name: "Amlan Chowdhury",
-      rating: 4,
-      date: moment().format("MMMM D, YYYY"),
-      text: "Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content. Some quick example text to build on the card title and make up the bulk of the card's content",
-    },
-  ];
-
   let starCountRef = useRef(null);
   const textReviewRef = useRef(null);
   const user = useSelector(getCurrentUser);
-  console.log(user);
+  const userType = useSelector(getUserType);
 
   let { tutorId } = useParams();
   if (props.tutorId !== undefined && props.tutorId != "") {
@@ -57,59 +40,18 @@ export default function ReviewList(props) {
       UserId: user.id,
       TutorProfileId: Number(tutorId),
     };
-    console.log(review);
     dispatch(saveReview(review));
   };
-  let ReviewsData =
-    tutorReviews === undefined ||
-    tutorReviews.length === undefined ||
-    tutorReviews.length === 0
-      ? false
-      : true;
-  console.log(ReviewsData);
 
-  if (
-    tutorReviews === undefined ||
-    tutorReviews.length === undefined ||
-    tutorReviews.length === 0
-  ) {
-    // return null;
-  }
+  const renderReview = () => {
+    if (userType !== "student") return null;
 
-  return (
-    <div>
-      {ReviewsData == true ? (
-        <div>
-          <span>REVIEWS</span>
-          <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
-            {tutorReviews.map((item, i) => {
-              return (
-                <ListGroup.Item
-                  key={i}
-                  className="d-flex justify-content-between align-items-start"
-                >
-                  <div className="me-auto">
-                    <div className="fw-bold">{item.firstName}</div>
-                    <div>
-                      <Rate defaultValue={item.rating} disabled />
-                      <span className="text-muted">{item.createdDateTime}</span>
-                    </div>
-                    <div className="fw-light">{item.text}</div>
-                  </div>
-                </ListGroup.Item>
-              );
-            })}
-          </ListGroup>
-          <br />
-        </div>
-      ) : null}
-      {user != undefined ? (
+    return (
+      <div>
         <Row>
-          <span>ADD A REVIEW</span>
+          <span>YOUR REVIEW</span>
           <Rate
             defaultValue={2.5}
-            // onChange={onChange}
-            style={{ fontSize: 40 }}
             ref={starCountRef}
             allowHalf
             allowClear={false}
@@ -129,29 +71,50 @@ export default function ReviewList(props) {
             </Button>
           </Col>
         </Row>
-      ) : null}
+        <br />
+      </div>
+    );
+  };
+
+  const renderReviews = () => {
+    if (
+      tutorReviews === undefined ||
+      tutorReviews.length === undefined ||
+      tutorReviews.length === 0
+    ) {
+      return null;
+    }
+
+    return (
+      <div>
+        <span>REVIEWS</span>
+        <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
+          {tutorReviewData?.map((item, i) => {
+            return (
+              <ListGroup.Item
+                key={i}
+                className="d-flex justify-content-between align-items-start"
+              >
+                <div className="me-auto">
+                  <div className="fw-bold">{`${item.firstName} ${item.lastName}`}</div>
+                  <div>
+                    <Rate defaultValue={item.rating} disabled />
+                    <span className="text-muted">{item.modifiedDateTime}</span>
+                  </div>
+                  <div className="fw-light">{item.text}</div>
+                </div>
+              </ListGroup.Item>
+            );
+          })}
+        </ListGroup>
+      </div>
+    );
+  };
+
+  return (
+    <div>
+      {renderReview()}
+      {renderReviews()}
     </div>
   );
 }
-
-// onClick={filterTutors}
-
-/* <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
-  {tutorReviews.map((item, i) => {
-    return (
-      <ListGroup.Item
-        key={i}
-        className="d-flex justify-content-between align-items-start"
-      >
-        <div className="me-auto">
-          <div className="fw-bold">{item.firstName}</div>
-          <div>
-            <Rate defaultValue={item.rating} disabled />
-            <span className="text-muted">{item.createdDateTime}</span>
-          </div>
-          <div className="fw-light">{item.text}</div>
-        </div>
-      </ListGroup.Item>
-    );
-  })}
-</ListGroup>; */

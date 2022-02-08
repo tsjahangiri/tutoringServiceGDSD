@@ -1,6 +1,0 @@
-const prefix = "studentListShow";
-
-export const FETCH_STUDENT_SHOW_LIST = `${prefix}/GET_STUDENT_SHOW_LIST`;
-export const SET_STUDENT_SHOW_LIST_LOADING = `${prefix}/SET_STUDENT_SHOW_LIST_LOADING`;
-export const GET_STUDENT_SHOW_LIST_SUCCESS = `${prefix}/GET_STUDENT_SHOW_LIST_SUCCESS`;
-export const GET_STUDENT_SHOW_LIST_FAILED = `${prefix}/GET_STUDENT_SHOW_LIST_FAILED`;

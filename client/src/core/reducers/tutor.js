@@ -12,6 +12,7 @@ import {
   SAVE_REVIEW_LOADING,
   SAVE_REVIEW_SUCCESS,
   SAVE_REVIEW_FAILED,
+  SET_TUTOR_FILES,
 } from "../actionTypes/tutor";
 
 export const INITIAL_STATE = {
@@ -20,6 +21,7 @@ export const INITIAL_STATE = {
   tutorCourseData: [],
   tutorQualificationData: [],
   tutorReviewData: [],
+  tutorFilesData: [],
   filters: {
     subjectId: undefined,
     level: "%",
@@ -58,6 +60,11 @@ export default (state = INITIAL_STATE, action = {}) => {
         ...state,
         tutorCourseData: action.payload,
       };
+    case SET_TUTOR_FILES:
+      return {
+        ...state,
+        tutorFilesData: action.payload,
+      };
     case SET_TUTOR_QUALIFICATION:
       return {
         ...state,
@@ -68,15 +75,5 @@ export default (state = INITIAL_STATE, action = {}) => {
         ...state,
         tutorReviewData: action.payload,
       };
-    case SAVE_REVIEW:
-      return {
-        ...state,
-      };
-    case SAVE_REVIEW_LOADING:
-      return INITIAL_STATE;
-    case SAVE_REVIEW_SUCCESS:
-      return INITIAL_STATE;
-    case SAVE_REVIEW_FAILED:
-      return INITIAL_STATE;
   }
 };

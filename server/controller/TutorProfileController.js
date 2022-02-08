@@ -41,15 +41,18 @@ module.exports = {
 
   getReviewsById: async (req, res) => {
     let id = req.params.id;
-    database.query(
-      `SELECT A.id, A.text, A.rating, A.createdDateTime, A.modifiedDateTime, U.firstName, U.lastName, A.userId FROM hm_review A,
-      inner join hm_user U on (A.userId = u.id)
+    try {
+      let result = await executeQuery(
+        `SELECT A.id, A.text, A.rating, A.createdDateTime, A.modifiedDateTime, U.firstName, U.lastName, A.userId FROM hm_review A
+      inner join hm_user U on (A.userId = U.id)
       inner join hm_tutor_profile T on (A.tutorProfileId = T.id and T.userId = ?);`,
-      [id],
-      (err, result) => {
-        res.json(result);
-      }
-    );
+        [id]
+      );
+
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
   },
 
   getTutorsByStatus: async (req, res) => {
