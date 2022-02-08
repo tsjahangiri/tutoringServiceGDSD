@@ -34,6 +34,7 @@ export default function ReviewList(props) {
   let starCountRef = useRef(null);
   const textReviewRef = useRef(null);
   const user = useSelector(getCurrentUser);
+  console.log(user);
 
   let { tutorId } = useParams();
   if (props.tutorId !== undefined && props.tutorId != "") {
@@ -49,14 +50,6 @@ export default function ReviewList(props) {
     setTutorReview(tutorReviewData);
   }, [tutorReviewData]);
 
-  if (
-    tutorReviews === undefined ||
-    tutorReviews.length === undefined ||
-    tutorReviews.length === 0
-  ) {
-    // return null;
-  }
-
   const submitReview = () => {
     let review = {
       Rating: starCountRef.current.state.value,
@@ -67,57 +60,98 @@ export default function ReviewList(props) {
     console.log(review);
     dispatch(saveReview(review));
   };
+  let ReviewsData =
+    tutorReviews === undefined ||
+    tutorReviews.length === undefined ||
+    tutorReviews.length === 0
+      ? false
+      : true;
+  console.log(ReviewsData);
+
+  if (
+    tutorReviews === undefined ||
+    tutorReviews.length === undefined ||
+    tutorReviews.length === 0
+  ) {
+    // return null;
+  }
 
   return (
     <div>
-      <span>REVIEWS</span>
-      <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
-        {data.map((item, i) => {
-          return (
-            <ListGroup.Item
-              key={i}
-              className="d-flex justify-content-between align-items-start"
+      {ReviewsData == true ? (
+        <div>
+          <span>REVIEWS</span>
+          <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
+            {tutorReviews.map((item, i) => {
+              return (
+                <ListGroup.Item
+                  key={i}
+                  className="d-flex justify-content-between align-items-start"
+                >
+                  <div className="me-auto">
+                    <div className="fw-bold">{item.firstName}</div>
+                    <div>
+                      <Rate defaultValue={item.rating} disabled />
+                      <span className="text-muted">{item.createdDateTime}</span>
+                    </div>
+                    <div className="fw-light">{item.text}</div>
+                  </div>
+                </ListGroup.Item>
+              );
+            })}
+          </ListGroup>
+          <br />
+        </div>
+      ) : null}
+      {user != undefined ? (
+        <Row>
+          <span>ADD A REVIEW</span>
+          <Rate
+            defaultValue={2.5}
+            // onChange={onChange}
+            style={{ fontSize: 40 }}
+            ref={starCountRef}
+            allowHalf
+            allowClear={false}
+          />
+          <Col sm={11}>
+            <Form.Control size="md" ref={textReviewRef} type="text" />
+          </Col>
+          <Col sm={1}>
+            <Button
+              className="float-end"
+              variant="primary"
+              size="md"
+              onClick={submitReview}
+              type="submit"
             >
-              <div className="me-auto">
-                <div className="fw-bold">{item.name}</div>
-                <div>
-                  <Rate defaultValue={item.rating} disabled />
-                  <span className="text-muted">{item.date}</span>
-                </div>
-                <div className="fw-light">{item.text}</div>
-              </div>
-            </ListGroup.Item>
-          );
-        })}
-      </ListGroup>
-      <br />
-      <Row>
-        <span>ADD A REVIEW</span>
-        <Rate
-          defaultValue={2.5}
-          // onChange={onChange}
-          style={{ fontSize: 40 }}
-          ref={starCountRef}
-          allowHalf
-          allowClear={false}
-        />
-        <Col sm={11}>
-          <Form.Control size="md" ref={textReviewRef} type="text" />
-        </Col>
-        <Col sm={1}>
-          <Button
-            className="float-end"
-            variant="primary"
-            size="md"
-            onClick={submitReview}
-            type="submit"
-          >
-            Submit
-          </Button>
-        </Col>
-      </Row>
+              Submit
+            </Button>
+          </Col>
+        </Row>
+      ) : null}
     </div>
   );
 }
 
 // onClick={filterTutors}
+
+/* <ListGroup style={{ padding: "1.0rem 0 0 0" }}>
+  {tutorReviews.map((item, i) => {
+    return (
+      <ListGroup.Item
+        key={i}
+        className="d-flex justify-content-between align-items-start"
+      >
+        <div className="me-auto">
+          <div className="fw-bold">{item.firstName}</div>
+          <div>
+            <Rate defaultValue={item.rating} disabled />
+            <span className="text-muted">{item.createdDateTime}</span>
+          </div>
+          <div className="fw-light">{item.text}</div>
+        </div>
+      </ListGroup.Item>
+    );
+  })}
+</ListGroup>; */
