@@ -61,7 +61,7 @@ export default function TutorProfile(props) {
             <br />
             <Row>
               <span className="text-muted" style={{ float: "left" }}>
-                {`Age: ${tutorInfoData?.age}`}
+                {`Age: ${tutorInfoData?.age ?? 'N/A'}`}
               </span>
               <span className="mt-2 text-muted" style={{ float: "left" }}>
                 {tutorInfoData?.about}

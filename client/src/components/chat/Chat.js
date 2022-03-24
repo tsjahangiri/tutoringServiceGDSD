@@ -41,23 +41,6 @@ type Props = {
  * ]
  */
 
-function getDefaultSelectedChat(selectedUserId, texts) {
-  let defaultSelectedChat = undefined;
-  if (selectedUserId !== undefined) {
-    defaultSelectedChat = texts?.find(
-      (element) => element.userID == selectedUserId
-    );
-
-    if (defaultSelectedChat === undefined) {
-      defaultSelectedChat = {
-        userID: selectedUserId,
-        texts: [],
-      };
-    }
-  }
-  return defaultSelectedChat;
-}
-
 export default function Chat(props: Props) {
   // TODO: Remove
   const pictureUrl = "logo512.png";
@@ -69,10 +52,27 @@ export default function Chat(props: Props) {
   const textControl = useRef();
   const [texts, setTexts] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [selectedChat, setSelectedChat] = useState(
-    getDefaultSelectedChat(selectedUserId, texts)
-  );
+
   const currentUser = useSelector(getCurrentUser);
+
+  const getDefaultSelectedChat = () => {
+    let defaultSelectedChat = undefined;
+    if (selectedUserId != undefined) {
+      defaultSelectedChat = texts?.find(
+        (element) => element.userID == selectedUserId
+      );
+
+      if (defaultSelectedChat === undefined) {
+        defaultSelectedChat = {
+          userID: selectedUserId,
+          texts: [], //TODO: Remove this
+        };
+      }
+    }
+    return defaultSelectedChat;
+  };
+
+  const [selectedChat, setSelectedChat] = useState(getDefaultSelectedChat());
 
   useEffect(() => {
     if (arrivalMessage) {
@@ -250,7 +250,9 @@ export default function Chat(props: Props) {
             className="bi bi-arrow-left-short"
             style={{ fontSize: "2rem", cursor: "pointer", opacity: ".5" }}
           ></i>
-          <Offcanvas.Title>{selectedChat.userName}</Offcanvas.Title>
+          <Offcanvas.Title>
+            {selectedChat?.userName ?? "New Chat"}
+          </Offcanvas.Title>
         </Offcanvas.Header>
       );
     }
