@@ -13,7 +13,6 @@ module.exports = {
     let { Id, CourseName, Description, Level } = req.body;
 
     TutorProfileId = Id;
-
     database.query(
       "INSERT INTO hm_poll (coursename, description, level, tutorProfileId) VALUES ( ?, ?, ?, ?)",
       [CourseName, Description, Level, TutorProfileId],
