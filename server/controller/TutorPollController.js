@@ -5,18 +5,12 @@ const util = require("util");
 const executeQuery = util.promisify(database.query).bind(database);
 
 module.exports = {
-
   createPoll: async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    let {
-      Id,
-      CourseName 
-      Description,
-      Level,
-    } = req.body;
+    let { Id, CourseName, Description, Level } = req.body;
 
     TutorProfileId = Id;
 
@@ -25,11 +19,9 @@ module.exports = {
       [CourseName, Description, Level, TutorProfileId],
       (err, result) => {
         if (err) res.status(400).send(`Response Error: ${err}`);
-        else
-          res
-            .status(200)
-            .json({ message: `Poll created successfully.` });
-      });
+        else res.status(200).json({ message: `Poll created successfully.` });
+      }
+    );
   },
 
   deletePoll: async (req, res) => {
