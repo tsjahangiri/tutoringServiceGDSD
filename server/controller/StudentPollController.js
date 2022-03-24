@@ -13,7 +13,7 @@ module.exports = {
     }
     let {
       Id,
-      CourseName 
+      CourseName,
       Description,
       Level,
     } = req.body;
@@ -35,7 +35,7 @@ module.exports = {
   viewCreatedPolls: async (req, res) => {
     let StudentProfileId = req.params.id;
     database.query(
-      "SELECT * FROM helpmelearn.hm_poll WHERE id NOT IN (SELECT id  FROM helpmelearn.hm_poll WHERE studentId LIKE '%$StudentProfileId%') ORDER BY id DESC;",
+      "SELECT A.id, coursename, description, level, upVotePer, downVotePer, tutorProfileId, CONCAT_WS(" ", B.firstName, B.lastName) AS TutorName FROM helpmelearn.hm_poll A, helpmelearn.hm_user B WHERE A.tutorProfileId = B.id AND A.id NOT IN (SELECT id  FROM helpmelearn.hm_poll WHERE studentId LIKE '%$StudentProfileId%') ORDER BY id DESC;",
       [StudentProfileId],
       (err, result) => {
         if (err) res.status(400).send(`Response Error: ${err}`);
