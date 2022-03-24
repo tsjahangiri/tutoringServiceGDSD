@@ -121,4 +121,8 @@ let fetchController = require("../controller/fetchFileController");
 router.get("/fetch/file/:id", fetchController.file);
 router.get("/fetch/image", tutorAuth.isTutor, fetchController.image);
 
+let dashboardController = require("../controller/dashboardController");
+
+router.get("/dashboard", dashboardController.dashboard);
+
 module.exports = router;
