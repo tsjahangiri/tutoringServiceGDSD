@@ -14,7 +14,7 @@ function VotingPoll(props) {
   const descriptionRef = useRef(null);
 
   const user = useSelector(getCurrentUser);
-  console.log("userid" + user );
+  console.log("userid" + user);
 
   //function to save the qualification
   const submitPollResult = () => {
@@ -29,40 +29,49 @@ function VotingPoll(props) {
 
   return (
     <div>
-    <Page></Page>
-    <div className="qualification-page">
-      <div className="qualification-content">
-        <h1>Create Poll</h1>
-        <Form>
+      <Page></Page>
+      <div className="qualification-page">
+        <div className="qualification-content">
+          <h1>Create Poll</h1>
+          <Form>
             <div className="div1">
-                <label className="labelS">Subject Name</label>                
-                <Form.Control type="text" ref={subjectRef} placeholder="Subject" />
-            </div>
-            
-            <div>
-                <label className="labelS">Level</label>     
-                <select name="level" ref={levelRef}>
-                    <option value="Bachelor">Bachelor</option>
-                    <option value="Masters">Masters</option>
-                </select>           
+              <label className="labelS">Subject Name</label>
+              <Form.Control
+                type="text"
+                ref={subjectRef}
+                placeholder="Subject"
+              />
             </div>
 
             <div>
-                <label className="labelS">Description</label>                
-                <Form.Control
-                    ref={descriptionRef}
-                    as="textarea"
-                    rows={3}
-                    placeholder="Description"
-                />
+              <label className="labelS">Level</label>
+              <select name="level" ref={levelRef}>
+                <option value="Bachelor">Bachelor</option>
+                <option value="Masters">Masters</option>
+              </select>
             </div>
 
-            <Button className="btn btn-success" variant="primary" onClick={submitPollResult} type="submit">
-                Save
+            <div>
+              <label className="labelS">Description</label>
+              <Form.Control
+                ref={descriptionRef}
+                as="textarea"
+                rows={3}
+                placeholder="Description"
+              />
+            </div>
+
+            <Button
+              className="btn btn-success"
+              variant="primary"
+              onClick={submitPollResult}
+              type="submit"
+            >
+              Save
             </Button>
-        </Form>
+          </Form>
+        </div>
       </div>
-    </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 export const getSaveAlert = (state: Object) => {
-    return state.poll.saveAlert;
+  return state.poll.saveAlert;
 };
 
 export const getUpdateAlert = (state: Object) => state.poll.updateAlert;

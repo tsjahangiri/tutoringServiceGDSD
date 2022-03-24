@@ -1,21 +1,21 @@
 // @flow
 import { takeEvery, call, put } from "redux-saga/effects";
 import { executeApiCall } from "./api";
-import { pollApi } from "../endpoints"
+import { pollApi } from "../endpoints";
 import type { Saga } from "redux-saga";
 
-import {  
-    SAVE_POLL,  
-    UPDATE_POLL, 
-    FETCH_POLL_BY_ID
+import {
+  SAVE_POLL,
+  UPDATE_POLL,
+  FETCH_POLL_BY_ID,
 } from "../actionTypes/votingPoll";
 
 import {
-    setPoll,
-    savePollSuccess,
-    savePollFailed,
-    updatePollSuccess,
-    updatePollFailed
+  setPoll,
+  savePollSuccess,
+  savePollFailed,
+  updatePollSuccess,
+  updatePollFailed,
 } from "../actionCreators/votingPoll";
 
 export default function* pollSaga(): Saga<void> {
@@ -26,8 +26,8 @@ export default function* pollSaga(): Saga<void> {
 
 export function* fetchPollById(action: Object): Saga<void> {
   const { id } = action.payload;
- 
-  console.log(action.payload)
+
+  console.log(action.payload);
 
   var url = pollApi + `/id:${id}`;
 
@@ -44,14 +44,14 @@ export function* fetchPollById(action: Object): Saga<void> {
   }
 }
 
-
 export function* savePoll(action: Object): Saga<void> {
-  console.log("saga" +  action.payload);
+  console.log("Called1");
+  console.log("saga" + action.payload);
   const apiOptions: ApiOptions = {
-    url:pollApi,
+    url: pollApi,
     method: "POST",
     params: action.payload,
-    useJwtSecret: false
+    useJwtSecret: false,
   };
   console.log("saga" + apiOptions.url);
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
@@ -60,19 +60,19 @@ export function* savePoll(action: Object): Saga<void> {
   var msg = "";
   if (isSuccessful) {
     msg = "Poll Saved Successfully";
-    yield put(savePollSuccess( msg ));
+    yield put(savePollSuccess(msg));
   } else {
     msg = "Failed to save data"; //FIXME Improve error message
-    yield put(savePollFailed( msg ));
+    yield put(savePollFailed(msg));
   }
 }
 
 export function* updatePoll(action: Object): Saga<void> {
   const apiOptions: ApiOptions = {
-    url:pollApi,
+    url: pollApi,
     method: "PUT",
     params: action.payload,
-    useJwtSecret: false
+    useJwtSecret: false,
   };
 
   const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
@@ -81,9 +81,9 @@ export function* updatePoll(action: Object): Saga<void> {
   var msg = "";
   if (isSuccessful) {
     msg = "Poll Updated Successfully";
-    yield put(updatePollSuccess( msg ));
+    yield put(updatePollSuccess(msg));
   } else {
     msg = "Failed to update data"; //FIXME Improve error message
-    yield put(updatePollFailed( msg ));
+    yield put(updatePollFailed(msg));
   }
 }

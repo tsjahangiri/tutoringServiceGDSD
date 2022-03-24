@@ -6,6 +6,7 @@ import course from "./course";
 import qualification from "./qualification";
 import manageUsers from "./manageUsers";
 import manageTutorsProfile from "./manageTutorsProfile";
+import votingPoll from "./votingPoll";
 
 const rootReducer = combineReducers({
   tutor,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   qualification,
   manageUsers,
   manageTutorsProfile,
+  votingPoll,
 });
 
 export default rootReducer;
