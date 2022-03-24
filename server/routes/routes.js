@@ -130,7 +130,9 @@ let fetchController = require("../controller/fetchFileController");
 router.get("/fetch/file/:id", fetchController.file);
 router.get("/fetch/image", tutorAuth.isTutor, fetchController.image);
 
-// Poll
+let dashboardController = require("../controller/dashboardController");
+router.get("/dashboard", dashboardController.dashboard);
+
 let tutorPollController = require("../controller/TutorPollController");
 router.post("/polls", createPollValidation, tutorPollController.createPoll);
 router.get("/polls", tutorPollController.viewPolls);
