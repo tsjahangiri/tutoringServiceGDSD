@@ -17,6 +17,7 @@ module.exports = {
       Language,
       SubjectName,
       RatePerHour,
+      Level,
       ExperinceYears,
       AvailableTime,
       UserId,
@@ -32,8 +33,9 @@ module.exports = {
       );
       let tutorProfileId = result[0].id;
       result = await executeQuery(
-        "INSERT INTO hm_post(description, tutorProfileId, status, `language`, subjectName, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO hm_post(level, description, tutorProfileId, status, `language`, subjectName, ratePerHour, createdDateTime, modifiedDateTime, experienceYears, isActive, availableTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         [
+          Level,
           Description,
           tutorProfileId,
           Status,
