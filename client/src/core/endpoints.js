@@ -13,6 +13,7 @@ export const fileUploadApi = `${baseUrl}/upload`;
 export const allStudentListApi = `${baseUrl}/users/?UserType=102`;
 export const allTutorListApi = `${baseUrl}/users/?UserType=101`;
 export const pendingTutorListApi = `${baseUrl}/courses?Status=100`;
+export const pollApi = `${baseUrl}/polls`;
 
 export const socketIOUrl = `${process.env.REACT_APP_API_URL}`;
 export const filesApi = `${process.env.REACT_APP_API_URL}`;

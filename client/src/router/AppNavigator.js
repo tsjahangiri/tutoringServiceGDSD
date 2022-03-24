@@ -12,6 +12,7 @@ import { Anonymous } from "./Anonymous";
 import { Authorized } from "./Authorized";
 import TutorProfile from "../pages/tutorProfile/TutorProfile";
 import FileUpload from "../pages/tutorProfile/fileUpload/FileUpload";
+import VotingPoll from "../pages/tutorProfile/votingPoll/VotingPoll";
 
 function AppNavigator() {
   return (
@@ -33,6 +34,7 @@ function AppNavigator() {
       <Route path="/offer-course" element={<OfferCourse />} />
       <Route path="/tutor/:tutorId" element={<TutorProfile />} />
       <Route path="/file" element={<FileUpload />} />
+      <Route path="/poll" element={<VotingPoll />} />
     </Routes>
   );
 }
