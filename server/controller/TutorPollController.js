@@ -6,13 +6,15 @@ const executeQuery = util.promisify(database.query).bind(database);
 
 module.exports = {
   createPoll: async (req, res) => {
-    const errors = validationResult(req);
+    /*const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    */
     let { Id, CourseName, Description, Level } = req.body;
 
     TutorProfileId = Id;
+    console.log(TutorProfileId);
 
     database.query(
       "INSERT INTO hm_poll (coursename, description, level, tutorProfileId) VALUES ( ?, ?, ?, ?)",
