@@ -1,0 +1,39 @@
+.qualification-content {
+  width: 350px;
+}
+
+.qualification-button {
+  width: 100%;
+}
+
+.qualification-logo {
+  margin-bottom: 20px;
+  width: 118px;
+}
+
+.qualification-page {
+  min-height: 100vh;
+  background-color: #fbfafb;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.labelS {
+  justify-content: flex-start;
+  margin-bottom: 0.7em;
+  margin-top: 0.7em;
+}
+
+@media only screen and (max-width: 540px) {
+  .qualification-content {
+    width: 70%;
+  }
+}
+
+.div1 {
+  width: 100%;
+  justify-content: flex-start;
+}

@@ -11,6 +11,7 @@ import fileUploadSaga from "./fileUpload";
 import manageUsersSaga from "./manageUsers";
 import manageTutorsProfile from "./manageTutorsProfile";
 import dashboard from "./dashboard";
+import pollSaga from "./votingPoll";
 
 export default function* rootSaga(): Saga<void> {
   yield all([
@@ -24,5 +25,6 @@ export default function* rootSaga(): Saga<void> {
     fork(manageUsersSaga),
     fork(manageTutorsProfile),
     fork(dashboard),
+    fork(pollSaga),
   ]);
 }
