@@ -1,0 +1,65 @@
+// @flow
+import { takeEvery, call, put } from "redux-saga/effects";
+import { executeApiCall } from "./api";
+import type { Saga } from "redux-saga";
+import {
+  GET_TUTOR_REVIEW_BY_ID,
+  SAVE_REVIEW,
+} from "../actionTypes/tutor";
+import {
+  getTutorReviewsById,
+  reviewApi,
+} from "../endpoints";
+import {
+  setTutorReview,
+  saveReviewSuccess,
+  saveReviewFailed,
+} from "../actionCreators/tutor";
+
+export default function* tutorSaga(): Saga<void> {
+  yield takeEvery(GET_TUTOR_REVIEW_BY_ID, getTutorReviewDataById);
+  yield takeEvery(SAVE_REVIEW, saveReview);
+}
+
+export function* getTutorReviewDataById(action: Object): Saga<void> {
+  const { id } = action.payload;
+  var url = `${process.env.REACT_APP_API_URL}`;
+  const apiOptions: ApiOptions = {
+    url: getTutorReviewsById(id),
+    method: "GET",
+    useJwtSecret: false,
+  };
+
+  const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
+  const { isSuccessful, response = {} } = apiResponse;
+  if (isSuccessful) {
+    yield put(setTutorReview(response));
+  }
+}
+
+export function* saveReview(action: Object): Saga<void> {
+  // const { course } = action.payload;
+  console.log(action.payload);
+
+  // var url = process.env.REACT_APP_API_URL;
+  // url += `/reviews`;
+
+  const apiOptions: ApiOptions = {
+    url: reviewApi,
+    method: "POST",
+    params: action.payload,
+    useJwtSecret: false,
+  };
+
+  const apiResponse: ApiResponse = yield call(executeApiCall, apiOptions);
+
+  const { success } = apiResponse;
+  var msg = "";
+  if (success) {
+    msg = "Review Saved Successfully";
+    yield put(saveReviewSuccess({ msg }));
+  } else {
+    msg = "Failed to save data"; //FIXME Improve error message
+    yield put(saveReviewFailed({ msg }));
+  }
+}
