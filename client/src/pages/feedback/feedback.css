@@ -1,0 +1,28 @@
+.suggestion-content {
+  width: 350px;
+}
+
+.suggestion-button {
+  width: 100%;
+}
+
+.suggestion-logo {
+  margin-bottom: 20px;
+  width: 118px;
+}
+
+.suggestion-page {
+  min-height: 100vh;
+  background-color: #fbfafb;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+@media only screen and (max-width: 540px) {
+  .suggestion-content {
+    width: 70%;
+  }
+}

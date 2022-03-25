@@ -8,7 +8,7 @@ import ManageTutorsProfile from "../pages/home/admin/manageTutorsProfile/ManageT
 import { Anonymous } from "./Anonymous";
 import { Authorized } from "./Authorized";
 import TutorProfile from "../pages/tutorProfile/TutorProfile";
-
+import Feedback from "../pages/feedback/feedback";
 function AppNavigator() {
   return (
     <Routes>
@@ -25,6 +25,8 @@ function AppNavigator() {
         element={<Anonymous component={Registration} />}
       />
       <Route path="/tutor/:tutorId" element={<TutorProfile />} />
+      <Route path="/feedback" element={<Feedback />} />
+
     </Routes>
   );
 }
