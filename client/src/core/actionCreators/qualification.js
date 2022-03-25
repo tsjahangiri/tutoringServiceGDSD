@@ -2,12 +2,10 @@
 import {
   FETCH_QUALIFICATION_BY_ID,
   SET_QUALIFICATION,
-
   SAVE_QUALIFICATION,
   SAVE_QUALIFICATION_LOADING,
   SAVE_QUALIFICATION_SUCCESS,
   SAVE_QUALIFICATION_FAILED,
-
   UPDATE_QUALIFICATION,
   UPDATE_QUALIFICATION_SUCCESS,
   UPDATE_QUALIFICATION_FAILED,
@@ -15,7 +13,7 @@ import {
 
 //GET
 export const fetchQualificationById = (id) => {
-  
+  console.log("fetchQualificationById");
   return {
     type: FETCH_QUALIFICATION_BY_ID,
     payload: {
@@ -31,22 +29,24 @@ export const setQualification = (payload) => {
   };
 };
 
-
 //SAVE
 export const saveQualification = (payload) => {
   return {
     type: SAVE_QUALIFICATION,
-    payload
+    payload,
   };
 };
 
 export const saveQualificationLoading = (payload) => ({
-  type: SAVE_QUALIFICATION_LOADING
+  type: SAVE_QUALIFICATION_LOADING,
 });
 
-export const saveQualificationSuccess = (message: string, type: string = "success") => ({
+export const saveQualificationSuccess = (
+  message: string,
+  type: string = "success"
+) => ({
   type: SAVE_QUALIFICATION_SUCCESS,
-   payload: {
+  payload: {
     saveAlert: {
       message,
       type,
@@ -54,7 +54,10 @@ export const saveQualificationSuccess = (message: string, type: string = "succes
   },
 });
 
-export const saveQualificationFailed = (message: string, type: string = "danger") => ({
+export const saveQualificationFailed = (
+  message: string,
+  type: string = "danger"
+) => ({
   type: SAVE_QUALIFICATION_FAILED,
   payload: {
     saveAlert: {
@@ -68,22 +71,15 @@ export const saveQualificationFailed = (message: string, type: string = "danger"
 export const updateQualification = (payload) => {
   return {
     type: UPDATE_QUALIFICATION,
-    payload
+    payload,
   };
 };
 
-export const updateQualificationSuccess = (message: string, type: string = "success") => ({
+export const updateQualificationSuccess = (
+  message: string,
+  type: string = "success"
+) => ({
   type: UPDATE_QUALIFICATION_SUCCESS,
-   payload: {
-    updateAlert: {
-      message,
-      type,
-    },
-  },
-});
-
-export const updateQualificationFailed = (message: string, type: string = "danger") => ({
-  type: UPDATE_QUALIFICATION_FAILED,
   payload: {
     updateAlert: {
       message,
@@ -92,3 +88,15 @@ export const updateQualificationFailed = (message: string, type: string = "dange
   },
 });
 
+export const updateQualificationFailed = (
+  message: string,
+  type: string = "danger"
+) => ({
+  type: UPDATE_QUALIFICATION_FAILED,
+  payload: {
+    updateAlert: {
+      message,
+      type,
+    },
+  },
+});
