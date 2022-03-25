@@ -40,6 +40,12 @@ exports.createReviewValidation = [
   body("Text").isString(),
 ];
 
+exports.createFeedbackValidation = [
+  body("Subject").notEmpty().isString(),
+  body("Description").notEmpty().isString(),
+  body("UserId").notEmpty().isInt(),
+];
+
 exports.updateReviewValidation = [
   body("Id").notEmpty().isInt(),
   body("UserId").notEmpty().isInt(),
