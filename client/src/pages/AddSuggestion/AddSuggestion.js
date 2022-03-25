@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getCurrentUser } from "../../core/selectors/user";
 import Page from "../../components/page/Page";
 import './AddSuggestion.css';
+import axios from "axios";
+import getFeedback from '../../core/endpoints'
 function AddSuggestion() {
 
     const suggestionRef = useRef(null);
@@ -18,7 +20,7 @@ function AddSuggestion() {
             UserId: user.id
         };
         console.log("Suggestion added = ",Suggestion);
-        // dispatch(saveSuggestion(Suggestion));
+        axios.post(getFeedback, Suggestion);
       };
    return (
    <>
@@ -30,8 +32,6 @@ function AddSuggestion() {
           <br />
           <Form.Control type="text" ref={suggestionRef} placeholder="Suggestion" />
           <br />
-          {/* <Form.Control type="text" ref={qualificationRef} placeholder="Qualification" />
-          <br /> */}
           <br />
           <Form.Control
           ref={descriptionRef}

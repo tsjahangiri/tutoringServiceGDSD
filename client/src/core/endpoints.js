@@ -27,4 +27,4 @@ export const getTutorQualificationById = (id) =>
   `${baseUrl}/tutors/qualification/` + id;
 export const getTutorReviewsById = (id) => `${baseUrl}/tutors/reviews/` + id;
 
-export const getFeedback = () => `${baseUrl}/feedback`;
+export const getFeedback = () => `${baseUrl}/feedbacks`;

@@ -1,1 +1,0 @@
-export const getSaveAlert = (state: Object) => state.feedback.saveAlert;
