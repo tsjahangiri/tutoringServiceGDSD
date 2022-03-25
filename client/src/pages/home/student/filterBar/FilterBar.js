@@ -61,8 +61,8 @@ export default function FilterBar(props: Props) {
           <Form.Label>Level</Form.Label>
           <Form.Select size="sm" ref={levelControl} defaultValue="Any">
             <option>Any</option>
-            <option value="Bachelors">Undergraduate</option>
-            <option value="Masters">Graduate</option>
+            <option value="Undergraduate">Undergraduate</option>
+            <option value="Graduate">Graduate</option>
           </Form.Select>
         </Col>
         <Col>

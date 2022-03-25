@@ -14,6 +14,7 @@ const {
   updateQualificationValidation,
   createTutorProfileValidation,
   updateTutorProfileValidation,
+  createPollValidation,
 } = require("../middleware/validation.js");
 const router = express.Router();
 let adminAuth = require("../middleware/adminAuth");
@@ -90,8 +91,16 @@ router.get(
 router.get("/tutors/reviews/:id", tutorProfileController.getReviewsById);
 router.get("/tutors", tutorProfileController.searchTutorProfile);
 router.get("/tutors/status", tutorProfileController.getTutorsByStatus);
-router.post("/tutors", createTutorProfileValidation, tutorProfileController.saveTutorInfo);
-router.put("/tutors", updateTutorProfileValidation, tutorProfileController.updateTutorInfo);
+router.post(
+  "/tutors",
+  createTutorProfileValidation,
+  tutorProfileController.saveTutorInfo
+);
+router.put(
+  "/tutors",
+  updateTutorProfileValidation,
+  tutorProfileController.updateTutorInfo
+);
 
 let qualificationController = require("../controller/qualificationController");
 router.get("/qualifications/:id", qualificationController.getQualificationById);
@@ -120,5 +129,12 @@ router.post("/upload", tutorAuth.isTutor, uploadController.upload);
 let fetchController = require("../controller/fetchFileController");
 router.get("/fetch/file/:id", fetchController.file);
 router.get("/fetch/image", tutorAuth.isTutor, fetchController.image);
+
+let dashboardController = require("../controller/dashboardController");
+router.get("/dashboard", dashboardController.dashboard);
+
+let tutorPollController = require("../controller/TutorPollController");
+router.post("/polls", createPollValidation, tutorPollController.createPoll);
+router.get("/polls", tutorPollController.viewPolls);
 
 module.exports = router;

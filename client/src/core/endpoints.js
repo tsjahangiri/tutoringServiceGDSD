@@ -7,6 +7,7 @@ export const tutorSearchApi = `${baseUrl}/tutors`;
 export const tutorsApi = `${baseUrl}/tutors`;
 export const reviewApi = `${baseUrl}/reviews`;
 export const courseApi = `${baseUrl}/courses`;
+export const dashboardApi = `${baseUrl}/dashboard`;
 export const offerCourseApi = `${baseUrl}/posts`;
 export const qualificationApi = `${baseUrl}/qualifications`;
 export const fileUploadApi = `${baseUrl}/upload`;

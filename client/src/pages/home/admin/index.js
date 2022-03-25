@@ -1,29 +1,59 @@
 // @flow
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Card } from "react-bootstrap";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchDashboardData } from "../../../core/actionCreators/dashboard";
+import { getDashboardData } from "../../../core/selectors/dashboard";
 
 export default function Admin() {
   const navigate = useNavigate();
 
-  const usersByStatus = [
-    { name: "Approved", value: 400, color: "#0088FE" },
-    { name: "Rejected", value: 50, color: "#FF0000" },
-    { name: "Pending", value: 150, color: "#FFBB28" },
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchDashboardData());
+  }, []);
+
+  let data = useSelector(getDashboardData);
+
+  var usersByStatus = [
+    { name: "Approved", value: 0, color: "#0088FE" },
+    { name: "Rejected", value: 0, color: "#FF0000" },
+    { name: "Pending", value: 0, color: "#FFBB28" },
   ];
 
-  const postsByStatus = [
-    { name: "Approved", value: 400, color: "#0088FE" },
-    { name: "Rejected", value: 50, color: "#FF0000" },
-    { name: "Pending", value: 150, color: "#FFBB28" },
+  var postsByStatus = [
+    { name: "Approved", value: 0, color: "#0088FE" },
+    { name: "Rejected", value: 0, color: "#FF0000" },
+    { name: "Pending", value: 0, color: "#FFBB28" },
   ];
 
-  const usersByType = [
-    { name: "Student", value: 100, color: "#FFBB28" },
-    { name: "Tutor", value: 300, color: "#00C49F" },
+  var usersByType = [
+    { name: "Student", value: 0, color: "#FFBB28" },
+    { name: "Tutor", value: 0, color: "#00C49F" },
   ];
+
+  if (data) {
+    if (data.UsersByStatus) {
+      usersByStatus[0].value = data.UsersByStatus[0].value;
+      usersByStatus[1].value = data.UsersByStatus[2].value;
+      usersByStatus[2].value = data.UsersByStatus[1].value;
+    }
+
+    if (data.PostByStatus) {
+      postsByStatus[0].value = data.PostByStatus[0].value;
+      postsByStatus[1].value = data.PostByStatus[2].value;
+      postsByStatus[2].value = data.PostByStatus[1].value;
+    }
+
+    if (data.UsersByType) {
+      usersByType[0].value = data.UsersByType[0].value;
+      usersByType[1].value = data.UsersByType[1].value;
+    }
+  }
 
   const renderLabel = ({
     cx,

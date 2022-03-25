@@ -13,9 +13,7 @@ exports.updateUserValidation = [
   body("Status").notEmpty().isIn([100, 101, 102]),
 ];
 
-exports.createTutorProfileValidation = [
-  body("UserId").notEmpty().isInt(),
-];
+exports.createTutorProfileValidation = [body("UserId").notEmpty().isInt()];
 
 exports.updateTutorProfileValidation = [
   body("UserId").notEmpty().isInt(),
@@ -47,6 +45,13 @@ exports.updateReviewValidation = [
   body("UserId").notEmpty().isInt(),
   body("TutorProfileId").notEmpty().isInt(),
   body("Text").isString(),
+];
+
+exports.createPollValidation = [
+  body("Id").notEmpty().isInt(),
+  body("CourseName").notEmpty().isString().isLength({ min: 1 }),
+  body("Description").notEmpty().isString().isLength({ min: 1 }),
+  body("Level").notEmpty().isString().isLength({ min: 1 }),
 ];
 
 exports.createDeptValidation = [
