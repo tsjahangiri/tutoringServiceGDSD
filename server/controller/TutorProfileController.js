@@ -19,7 +19,7 @@ module.exports = {
 
   getTutorOfferedCoursesById: async (req, res) => {
     let id = req.params.id;
-    let query = `SELECT subjectName, ratePerHour FROM hm_post A inner join hm_tutor_profile B on
+    let query = `SELECT subjectName, ratePerHour, description, experienceYears, availableTime, language, level FROM hm_post A inner join hm_tutor_profile B on
     (A.tutorProfileId = B.id and B.userId = ?);`;
     console.log(query);
     database.query(query, [id], (err, result) => {
@@ -106,6 +106,19 @@ module.exports = {
         `*${req.query.SubjectName}*`
       )} IN BOOLEAN MODE)`;
     }
+
+    if(req.query.level) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `level = ${database.escape(req.query.level)}`;
+    }
+
+    if(req.query.gender) {
+      if (joinQuery != "") joinQuery += " and ";
+
+      joinQuery += `gender = ${database.escape(req.query.gender)}`;
+    }
+
     let dbQuery =
       "SELECT hm_tutor_profile.userId as userId, hm_post.id, hm_post.description, hm_post.tutorProfileId, hm_post.status, hm_post.language, hm_post.subjectName, hm_post.ratePerHour, hm_post.experienceYears, hm_post.availableTime, hm_user.firstName, hm_user.lastName, hm_tutor_profile.picPath, hm_tutor_profile.about FROM hm_post" +
       " INNER JOIN hm_tutor_profile ON (hm_tutor_profile.id = hm_post.tutorProfileId and hm_tutor_profile.status = 101)" +
@@ -167,20 +180,39 @@ module.exports = {
 
   saveTutorInfo: async (req, res) => {
     await uploadFile(req, res);
-    if (req.file == undefined) {
-      return res.status(400).send({ message: "Please upload a Image!" });
-    }
 
     let { UserId, About, Age } = req.body;
-    let PicturePath = "public/images/" + req.file.originalname;
-    database.query(
-      "UPDATE hm_tutor_profile SET about = ?, age = ?, rating = 0, picPath = ?, status = 100 WHERE userId = ?",
-      [About, Age, PicturePath, UserId],
-      (err) => {
-        if (err) res.status(400).send(`Response Error: ${err}`);
-        else res.status(200).json({ message: "Tutor profile updated" });
-      }
-    );
+
+    if (req.file) {
+      let PicturePath = "public/images/" + req.file.originalname;
+
+      await executeQuery(
+        "UPDATE hm_tutor_profile SET picPath = ?, status = 100 WHERE userId = ?",
+        [PicturePath, UserId]
+      );
+    }
+
+    var queryParams = [];
+    var query = "UPDATE hm_tutor_profile SET rating = 0";
+
+    if (About) {
+      queryParams.push(About);
+      query += ", about = ?";
+    }
+
+    if (Age) {
+      queryParams.push(Age);
+      query += ", age = ?";
+    }
+
+    if (queryParams.length > 0) {
+      query += ", status = 100 WHERE userId = ?";
+      queryParams.push(UserId);
+    }
+
+    await executeQuery(query, queryParams);
+
+    res.status(200).json({ message: "Tutor profile updated" });
   },
 
   updateTutorInfo: async (req, res) => {

@@ -105,7 +105,7 @@ export default function FileList(props) {
                 <div className="ms-2 me-auto">
                   <div className="fw-bold">{item.fileName}</div>
                 </div>
-                <Badge variant="primary" pill>
+                <Badge bg="primary" pill>
                   <a
                     style={{ color: "#FFFFFF" }}
                     target="_blank"
