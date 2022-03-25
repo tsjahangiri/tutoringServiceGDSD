@@ -28,4 +28,3 @@ export const getTutorQualificationById = (id) =>
 export const getTutorReviewsById = (id) => `${baseUrl}/tutors/reviews/` + id;
 
 export const getFeedback = () => `${baseUrl}/feedback`;
-
