@@ -135,6 +135,6 @@ router.get("/dashboard", dashboardController.dashboard);
 
 let tutorPollController = require("../controller/TutorPollController");
 router.post("/polls", createPollValidation, tutorPollController.createPoll);
-router.get("/polls", tutorPollController.viewPolls);
+router.get("/polls/:id", tutorPollController.viewPolls);
 
 module.exports = router;
