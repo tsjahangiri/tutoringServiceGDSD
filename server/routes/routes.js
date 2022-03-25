@@ -50,6 +50,7 @@ router.get("/reviews", reviewController.getReviews);
 let feedbackController = require("../controller/userFeedbackController");
 router.post("/feedbacks", feedbackController.createUserFeedback);
 router.get("/feedbacks", feedbackController.getFeedbacks);
+router.get("/feedbacks/:id", feedbackController.getFeedbackById);
 
 // Department
 let departmentController = require("../controller/deptController");
