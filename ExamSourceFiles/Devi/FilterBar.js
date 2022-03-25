@@ -22,6 +22,7 @@ export default function FilterBar(props: Props) {
     gender: undefined,
   });
 
+  // Called whenever component renders
   React.useEffect(() => {
     dispatch(props.fetchOfferCourse({ filters }));
   });
