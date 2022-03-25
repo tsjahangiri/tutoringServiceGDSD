@@ -10,7 +10,11 @@ import profilePictureSaga from "./profilePicture";
 import fileUploadSaga from "./fileUpload";
 import manageUsersSaga from "./manageUsers";
 import manageTutorsProfile from "./manageTutorsProfile";
+<<<<<<< HEAD
 import dashboard from "./dashboard";
+=======
+import feedbackSaga from "./feedback";
+>>>>>>> 8f69627dfc17e79cf24870642598d63072d2ea76
 
 export default function* rootSaga(): Saga<void> {
   yield all([
@@ -23,6 +27,10 @@ export default function* rootSaga(): Saga<void> {
     fork(fileUploadSaga),
     fork(manageUsersSaga),
     fork(manageTutorsProfile),
+<<<<<<< HEAD
     fork(dashboard),
+=======
+    fork(feedbackSaga),
+>>>>>>> 8f69627dfc17e79cf24870642598d63072d2ea76
   ]);
 }
