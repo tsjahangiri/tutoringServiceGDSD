@@ -21,7 +21,7 @@ function TutorProfileItem(props) {
       UserId: userId,
       Status: updatedStatus,
     };
-    
+
     dispatch(updateTutorProfile(updatedItem));
   };
 
@@ -29,21 +29,35 @@ function TutorProfileItem(props) {
     // Rejected
     if (status == "102") {
       return (
-        <i
-          style={{ cursor: "pointer" }}
-          onClick={() => handleSubmit("101")}
-          className="bi bi-person-check-fill"
-        />
+        <div>
+          <i
+            style={{ cursor: "pointer" }}
+            onClick={() => handleSubmit("101")}
+            className="bi bi-person-check-fill"
+          />
+          <i
+            style={{ cursor: "pointer", marginLeft: "15px" }}
+            onClick={() => navigate(`/tutor/${userId}`)}
+            className="bi bi-eye-fill"
+          />
+        </div>
       );
     }
     // Approved
     if (status == "101")
       return (
-        <i
-          style={{ cursor: "pointer" }}
-          onClick={() => handleSubmit("102")}
-          className="bi bi-person-x-fill"
-        />
+        <div>
+          <i
+            style={{ cursor: "pointer" }}
+            onClick={() => handleSubmit("102")}
+            className="bi bi-person-x-fill"
+          />
+          <i
+            style={{ cursor: "pointer", marginLeft: "15px" }}
+            onClick={() => navigate(`/tutor/${userId}`)}
+            className="bi bi-eye-fill"
+          />
+        </div>
       );
 
     // Pending
@@ -58,6 +72,11 @@ function TutorProfileItem(props) {
           style={{ cursor: "pointer" }}
           onClick={() => handleSubmit("102")}
           className="bi bi-person-x-fill"
+        />
+        <i
+          style={{ cursor: "pointer", marginLeft: "15px" }}
+          onClick={() => navigate(`/tutor/${userId}`)}
+          className="bi bi-eye-fill"
         />
       </div>
     );
@@ -84,9 +103,7 @@ function TutorProfileItem(props) {
           <text>{renderStatus(status)}</text>
         </Col>
         <Col>
-          <text style={{ fontSize: "32px" }}>
-            {renderActions(status)}
-          </text>
+          <text style={{ fontSize: "32px" }}>{renderActions(status)}</text>
         </Col>
       </Row>
     </div>
