@@ -7,6 +7,7 @@ import ManageUsers from "../pages/home/admin/manageUsers/ManageUsers";
 import ManageTutorsProfile from "../pages/home/admin/manageTutorsProfile/ManageTutorsProfile";
 import AddCourse from "../pages/addCourse/AddCourse";
 import AddQualification from "../pages/addQualification/AddQualification";
+import AddSuggestion from "../pages/AddSuggestion/AddSuggestion";
 import OfferCourse from "../pages/offerCourse/OfferCourse";
 import { Anonymous } from "./Anonymous";
 import { Authorized } from "./Authorized";
@@ -30,6 +31,7 @@ function AppNavigator() {
       />
       <Route path="/add-course" element={<AddCourse />} />
       <Route path="/add-qualification" element={<AddQualification />} />
+      <Route path="/AddSuggestion" element={<AddSuggestion />} />
       <Route path="/offer-course" element={<OfferCourse />} />
       <Route path="/tutor/:tutorId" element={<TutorProfile />} />
       <Route path="/file" element={<FileUpload />} />

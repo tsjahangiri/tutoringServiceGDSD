@@ -1,6 +1,7 @@
 // @flow
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Navbar,
@@ -71,6 +72,7 @@ function renderBrand() {
 }
 
 function Header(props: Props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const isAuth = useSelector(isAuthenticated);
@@ -91,6 +93,7 @@ function Header(props: Props) {
           {renderBrand()}
           <Navbar.Toggle />
           {renderNavOptions(props.headerOptions)}
+          {isAuth && <Button variant="success" onClick={() => navigate(`/AddSuggestion`)}>Success</Button>}
           {renderUserOptions(currentUser, isAuth, onSignOut)}
         </Container>
       </Navbar>
