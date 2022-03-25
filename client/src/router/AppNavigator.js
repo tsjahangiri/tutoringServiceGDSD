@@ -5,9 +5,6 @@ import Login from "../pages/login/Login";
 import Registration from "../pages/registration/Registration";
 import ManageUsers from "../pages/home/admin/manageUsers/ManageUsers";
 import ManageTutorsProfile from "../pages/home/admin/manageTutorsProfile/ManageTutorsProfile";
-import AddCourse from "../pages/addCourse/AddCourse";
-import AddQualification from "../pages/addQualification/AddQualification";
-import OfferCourse from "../pages/offerCourse/OfferCourse";
 import { Anonymous } from "./Anonymous";
 import { Authorized } from "./Authorized";
 import TutorProfile from "../pages/tutorProfile/TutorProfile";
@@ -30,9 +27,6 @@ function AppNavigator() {
         path="/registration"
         element={<Anonymous component={Registration} />}
       />
-      <Route path="/add-course" element={<AddCourse />} />
-      <Route path="/add-qualification" element={<AddQualification />} />
-      <Route path="/offer-course" element={<OfferCourse />} />
       <Route path="/tutor/:tutorId" element={<TutorProfile />} />
       <Route path="/file" element={<FileUpload />} />
       <Route path="/poll" element={<VotingPoll />} />

@@ -17,6 +17,11 @@ const upload = async (req, res) => {
     var result = await executeQuery('SELECT id FROM hm_tutor_profile WHERE userId = ?', [req.userid]);
     var tutorProfileId = result[0].id;
 
+    await executeQuery(
+      "UPDATE hm_tutor_profile SET status = 100 WHERE id = ?;",
+      [tutorProfileId]
+    );
+
     if(req.file.mimetype === "application/pdf") {
       
         database.execute("SELECT * FROM `helpmelearn`.`hm_file` WHERE `tutorProfileId`= ?",
