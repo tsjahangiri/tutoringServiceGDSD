@@ -15,6 +15,7 @@ const {
   createTutorProfileValidation,
   updateTutorProfileValidation,
   createPollValidation,
+  createFeedbackValidation,
 } = require("../middleware/validation.js");
 const router = express.Router();
 let adminAuth = require("../middleware/adminAuth");
@@ -43,6 +44,12 @@ router.delete("/reviews/:id", reviewController.deleteReview);
 router.put("/reviews", updateReviewValidation, reviewController.updateReview);
 router.get("/reviews/:id", reviewController.getReviewById);
 router.get("/reviews", reviewController.getReviews);
+
+
+// Feedback
+let feedbackController = require("../controller/userFeedbackController");
+router.post("/feedbacks", feedbackController.createUserFeedback);
+router.get("/feedbacks", feedbackController.getFeedbacks);
 
 // Department
 let departmentController = require("../controller/deptController");
