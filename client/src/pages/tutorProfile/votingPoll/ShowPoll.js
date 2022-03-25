@@ -6,22 +6,26 @@ import { Link } from "react-router-dom";
 import { getUserType } from "../../../core/selectors/user";
 import { getPollById } from "../../../core/selectors/votingPoll";
 import { fetchPollById } from "../../../core/actionCreators/votingPoll";
+import { getCurrentUser } from "../../../core/selectors/user";
 
 export default function ShowPoll(props) {
   const dispatch = useDispatch();
-  let { tutorId } = useParams();
-  if (props.tutorId !== undefined && props.tutorId != "") {
-    tutorId = props.tutorId;
-  }
+  // let { tutorId } = useParams();
+  const user = useSelector(getCurrentUser);
+  console.log(user.id);
+  // if (props.tutorId !== undefined && props.tutorId != "") {
+  //   tutorId = props.tutorId;
+  // }
   const userType = useSelector(getUserType);
   const tutorQualificationData = useSelector(getPollById);
   const [tutorQualifications, setTutorQualifications] = useState([]);
   useEffect(() => {
-    dispatch(fetchPollById(tutorId));
+    console.log("dispatch");
+    dispatch(fetchPollById(user.id));
   }, []);
-  useEffect(() => {
-    setTutorQualifications(tutorQualificationData);
-  }, [tutorQualificationData]);
+  // useEffect(() => {
+  //   setTutorQualifications(tutorQualificationData);
+  // }, [tutorQualificationData]);
 
   console.log(tutorQualificationData);
   //   if (

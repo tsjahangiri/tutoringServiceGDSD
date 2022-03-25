@@ -27,3 +27,5 @@ export const getTutorOfferedCoursesById = (id) =>
 export const getTutorQualificationById = (id) =>
   `${baseUrl}/tutors/qualification/` + id;
 export const getTutorReviewsById = (id) => `${baseUrl}/tutors/reviews/` + id;
+
+export const getPollById = (id) => `${baseUrl}/polls/` + id;
