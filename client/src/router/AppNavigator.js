@@ -8,8 +8,9 @@ import ManageTutorsProfile from "../pages/home/admin/manageTutorsProfile/ManageT
 import { Anonymous } from "./Anonymous";
 import { Authorized } from "./Authorized";
 import TutorProfile from "../pages/tutorProfile/TutorProfile";
-// import FileUpload from "../pages/tutorProfile/fileUpload/FileUpload";
+//import FileUpload from "../pages/tutorProfile/fileUpload/FileUpload";
 import VotingPoll from "../pages/tutorProfile/votingPoll/VotingPoll";
+import ShowPoll from "../pages/tutorProfile/votingPoll/ShowPoll";
 
 function AppNavigator() {
   return (
@@ -27,7 +28,9 @@ function AppNavigator() {
         element={<Anonymous component={Registration} />}
       />
       <Route path="/tutor/:tutorId" element={<TutorProfile />} />
+      {/* <Route path="/file" element={<FileUpload />} /> */}
       <Route path="/poll" element={<VotingPoll />} />
+      <Route path="/showPoll" element={<ShowPoll />} />
     </Routes>
   );
 }
